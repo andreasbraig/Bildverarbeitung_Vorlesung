@@ -1,7 +1,7 @@
 import cv2 #Importieren OpenCV
 import numpy as np #Importieren Numpy
 
-image=cv2.imread('../Bilder/greyscale.tiff') #Bild laden
+image=cv2.imread('../Bilder/sample1.jpg') #Bild laden
 w, h = image.shape[0:2]
 
 
