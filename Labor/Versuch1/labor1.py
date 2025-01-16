@@ -60,8 +60,29 @@ def invert_color(image):
 
     return newimage
 
+
+#Rückwärts denken
+def rotsymCos(w,h):
+    
+    #erstelle ein leere Numpy Array mit den gegebenen Größen 
+    #1 für Schwarzweiß 
+    image = np.empty((h,w,1),dtype=np.uint8)
+
+    for i,height in enumerate(image):
+        for j,width in enumerate(height):
+            #für jeden Pixel den Abstand zur Mitte berechnen und diesen in Cos einsetzen.
+            k = np.sqrt(np.square(i-(h/2))+np.square(j-(w/2)))
+            width[0] = int(((np.cos(k)+1)/2) * 255) #Cos nach oben schieben um negative Werte zu verhindern.
+
+
+    print(image)
+
+    return image
+
+
+
 #AUSFÜHRUNG:____________________
 
-image = invert_grey(image)
+image = rotsymCos(960,480)
 show_image("test",image)
 
