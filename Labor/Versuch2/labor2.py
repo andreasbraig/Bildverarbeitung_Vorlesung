@@ -68,4 +68,4 @@ def show_image(text, image):
     cv2.destroyAllWindows()
 
 
-show_image("test",whitebalance(image))
+#äshow_image("test",whitebalance(image))
