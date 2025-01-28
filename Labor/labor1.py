@@ -1,8 +1,6 @@
 import cv2 #Importieren OpenCV
 import numpy as np #Importieren Numpy
 
-image=cv2.imread('../../Bilder/sample1.jpg') #Bild laden
-
 
 #Utilities 
 def show_image(text, image):
@@ -83,6 +81,17 @@ def rotsymCos(w,h):
 
 #AUSFÜHRUNG:____________________
 
-image = rotsymCos(960,480)
-show_image("test",image)
+def run(image, result,settings=None): #Funktion zur Bildverarbeitung
+    #Graubild erzeugen
+    image3=cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    result.append({"name":"Gray","data":invert_color(image)})
 
+
+if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
+    image=cv2.imread("Images\Ball.jpg")
+    result=[]
+    run(image,result)   
+    for ele in result:
+        cv2.imshow(ele["name"],ele["data"])
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

@@ -1,11 +1,11 @@
 import cv2
 
-import Labor.Versuch2.labor2 as l2
+import Labor.labor2 as l
 
 def run(image, result,settings=None): #Funktion zur Bildverarbeitung
     #Graubild erzeugen
     image3=cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    result.append({"name":"Gray","data":l2.kanal_kontrastspeizung(image)})
+    result.append({"name":"Gray","data":l.kanal_kontrastspeizung(image)})
 
 
 if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
