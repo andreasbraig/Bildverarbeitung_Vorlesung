@@ -321,8 +321,10 @@ class MainWindow(QMainWindow):
         self.load_Image()
 
     def update(self):
-        self.sld1L.setText(str(self.sld1.value()))
-        self.sld2L.setText(str(self.sld2.value()))
+        print(self.sld1.value())
+        print(self.sld2.value())
+        #self.sld1L.setText(str(self.sld1.value()))
+        #self.sld2L.setText(str(self.sld2.value()))
         self.save()
         self.load_Image()
 
