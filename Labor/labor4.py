@@ -54,21 +54,42 @@ def konturanalyse(image):
 
         color = random_colorgen()
 
+        cv2.drawMarker(image_binary,(cx,cy),(255,255,255)) # der Marker muss ja nur einmal pro Kontur gezeichnet werden und nicht für jeden Pixel wieder neu :)
+
+
+        radius = np.zeros((len(cont), 1))
+        a = np.zeros((len(cont), 1))
+        step = 3 #len(cont) / bins
         # Zeichne die Konturen und Rechtecke in den entsprechenden Bereich
         for j, pix in enumerate(cont):
             relx = pix[0][0] - cx
             rely = pix[0][1] - cy
 
-            cv2.drawMarker(image_binary,(cx,cy),(255,255,255))
+            radius[j] = int(np.sqrt(np.square(relx) + np.square(rely)))
+            a[j] = round((np.arctan2(relx, rely) + np.pi) / (2 * np.pi) * bins)
 
-            radius = int(np.sqrt(np.square(relx) + np.square(rely)))
-            a = round((np.arctan2(relx, rely) + np.pi) / (2 * np.pi) * bins)
-
-            point1 = (int(a * cropped_image.shape[1] / bins), cropped_image.shape[0] - 1)
-            point2 = (int((a + 1) * cropped_image.shape[1] / bins), cropped_image.shape[0] - int(2 * radius))
+        for r in range(len(radius)//3):
+            rad = int((radius[r*3] + radius[r*3+1] + radius[r*3+2])/3)
+            point1 = (int(a[r*3] * cropped_image.shape[1] / bins), cropped_image.shape[0] - 1)
+            point2 = (int((a[r*3] + 3) * cropped_image.shape[1] / bins), cropped_image.shape[0] - int(2 * rad))
 
             # Rechtecke für jedes Shape zeichnen
             cv2.rectangle(cropped_image, point1, point2, color, thickness=cv2.FILLED)
+        
+
+        print(radius)
+        # radius_cat = radius + radius + radius 
+        # corner_count = 0
+
+
+        # for x, r in enumerate(radius_cat):
+
+        #     if len(radius_cat) > x + 2 & radius_cat[x+1] > r & radius_cat[x+1] > radius_cat[x+2]:
+        #         corner_count += 1
+
+
+        # corner_count = int(corner_count / 3)
+        # print(corner_count)
 
 
         
