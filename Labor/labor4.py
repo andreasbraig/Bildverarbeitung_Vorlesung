@@ -83,7 +83,7 @@ def konturanalyse(image):
         cv2.drawMarker(image_binary, (cx, cy), (255, 255, 255))
         
         # Bestimme, wie viele Punkte in jeder Gruppe analysiert werden (Berechnung so, dass die Anzahl 90 nicht überschritten wird)
-        chunk_size = min(math.ceil(len(cont) / 90), len(cont))
+        chunk_size = math.ceil(len(cont) / 90)
         
         # Matrix zur Speicherung von Radius und Winkel
         matrix = []
@@ -111,9 +111,49 @@ def konturanalyse(image):
         for i in range(1, len(new_matrix) - 1):
             if new_matrix[i][0] > new_matrix[i - 1][0] and new_matrix[i][0] > new_matrix[i + 1][0]:
                 peak_count += 1
-        
+                point1 = (int(new_matrix[i][1] * cropped_image.shape[1] / bins), cropped_image.shape[0] - 1)
+                point2 = (int((new_matrix[i][1] + chunk_size) * cropped_image.shape[1] / bins), cropped_image.shape[0] - int(2 * new_matrix[i][0]))
+                cv2.rectangle(cropped_image, point1, point2, (0, 0, 255), thickness=cv2.FILLED)
+            
         print(f"Spitzenanzahl: {peak_count}")
     
+        # Extrahiere X- und Y-Werte
+        x_values = np.array([row[1] for row in new_matrix])
+        y_values = np.array([row[0] for row in new_matrix])  # Annahme: Die erste Spalte enthält die relevanten Werte
+
+        # Polynomielles Fitten (z. B. 4. Grad)
+        degree = 30
+        coeffs = np.polyfit(x_values, y_values, degree)
+        poly_func = np.poly1d(coeffs)
+
+        # Berechnung der Werte der Funktion
+        x_fine = np.linspace(x_values.min(), x_values.max(), 500)
+        y_fine = poly_func(x_fine)
+
+        # Erste und zweite Ableitung
+        dy_dx = np.polyder(poly_func)  # Erste Ableitung
+        d2y_dx2 = np.polyder(dy_dx)  # Zweite Ableitung
+
+        # Nullstellen der ersten Ableitung (potenzielle Extrema)
+        roots = np.roots(dy_dx)
+
+        # Filtere nur reale Werte im gültigen Bereich
+        maxima_x = []
+        maxima_y = []
+        for r in roots:
+            if np.isreal(r) and x_values.min() <= r.real <= x_values.max():
+                r_real = r.real
+                if np.polyval(d2y_dx2, r_real) < 0:  # Zweite Ableitung prüfen
+                    maxima_x.append(r_real)
+                    maxima_y.append(poly_func(r_real))
+
+        print(maxima_x)
+        # Plot zur Visualisierung
+        # plt.plot(x_values, y_values, 'bo', label="Originalwerte")
+        plt.plot(x_fine, y_fine, 'r-', label="Polynomial Fit")
+        plt.scatter(maxima_x, maxima_y, color='green', marker='o', label="Lokale Maxima")
+        plt.legend()
+        plt.show()
     return image_binary, newimage
 
 def run(image, result, settings=None):
