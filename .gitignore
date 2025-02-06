@@ -1,6 +1,4 @@
-/Labor/__pycache__/*
+Labor/__pycache__
+*/*.json
 
-Labor/ImageProcessingGUI.json
-
-
-*.pyc
+*/.DS_Store
