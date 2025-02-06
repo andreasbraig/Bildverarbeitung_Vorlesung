@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 import matplotlib
 import json
 
+def local_max(data):
+    count = 0 
+    for r in range(len(data)):
+        if data[(r-1)%len(data)] <= data[r] and data[r] > data[(r+1) % len(data)]:
+            count += 1
+
+    return count
+
 def random_colorgen():
 
     b = np.round(np.random.default_rng().random()*255)
@@ -68,14 +76,18 @@ def konturanalyse(image):
             radius[j] = int(np.sqrt(np.square(relx) + np.square(rely)))
             a[j] = round((np.arctan2(relx, rely) + np.pi) / (2 * np.pi) * bins)
 
-        for r in range(len(radius)//3):
-            rad = int((radius[r*3] + radius[r*3+1] + radius[r*3+2])/3)
-            point1 = (int(a[r*3] * cropped_image.shape[1] / bins), cropped_image.shape[0] - 1)
-            point2 = (int((a[r*3] + 3) * cropped_image.shape[1] / bins), cropped_image.shape[0] - int(2 * rad))
+        for i in range(5):
+            radius=(np.roll(radius,1)+radius+np.roll(radius,-1))/3
+
+        for r in range(len(radius)):
+            rad = radius[r]
+            point1 = (int(a[r] * cropped_image.shape[1] / bins), cropped_image.shape[0] - 1)
+            point2 = (int((a[r] + 1) * cropped_image.shape[1] / bins), cropped_image.shape[0] - int(2 * rad))
 
             # Rechtecke für jedes Shape zeichnen
             cv2.rectangle(cropped_image, point1, point2, color, thickness=cv2.FILLED)
         
+        cv2.putText(img= cropped_image,text= str(local_max(radius)), color = (255,255,255), org= (10,10), fontFace=1, fontScale=1)
 
         print(radius)
         # radius_cat = radius + radius + radius 
