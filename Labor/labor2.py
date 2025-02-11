@@ -68,7 +68,7 @@ def show_image(text, image):
 def run(image, result,settings=None): #Funktion zur Bildverarbeitung
     #Graubild erzeugen
     image3=cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    result.append({"name":"Gray","data":kanal_kontrastspeizung(image)})
+    result.append({"name":"Gray","data":global_kontrastspeizung(image)})
 
 
 if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
