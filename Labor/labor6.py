@@ -107,19 +107,24 @@ def getrim(blob,image):
 
     largest_contour = max(contours, key=cv2.contourArea) if contours else None
 
+    #mask als bild so initialisieren, dass es gleich groß ist
     mask=np.zeros_like(cropped)
+    mask = cv2.cvtColor(mask,cv2.COLOR_BGR2GRAY) #Konversion zu einkanal Graubild
 
 
+    #Konturmmaske zeichnen
     cv2.drawContours(contours=[largest_contour], 
-                     color=1,
+                     color=255,
                      hierarchy=hierarchy,
                      image=mask,
                      contourIdx=0,
                      lineType=cv2.LINE_8,
                      maxLevel=100,
                      thickness= -1)
-    
-    cropped[mask == 1] = [0,0,0]
+
+    #maske mit Bild "verheiraten"    
+
+    result = cv2.bitwise_and(cropped,cropped, mask=mask)
 
     return result
 
