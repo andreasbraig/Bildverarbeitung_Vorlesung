@@ -66,11 +66,11 @@ def isolate_largest_contour(blob,image):
 
 
     rect = cv2.minAreaRect(largest_contour)
-    print(rect[2])
+    #print(rect[2])
 
     box = cv2.boxPoints(rect)
     box = np.intp(box)  # In ganze Zahlen umwandeln
-    print(box)
+    #print(box)
 
 
     # Wähle drei Punkte für die Affine Transformation (z.B. die oberen drei)
@@ -122,37 +122,32 @@ def isolate_largest_contour(blob,image):
 
     return result
 
-#Kopiert einen Ordner zu einem Ordner!
-def preprocess_folder(source,dst):
+def scale_img(image,dim=150):
 
-    #Prüfen ob dst existiert, wenn nicht erstellen
-    if not os.path.exists(dst):
-        os.makedirs(dst)
+    #isoliere das zielbild
+    isolated = isolate_largest_contour(getcontours(image),image)
 
-    #alle elemente im Source Pfad bekommen
+    # Skalierung
+    h, w = isolated.shape[0:2]
+    #Leeres Quadratisches Bild erstellen
+    result = np.zeros((dim,dim,3),np.uint8)
+    #Berechnung der Skalierungsfaktoren für das isolierte Bild
+    scale = dim / max(h, w)
+    breite = int(w * scale)
+    hoehe = int(h * scale)
+    dimensionen = (breite, hoehe)
+    scaled = cv2.resize(isolated,dimensionen) #Tatsächliche skalierung
 
-    elements = []
-    result
+    #Schreibe das isolierte Bild in das leere
+    
+    result[:scaled.shape[0], :scaled.shape[1]] = scaled
 
-    #alle verarbeiten
+    return result
 
-    for element in elements:
-        result = isolate_largest_contour(getcontours(element),element)
-        #Speichern in neuem Ordner
-
-
-def train_test_split(source,dst):
-
-    if not os.path.exists(dst):
-        os.makedirs(dst)
-
-
-    pass
-
+#__________________AUSFÜHRENDER BEREICH___________________
 
 def run(image, result,settings=None): #Funktion zur Bildverarbeitung
-    newimage = getcontours(image)
-    newimage = isolate_largest_contour(newimage,image)
+    newimage = scale_img(image)
 
 
 
@@ -160,15 +155,10 @@ def run(image, result,settings=None): #Funktion zur Bildverarbeitung
     image3=cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     result.append({"name":"Gray","data":newimage})
 
-
 if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
     image=cv2.imread("Images\Ball.jpg")
     result=[]
-    run(image,result)
 
-    #Ordner 1
-
-    #Ordner 2
 
 
     #10% Verschieben
