@@ -40,19 +40,28 @@ def train_test_split(source,dst):
     for file in random_samples:
         shutil.move(os.path.join(source,file),os.path.join(dst,file))
 
+def cleanup(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    else:
+        print("Jibbet Nich")
 
 
+path = "../Bilder/Cashews"
 
-preprocess_folder(source="../Bilder/Cashews/unverarbeitet/Anomaly",
-                  dst="../Bilder/Cashews/Lernen/Anomaly")
+cleanup(path+"/Lernen")
+cleanup(path+"/Test")
+
+preprocess_folder(source= path+"/unverarbeitet/Anomaly",
+                  dst=path+"/Lernen/Anomaly")
 print("Lernen Anomaly Fertig")
-preprocess_folder(source="../Bilder/Cashews/unverarbeitet/Normal",
-                  dst="../Bilder/Cashews/Lernen/Normal")
+preprocess_folder(source=path+"/unverarbeitet/Normal",
+                  dst=path+"/Lernen/Normal")
 print("Lernen Normal Fertig")
 
 
-train_test_split(source="../Bilder/Cashews/Lernen/Anomaly",
-                 dst="../Bilder/Cashews/Test/Anomaly")
-train_test_split(source="../Bilder/Cashews/Lernen/Normal",
-                 dst="../Bilder/Cashews/Test/Normal")
+train_test_split(source=path+"/Lernen/Anomaly",
+                 dst=path+"/Test/Anomaly")
+train_test_split(source=path+"/Lernen/Normal",
+                 dst=path+"/Test/Normal")
 
