@@ -1,13 +1,6 @@
 import numpy as np 
+import os
 import cv2
-
-def random_colorgen():
-
-    b = np.round(np.random.default_rng().random()*255)
-    g = np.round(np.random.default_rng().random()*255)
-    r = np.round(np.random.default_rng().random()*255)
-
-    return (int(b),int(g),int(r))
 
 def getcontours(image,settings=(10,50)):
   svm = cv2.ml.SVM_create()
@@ -63,7 +56,7 @@ def getcontours(image,settings=(10,50)):
 
   return erg
 
-def getrim(blob,image):
+def isolate_largest_contour(blob,image):
 
 
 
@@ -78,6 +71,7 @@ def getrim(blob,image):
     box = cv2.boxPoints(rect)
     box = np.intp(box)  # In ganze Zahlen umwandeln
     print(box)
+
 
     # Wähle drei Punkte für die Affine Transformation (z.B. die oberen drei)
     #Je nach Rotation der Nuss ist der erkannte Winkel in Rect (rect[2]) anders und die Reihenfolge der Punkte ist nicht mehr 
@@ -128,9 +122,39 @@ def getrim(blob,image):
 
     return result
 
+#Kopiert einen Ordner zu einem Ordner!
+def preprocess_folder(source,dst):
+
+    #Prüfen ob dst existiert, wenn nicht erstellen
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+    #alle elemente im Source Pfad bekommen
+
+    elements = []
+    result
+
+    #alle verarbeiten
+
+    for element in elements:
+        result = isolate_largest_contour(getcontours(element),element)
+        #Speichern in neuem Ordner
+
+
+def train_test_split(source,dst):
+
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+
+    pass
+
+
 def run(image, result,settings=None): #Funktion zur Bildverarbeitung
     newimage = getcontours(image)
-    newimage = getrim(newimage,image)
+    newimage = isolate_largest_contour(newimage,image)
+
+
 
     #Graubild erzeugen
     image3=cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -141,6 +165,13 @@ if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist 
     image=cv2.imread("Images\Ball.jpg")
     result=[]
     run(image,result)
+
+    #Ordner 1
+
+    #Ordner 2
+
+
+    #10% Verschieben
     
     for ele in result:
         cv2.imshow(ele["name"],ele["data"])
