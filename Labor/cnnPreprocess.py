@@ -23,7 +23,7 @@ def preprocess_folder(source,dst):
         output_path = os.path.join(dst, element)
         
         #Bildvearbeitung
-        result=l6.scale_img(image)
+        result=l6.scale_img(image,dim=80)
 
         #Speichern in neuem Ordner
         cv2.imwrite(output_path,result)
