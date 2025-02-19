@@ -1,6 +1,9 @@
 Labor/__pycache__
 */*.json
-
-*/.DS_Store
+#Labor
+#*/.DS_Store
 
 Andi/Datensatz
+
+Labor/Model_Archiv
+*/*.state
