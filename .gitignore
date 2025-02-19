@@ -6,4 +6,4 @@ Labor/__pycache__
 Andi/Datensatz
 
 Labor/Model_Archiv
-*/*.state
+**/*.state
