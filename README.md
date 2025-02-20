@@ -8,6 +8,26 @@ Dieses Repo wird für die Zusammenarbeit/ gemeinsame Bearbeitung der Laboraufgab
 
 ## Grundlagen
 
+### Venv erstellen:
+
+Sinn ist, bugs zu vermeiden und wir können bei Komplikationen mit Heintz auch die requirements.txt übergeben. 
+
+1. Venv im Verzeichnis erstellen
+
+   1. Ins Hauptverzeichnis des Repos navigieren
+   2. python3.11 -m venv .venv
+   3. Der Ordner wird von der gitignore ausgeschlossen
+2. venv Aktivieren:
+
+   1. Mac: source .venv/bin/activate
+   2. Windows: cd .venv/bin und dann ./Activate.ps1
+3. Alle Requirements aus dem Repo übernehmen:
+
+   1. pip install -r /path/to/requirements.txt
+4. Wenn man das Venv deaktivieren möchte:
+
+   1. deactivate
+
 ### Template:
 
     import cv2 #Importieren OpenCV
