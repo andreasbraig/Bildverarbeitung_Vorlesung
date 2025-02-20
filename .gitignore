@@ -7,3 +7,5 @@ Andi/Datensatz
 
 Labor/Model_Archiv
 **/*.state
+
+.venv
