@@ -3,6 +3,7 @@ import numpy as np #Importieren Numpy
 from matplotlib import pyplot as plt
 import json
 
+
 cf = json.load(open("ImageProcessingGUI.json", 'r'))
 
 #image_path = "Datensatz/Images/4961fdd8-5b8c-428e-bcd1-8f65f8aecfe0.jpg"
@@ -44,7 +45,7 @@ def eye_mouth(segm):
 
     mask = (segm_gray == 5) | (segm_gray == 6) | (segm_gray == 7)
 
-    image_binary = np.zeros_like(segm_gray)
+    image_binary = np.zeros_like(segm_gray,dtype=np.uint8)
 
     image_binary[mask] = 255
 
@@ -74,29 +75,43 @@ def marker(image, segm):
     
 
 
+def segment_filter(image, segm):
+    centroids, _ = eye_mouth(segm)
+
+    if len(centroids) != 3:
+        raise ValueError("Nicht genau drei Segmentschwerpunkte gefunden!")
+
+    # target_pts = np.float32([mouth, eyes[0], eyes[1]])
+
+    eye_dist = 70
+
+    target_pts = np.float32([
+        [eye_dist*3//2, eye_dist*3], 
+        [eye_dist*2, eye_dist*2], 
+        [eye_dist, eye_dist*2]
+    ])
+    src_pts = np.float32([centroids[0], centroids[1], centroids[2]])
+    
+    # Transformation berechnen
+    matrix = cv2.getAffineTransform(src_pts, target_pts)
+    warped = cv2.warpAffine(image, matrix, (eye_dist*3, eye_dist*4))
+    
+    # Bild speichern
+    return warped
 
 
-
-
-def show_image(text, image):
-    cv2.imshow(text, image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
-#show_image("test",marker(image,segm))
 
 def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
-    mark, bin, seg = marker(image, image2)
-    result.append({"name":"res","data":mark})
-    result.append({"name":"binary","data":bin})
-    result.append({"name":"spreiz","data":seg})
+    seg = segment_filter(image, image2)
+    result.append({"name":"cropped","data":seg})
+    return
     
 
 
 
 if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
     image=cv2.imread("Images\Ball.jpg")
+    
     result=[]
     print(result)
     run(image, image2, result)   
