@@ -434,8 +434,11 @@ class MainWindow(QMainWindow):
         if(self.imageList.currentItem() is None): return
         name=self.imageList.currentItem().text()
         name=os.path.join( self.config["folder"],name)
+        name2=os.path.join( self.config["folder"],name[:-3]+"png")
         image=cv2.imread(name)
+        image2 = cv2.imread(name2)
         self.addResultImage("Base",image)
+        self.addResultImage("Maske",image2)
         try:
             script=str(self.comboScripts.currentText())
 
@@ -445,7 +448,7 @@ class MainWindow(QMainWindow):
                 importlib.reload(module)
                 moduleFct = getattr(module, "run")
                 result=[]
-                moduleFct(image,result,[self.sld1.value(),self.sld2.value(),])
+                moduleFct(image,image2,result,[self.sld1.value(),self.sld2.value(),])
                 for ele in result:
                     self.addResultImage(ele["name"],ele["data"])
         except Exception as err:
