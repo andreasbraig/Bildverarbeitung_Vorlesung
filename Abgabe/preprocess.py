@@ -3,6 +3,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import json
 import os
+import shutil
+import random
 
 import segmentierung as sg
 
@@ -37,20 +39,34 @@ def split_genders(dst_m,dst_w,gender_array):
             segmentpath = path[:-4]+data_suffix[1]
             segm = cv2.imread(segmentpath)
 
-            free,_ =sg.freistellen(image,segm)
+            free,_ = sg.freistellen(image,segm)
+            warped = sg.transformation(free,segm)
 
             if element[1] == "M":
-                print("Success")
-                cv2.imwrite(os.path.join(dst_m, filename+data_suffix[1]),free)
+                cv2.imwrite(os.path.join(dst_m, filename+data_suffix[1]),warped)
             elif element[1] == "W":
-                cv2.imwrite(os.path.join(dst_w, filename+data_suffix[1]),free)
+                cv2.imwrite(os.path.join(dst_w, filename+data_suffix[1]),warped)
             else:
                 print("Fehler, Kein eindeutiges Gender")
-
-
-    #for element in os.listdir(source):
- 
     
+def train_test_split(source,dst,ratio=20):
+
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+    files = [f for f in os.listdir(source)]
+
+    random_samples = random.sample(files, int(len(files)*(ratio/100)))
+
+    for file in random_samples:
+        shutil.move(os.path.join(source,file),os.path.join(dst,file))
+
+ 
+def cleanup(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    else:
+        print("Jibbet Nich")
 
 
 
@@ -60,6 +76,17 @@ def split_genders(dst_m,dst_w,gender_array):
 
 data = json.load(open("Images/tag.json","r"))
 
-split_genders(dst_m= "Datensatz/maennlich",
-              dst_w= "Datensatz/weiblich",
-              gender_array=create_gender_array(data))
+cleanup("Datensatz/Learn")
+cleanup("Datensatz/Test")
+
+all_m = "Datensatz/Learn/maennlich"
+all_w = "Datensatz/Learn/weiblich"
+
+split_genders(dst_m= all_m, dst_w= all_w ,gender_array=create_gender_array(data))
+
+print("Transformation abgeschlossen")
+
+train_test_split(source=all_m, dst="Datensatz/Test/maennlich", ratio=20)
+train_test_split(source=all_w, dst="Datensatz/Test/weiblich", ratio=20)
+
+print("Train_Test_Split abgeschlossen")

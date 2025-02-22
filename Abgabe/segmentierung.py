@@ -47,10 +47,9 @@ def freistellen(image, segm):
 
 
 def transformation(image, segm):
-    centroids, _ = eye_mouth(segm)
+    centr = get_corners(segm)
 
-    if len(centroids) != 3:
-        raise ValueError("Nicht genau drei Segmentschwerpunkte gefunden!")
+
 
     # target_pts = np.float32([mouth, eyes[0], eyes[1]])
 
@@ -61,7 +60,7 @@ def transformation(image, segm):
         [eye_dist*2, eye_dist*2], 
         [eye_dist, eye_dist*2]
     ])
-    src_pts = np.float32([centroids[0], centroids[1], centroids[2]])
+    src_pts = np.float32([centr[2], centr[1], centr[0]])
     
     # Transformation berechnen
     matrix = cv2.getAffineTransform(src_pts, target_pts)
@@ -70,6 +69,53 @@ def transformation(image, segm):
     # Bild speichern
     return warped
 
+def get_lastpoint(centr):
+
+    vec = np.subtract(centr[1] , centr[0])
+    vec2 = [vec[1], vec[0]]
+
+    last = np.add(centr[0], vec//2)
+    last = np.add(last, vec2)
+    return last
+
+def get_single_center(segm,value):
+
+    segm_gray = cv2.cvtColor(segm, cv2.COLOR_BGR2GRAY)
+
+    mask = (segm_gray == value)
+
+    image_binary = np.zeros_like(segm_gray,dtype=np.uint8)
+
+    image_binary[mask] = 255
+
+    contours, _ = cv2.findContours(image_binary,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
+
+    if len(contours)==0:
+        return 0
+    else: 
+
+        largest = max(contours, key=cv2.contourArea)
+
+        M = cv2.moments(largest)
+
+        cx = int(M['m10'] / M['m00'])
+        cy = int(M['m01'] / M['m00'])
+
+        return [cx,cy]
+
+def get_corners(segm):
+    result=[]
+    contours = [5,6,7]
+
+    for ele in contours:
+        coordinates = get_single_center(segm,ele)
+        if coordinates != 0:
+            result.append(coordinates)
+
+    if len(result) != 3:       
+        result.append(get_lastpoint(result))
+
+    return result
 
 def eye_mouth(segm):
 
@@ -91,9 +137,10 @@ def eye_mouth(segm):
     for idx, cont in enumerate(contours[:min(4, len(contours))]):
         # Berechne die Momente der Kontur, um den Mittelpunkt zu finden
         M = cv2.moments(cont)
-        cx = int(M['m10'] / M['m00'])
-        cy = int(M['m01'] / M['m00'])
-        corner.append([cx, cy])
+        if M['m00'] > 0:
+            cx = int(M['m10'] / M['m00'])
+            cy = int(M['m01'] / M['m00'])
+            corner.append([cx, cy])
         #print("neue Contur:",len(cont))
      
 
@@ -106,17 +153,6 @@ def eye_mouth(segm):
     corner = eyes + mouth
     return  corner, image_binary
 
-
-def marker(image, segm):
-
-    corner, binary = eye_mouth(segm)
-
-    for cor in corner:
-        cv2.drawMarker(image,cor,(255,255,255))
-
-    seg = global_kontrastspeizung(segm)
-
-    return image, binary, seg
     
 def eye_mouth_split(corner):
     if len(corner) < 3:
@@ -174,14 +210,26 @@ def cluster_points(points, eyes):
 
     return averaged_largest_cluster
 
+def marker(image, segm):
+
+    corner= get_corners(segm)
+
+    for cor in corner:
+        cv2.drawMarker(image,cor,(255,255,255))
+
+    seg = global_kontrastspeizung(segm)
+
+    return image, seg
 
 def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
-    mark, bin, seg = marker(image, image2)
+    mark, seg = marker(image, image2)
+    #get_single_center(image2,5)
     free,_ =freistellen(image,image2)
+    warped= transformation(free,image2)
     result.append({"name":"res","data":mark})
-    result.append({"name":"binary","data":bin})
     result.append({"name":"spreiz","data":seg})
     result.append({"name":"Freigestellt","data":free[:, :, :3]})
+    result.append({"name":"Final","data":warped[:, :, :3]})
 
     
 
