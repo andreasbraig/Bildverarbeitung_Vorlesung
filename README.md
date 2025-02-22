@@ -20,7 +20,7 @@ Sinn ist, bugs zu vermeiden und wir können bei Komplikationen mit Heintz auch d
 2. venv Aktivieren:
 
    1. Mac: source .venv/bin/activate
-   2. Windows: cd .venv/bin und dann ./Activate.ps1
+   2. Windows: cd .venv/Scripts und dann ./Activate.ps1
 3. Alle Requirements aus dem Repo übernehmen:
 
    1. pip install -r /path/to/requirements.txt
