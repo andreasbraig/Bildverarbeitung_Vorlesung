@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 
 import os
 import time
+import csv
 
 # Definiert eine CNN-Klassifikation für Bilddatensätze
 class CNNClassification(nn.Module):
@@ -70,30 +71,39 @@ class CNNClassification(nn.Module):
                 _, pred = torch.max(res, dim=1)
                 print(f"Index: {i} Predicted class: {pred[0].item()} Defined class: {label}")
 
-    def trainStart(self, epochs, lr, train_loader, device, opt_func=torch.optim.Adam):
+    def trainStart(self, epochs, lr, train_loader, device,modelname, opt_func=torch.optim.Adam):
         optimizer = opt_func(self.parameters(), lr)
         self.to(device)  # Verschiebt das Modell auf das angegebene Gerät
         self.train()
+        
+        log_file= modelname[:-6]+".csv"
+        print("log saved to:",log_file)
 
-        for epoch in range(epochs):
-            train_losses = []
-            for batch in train_loader:
-                images, labels = batch
-                images, labels = images.to(device), labels.to(device)
-                loss = self.training_step((images, labels))
-                train_losses.append(loss)
-                loss.backward()
-                optimizer.step()
-                optimizer.zero_grad()
+        with open(log_file, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["epoch", "epoch_loss", "epoch_acc", "timestamp"])
 
-            with torch.no_grad():
-                self.eval()
-                outputs = [self.validation_step(batch, device) for batch in train_loader]
-                batch_losses, batch_accs = zip(*outputs)
-                epoch_loss = torch.stack(batch_losses).mean().item()
-                epoch_acc = torch.stack(batch_accs).mean().item()
-                timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                print(f"Epoch {epoch}, loss: {epoch_loss}, acc: {epoch_acc}, Timestamp: {timestamp}")
+            for epoch in range(epochs):
+                train_losses = []
+                for batch in train_loader:
+                    images, labels = batch
+                    images, labels = images.to(device), labels.to(device)
+                    loss = self.training_step((images, labels))
+                    train_losses.append(loss)
+                    loss.backward()
+                    optimizer.step()
+                    optimizer.zero_grad()
+
+                with torch.no_grad():
+                    self.eval()
+                    outputs = [self.validation_step(batch, device) for batch in train_loader]
+                    batch_losses, batch_accs = zip(*outputs)
+                    epoch_loss = torch.stack(batch_losses).mean().item()
+                    epoch_acc = torch.stack(batch_accs).mean().item()
+                    timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                    print(f"Epoch {epoch}, loss: {epoch_loss}, acc: {epoch_acc}, Timestamp: {timestamp}")
+                    writer.writerow([epoch, epoch_loss, epoch_acc, timestamp])
+
 
     def training_step(self, batch):
         images, labels = batch
@@ -115,7 +125,7 @@ def rgba_loader(path):
         img = Image.open(path).convert("RGBA")  # Ensure RGBA mode
         return transforms.ToTensor()(img)  # Keep all 4 channels
 
-def train_model(data_dir, device,epochs=5):
+def train_model(data_dir, device,epochs=5,modelname = "model.state"):
     trans = [transforms.ToTensor()]
 
     train_dataset = ImageFolder(data_dir, transform=None, loader=rgba_loader) 
@@ -125,14 +135,14 @@ def train_model(data_dir, device,epochs=5):
 
 
     try:
-        model.load_state_dict(torch.load("model.state"))
+        model.load_state_dict(torch.load(modelname))
     except:
         print("No model found")
 
     trainEpochs = epochs
     if trainEpochs > 0:
-        model.trainStart(trainEpochs, 0.001, train_dl, device)
-        torch.save(model.state_dict(), "model.state")
+        model.trainStart(trainEpochs, 0.001, train_dl, device,modelname)
+        torch.save(model.state_dict(), modelname)
 
 
 def test_model(test_data_dir, device):
@@ -172,7 +182,10 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    train_model(data_dir, device, epochs=2)
-    test_model(test_data_dir, device)
+    train_model(data_dir, device, epochs=5,modelname="model5.state")
+    train_model(data_dir, device, epochs=30,modelname="model30.state")
+    train_model(data_dir, device, epochs=60,modelname="model60.state")
+    train_model(data_dir, device, epochs=90,modelname="model90.state")
+    #test_model(test_data_dir, device)
 
 

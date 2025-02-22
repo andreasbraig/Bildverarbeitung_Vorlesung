@@ -237,6 +237,7 @@ def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
 
 if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
     image=cv2.imread("Images\Ball.jpg")
+    image2=cv2.imread("Images\Ball.jpg")
     
     result=[]
     print(result)
