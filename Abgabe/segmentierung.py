@@ -2,6 +2,7 @@ import cv2 #Importieren OpenCV
 import numpy as np #Importieren Numpy
 from matplotlib import pyplot as plt
 import json
+import math
 
 
 cf = json.load(open("ImageProcessingGUI.json", 'r'))
@@ -50,30 +51,48 @@ def eye_mouth(segm):
     image_binary[mask] = 255
 
     contours, _ = cv2.findContours(image_binary,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
-    print(len(contours))
-    for idx, cont in enumerate(contours[:len(contours)]):
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)
+    #print(len(contours))
+
+
+    for idx, cont in enumerate(contours[:min(4, len(contours))]):
         # Berechne die Momente der Kontur, um den Mittelpunkt zu finden
         M = cv2.moments(cont)
         cx = int(M['m10'] / M['m00'])
         cy = int(M['m01'] / M['m00'])
-        
         corner.append([cx, cy])
+        #print("neue Contur:",len(cont))
+     
 
-    return corner, image_binary
+
+    # corner in Augen und Mund unterteilen
+    eyes, mouth = eye_mouth_split(corner)
+    # Verhindern, dass zu viele Marker eng beieinander gesetzt werden, Mittelung des größten Clusters
+    if len(mouth) > 1:
+        mouth = [cluster_points(mouth, eyes)]  # Clustert Punkte, die zu nah aneinander liegen (abhängig vom Abstand der Augen)
+    corner = eyes + mouth
+    return  corner, image_binary
 
 
 def marker(image, segm):
 
     corner, binary = eye_mouth(segm)
 
-    for cor in corner[2:]:
+    for cor in corner:
         cv2.drawMarker(image,cor,(255,255,255))
 
     seg = global_kontrastspeizung(segm)
 
     return image, binary, seg
     
+def eye_mouth_split(corner):
+    if len(corner) < 3:
+        return corner, []  # Falls zu wenige Punkte vorhanden sind, alle zu "eyes" packen
 
+    corner.sort(key=lambda p: p[1])  # Sortiere nach der y-Koordinate
+    eyes = corner[:2]  # Die zwei obersten Punkte sind die Augen
+    mouth = corner[2:]  # Die restlichen Punkte sind der Mund
+    return eyes, mouth
 
 def segment_filter(image, segm):
     centroids, _ = eye_mouth(segm)
@@ -99,6 +118,51 @@ def segment_filter(image, segm):
     # Bild speichern
     return warped
 
+def calculate_eye_distance(eyes):
+    if len(eyes) < 2:
+        return 0  # Falls weniger als 2 Augen vorhanden sind, gebe 0 zurück
+    
+    # Berechne den Abstand zwischen den beiden Augen
+    x1, y1 = eyes[0]
+    x2, y2 = eyes[1]
+    
+    eye_distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    # print(dist)
+    
+    return eye_distance
+
+def cluster_points(points, eyes):
+    clustered = []
+    max_distance = calculate_eye_distance(eyes) * 0.01
+
+    # Wir gehen alle Punkte durch
+    for pnt in points:
+        # Falls der Cluster leer ist, füge den Punkt direkt hinzu
+        if not clustered:
+            clustered.append([pnt])
+            continue
+        
+        # Berechne die Distanz zum Mittelpunkt jedes bestehenden Clusters
+        added_to_cluster = False
+        for cluster in clustered:
+            cluster_center = np.mean(cluster, axis=0)  # Berechne den Mittelpunkt des Clusters
+            dist = np.linalg.norm(np.array(pnt) - np.array(cluster_center))  # Euklidische Distanz
+            
+            if dist < max_distance:
+                cluster.append(pnt)  # Füge den Punkt zum Cluster hinzu
+                added_to_cluster = True
+                break
+        
+        # Wenn der Punkt keinem Cluster hinzugefügt wurde, erstelle einen neuen Cluster
+        if not added_to_cluster:
+            clustered.append([pnt])
+
+    # Finde das Cluster mit der maximalen Anzahl von Punkten
+    largest_cluster = max(clustered, key=len)  # Cluster mit den meisten Punkten
+    averaged_largest_cluster = np.mean(largest_cluster, axis=0)  # Mittelwert des größten Clusters
+    averaged_largest_cluster = np.round(averaged_largest_cluster).astype(int).tolist()  # Runden und zu int konvertieren
+
+    return averaged_largest_cluster
 
 
 def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
