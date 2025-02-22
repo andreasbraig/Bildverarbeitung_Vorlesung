@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.18)  18 FEB 2025 11:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.18)  18 FEB 2025 11:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/tmi.tex
-(d:/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/tmi.tex
+**d:/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/vorlagen.tex
+(d:/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/vorlagen.tex
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
 (ieeecolor.cls
@@ -221,23 +221,23 @@ Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count299
 \l__pdf_internal_box=\box56
-) (tmi.aux)
-\openout1 = `tmi.aux'.
+) (vorlagen.aux)
+\openout1 = `vorlagen.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
  (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count300
@@ -257,164 +257,47 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package color Info: Redefining color nblue on input line 29.
-Package color Info: Redefining color mblue on input line 29.
-LaTeX Font Info:    Trying to load font information for OT1+phv on input line 29.
- (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
-File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
-)
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <11> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 29.
-Package color Info: Redefining color nblue on input line 29.
-Package color Info: Redefining color mblue on input line 29.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
- (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
- (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Package color Info: Redefining color nblue on input line 31.
-Package color Info: Redefining color mblue on input line 31.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <9> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 31.
-Package color Info: Redefining color nblue on input line 34.
-Package color Info: Redefining color mblue on input line 34.
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 37.
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 11.
  (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
-Underfull \hbox (badness 2837) in paragraph at lines 39--48
-[]\OT1/ptm/m/n/10 HIS doc-u-ment is a tem-plate for L[]T[]X. You are
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--48
-\OT1/ptm/m/n/10 site at $[]$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--48
-\OT1/ptm/m/n/10 to pre-pare your manuscript. You can
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--48
-\OT1/ptm/m/n/10 also ex-plore us-ing the Over-leaf ed-i-tor at
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--48
-[]$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--48
-[]$
- []
-
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 56.
-(C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 12.
+ (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 58.
-
-
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <7> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 109.
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 111.
-(C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-
-Package epstopdf Info: Source file: <LOGO-tmi-web.eps>
-(epstopdf)                    date: 2025-01-07 10:30:42
-(epstopdf)                    size: 250611 bytes
-(epstopdf)             Output file: <LOGO-tmi-web-eps-converted-to.pdf>
-(epstopdf)                    date: 2025-01-07 10:44:02
-(epstopdf)                    size: 16085 bytes
-(epstopdf)             Command: <miktex-epstopdf --outfile=LOGO-tmi-web-eps-converted-to.pdf LOGO-tmi-web.eps>
-(epstopdf)             \includegraphics on input line 115.
-Package epstopdf Info: Output file is already uptodate.
-<LOGO-tmi-web-eps-converted-to.pdf, id=1, 413.545pt x 57.21375pt>
-File: LOGO-tmi-web-eps-converted-to.pdf Graphic file (type pdf)
-<use LOGO-tmi-web-eps-converted-to.pdf>
-Package pdftex.def Info: LOGO-tmi-web-eps-converted-to.pdf  used on input line 115.
-(pdftex.def)             Requested size: 198.0pt x 27.39331pt.
-
-Overfull \hbox (109.0pt too wide) has occurred while \output is active
-[][] 
- []
-
-
-Overfull \hbox (162.0pt too wide) has occurred while \output is active
-[] [] [] 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-
-Overfull \vbox (16.39331pt too high) has occurred while \output is active []
-
- [1{C:/Users/celin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
-
-
- <./LOGO-tmi-web-eps-converted-to.pdf>]
-Underfull \hbox (badness 1742) in paragraph at lines 116--119
-[]\OT1/ptm/m/n/10 Do not use the [][]\OT1/pcr/m/n/10 {eqnarray} []\OT1/ptm/m/n/10 equa-tion en-vi-ron-ment.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 116--119
-\OT1/ptm/m/n/10 Use [][]\OT1/pcr/m/n/10 {align} []\OT1/ptm/m/n/10 or [][]\OT1/pcr/m/n/10 {IEEEeqnarray} []\OT1/ptm/m/n/10 in-stead. The
- []
-
-LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 148.
-(C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omspcr.fd
-File: omspcr.fd 
-)
-LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 148.
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 149.
-
-Overfull \hbox (8.91965pt too wide) in paragraph at lines 145--152
- []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 145--152
-
- []
-
-<images/fig1.png, id=19, 249.3315pt x 189.22694pt>
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 12.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 16.
+<images/fig1.png, id=1, 249.3315pt x 189.22694pt>
 File: images/fig1.png Graphic file (type png)
 <use images/fig1.png>
-Package pdftex.def Info: images/fig1.png  used on input line 169.
+Package pdftex.def Info: images/fig1.png  used on input line 20.
 (pdftex.def)             Requested size: 252.0pt x 191.25339pt.
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 184.
-
-
+LaTeX Font Info:    Trying to load font information for U+msa on input line 22.
+ (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 22.
+ (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 \width=\dimen166
 
-Underfull \hbox (badness 2591) in paragraph at lines 229--230
+Underfull \hbox (badness 2591) in paragraph at lines 57--58
 []\OT1/ptm/m/n/8 1 erg/(G$\OMS/cmsy/m/n/8 ^^A$\OT1/ptm/m/n/8 g) $\OT1/cmr/m/n/8 =$ \OT1/ptm/m/n/8 1 emu/g $\OMS/cmsy/m/n/8 !$ \OT1/ptm/m/n/8 1
  []
 
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 203--263
+Overfull \hbox (5.0pt too wide) in paragraph at lines 31--91
 [][]
  []
 
 
 
-[2
+
+
+[1{C:/Users/celin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 pdfTeX warning: pdflatex: pop empty color page stack 0
 
@@ -429,52 +312,26 @@ pdfTeX warning: pdflatex: pop empty color page stack 0
 
 
 pdfTeX warning: pdflatex: pop empty color page stack 0
- <./images/fig1.png>]
-Underfull \hbox (badness 2941) in paragraph at lines 296--300
-\OT1/ptm/m/n/10 (red/green/blue) and CMYK (cyan/magenta/yellow/black).
- []
 
 
-
-
-
-[3]
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--422
-[]\OT1/ptm/m/n/10 A gen-eral IEEE styleguide is avail-able at
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--422
-[]$
- []
-
-
-Underfull \hbox (badness 8132) in paragraph at lines 441--441
-[][][]\OT1/ptm/m/n/8 Supplementary ma-te-ri-als are avail-able in the sup-port-ing doc-u-
- []
-
-
-
-[4] (tmi.aux)
+ <./images/fig1.png>] (vorlagen.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3846 strings out of 473682
- 59356 string characters out of 5719215
- 470905 words of memory out of 5000000
- 26857 multiletter control sequences out of 15000+600000
- 630701 words of font info for 152 fonts, out of 8000000 for 9000
+ 3691 strings out of 473682
+ 56930 string characters out of 5719215
+ 459634 words of memory out of 5000000
+ 26733 multiletter control sequences out of 15000+600000
+ 610551 words of font info for 117 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,19n,72p,681b,346s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on tmi.pdf (4 pages, 293786 bytes).
+ 57i,15n,65p,686b,310s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
+Output written on vorlagen.pdf (1 page, 140289 bytes).
 PDF statistics:
- 132 PDF objects out of 1000 (max. 8388607)
+ 59 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
