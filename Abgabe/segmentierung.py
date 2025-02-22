@@ -1,9 +1,6 @@
 import cv2 #Importieren OpenCV
 import numpy as np #Importieren Numpy
 from matplotlib import pyplot as plt
-import json
-
-cf = json.load(open("ImageProcessingGUI.json", 'r'))
 
 #image_path = "Datensatz/Images/4961fdd8-5b8c-428e-bcd1-8f65f8aecfe0.jpg"
 #sem_seg = "Datensatz/Images/4961fdd8-5b8c-428e-bcd1-8f65f8aecfe0.png"
@@ -28,7 +25,20 @@ def global_kontrastspeizung(image):
 
 def freistellen(image, segm):
 
-    return image, segm
+    segm_gray = cv2.cvtColor(segm, cv2.COLOR_BGR2GRAY)
+    image_binary = np.zeros_like(segm_gray)
+
+    mask = (segm_gray != 0)
+
+    image_binary[mask] = 255
+
+    result =  cv2.bitwise_and(image,image, mask=image_binary)
+    
+    b,g,r = cv2.split(result)
+
+    rgba_image = cv2.merge([b, g, r, image_binary])
+
+    return rgba_image, image_binary
 
 
 def transformation(image, triangle):
@@ -54,7 +64,7 @@ def eye_mouth(segm):
         # Berechne die Momente der Kontur, um den Mittelpunkt zu finden
         M = cv2.moments(cont)
 
-        if len(cont)>10:
+        if len(cont)>1:
             cx = int(M['m10'] / M['m00'])
             cy = int(M['m01'] / M['m00'])
             corner.append([cx, cy])
@@ -92,11 +102,12 @@ def show_image(text, image):
 
 def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
     mark, bin, seg = marker(image, image2)
-    # seg = global_kontrastspeizung(image2)
-    # _,bin = eye_mouth(image2)
+    free,_ =freistellen(image,image2)
     result.append({"name":"res","data":mark})
     result.append({"name":"binary","data":bin})
     result.append({"name":"spreiz","data":seg})
+    result.append({"name":"Freigestellt","data":free[:, :, :3]})
+
     
 
 
