@@ -49,23 +49,27 @@ def eye_mouth(segm):
     image_binary[mask] = 255
 
     contours, _ = cv2.findContours(image_binary,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
-    print(len(contours))
+    #print(len(contours))
     for idx, cont in enumerate(contours[:len(contours)]):
         # Berechne die Momente der Kontur, um den Mittelpunkt zu finden
         M = cv2.moments(cont)
-        cx = int(M['m10'] / M['m00'])
-        cy = int(M['m01'] / M['m00'])
-        
-        corner.append([cx, cy])
 
-    return corner, image_binary
+        if len(cont)>10:
+            cx = int(M['m10'] / M['m00'])
+            cy = int(M['m01'] / M['m00'])
+            corner.append([cx, cy])
+            #print("neue Contur:",len(cont))
+        else:
+            pass
+
+    return  corner, image_binary
 
 
 def marker(image, segm):
 
     corner, binary = eye_mouth(segm)
 
-    for cor in corner[2:]:
+    for cor in corner:
         cv2.drawMarker(image,cor,(255,255,255))
 
     seg = global_kontrastspeizung(segm)
@@ -88,6 +92,8 @@ def show_image(text, image):
 
 def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
     mark, bin, seg = marker(image, image2)
+    # seg = global_kontrastspeizung(image2)
+    # _,bin = eye_mouth(image2)
     result.append({"name":"res","data":mark})
     result.append({"name":"binary","data":bin})
     result.append({"name":"spreiz","data":seg})
