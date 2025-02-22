@@ -33,9 +33,29 @@ def freistellen(image, segm):
     return image, segm
 
 
-def transformation(image, triangle):
+def transformation(image, segm):
+    centroids, _ = eye_mouth(segm)
+
+    if len(centroids) != 3:
+        raise ValueError("Nicht genau drei Segmentschwerpunkte gefunden!")
+
+    # target_pts = np.float32([mouth, eyes[0], eyes[1]])
+
+    eye_dist = 70
+
+    target_pts = np.float32([
+        [eye_dist*3//2, eye_dist*3], 
+        [eye_dist*2, eye_dist*2], 
+        [eye_dist, eye_dist*2]
+    ])
+    src_pts = np.float32([centroids[0], centroids[1], centroids[2]])
     
-    return
+    # Transformation berechnen
+    matrix = cv2.getAffineTransform(src_pts, target_pts)
+    warped = cv2.warpAffine(image, matrix, (eye_dist*3, eye_dist*4))
+    
+    # Bild speichern
+    return warped
 
 
 def eye_mouth(segm):
@@ -94,29 +114,6 @@ def eye_mouth_split(corner):
     mouth = corner[2:]  # Die restlichen Punkte sind der Mund
     return eyes, mouth
 
-def segment_filter(image, segm):
-    centroids, _ = eye_mouth(segm)
-
-    if len(centroids) != 3:
-        raise ValueError("Nicht genau drei Segmentschwerpunkte gefunden!")
-
-    # target_pts = np.float32([mouth, eyes[0], eyes[1]])
-
-    eye_dist = 70
-
-    target_pts = np.float32([
-        [eye_dist*3//2, eye_dist*3], 
-        [eye_dist*2, eye_dist*2], 
-        [eye_dist, eye_dist*2]
-    ])
-    src_pts = np.float32([centroids[0], centroids[1], centroids[2]])
-    
-    # Transformation berechnen
-    matrix = cv2.getAffineTransform(src_pts, target_pts)
-    warped = cv2.warpAffine(image, matrix, (eye_dist*3, eye_dist*4))
-    
-    # Bild speichern
-    return warped
 
 def calculate_eye_distance(eyes):
     if len(eyes) < 2:
