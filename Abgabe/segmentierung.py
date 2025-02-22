@@ -26,19 +26,20 @@ def global_kontrastspeizung(image):
     return img
 
 
-def marker(image,segm):
+def freistellen(image, segm):
 
-    #segm[segm != (5, 5, 5) or segm != (6, 6, 6) or segm != (7, 7, 7)] = 0 
-    #copy = np.zeros_like(segm)
-    #for i, row in enumerate(segm):
-    #    for j, col in enumerate(row):
-    #        if col[0] == 5 or col[0] == 6 or col[0] == 7:
-    #            copy[i, j] = (255, 255, 255)
+    return image, segm
 
+
+def transformation(image, triangle):
     
+    return
 
-    #segm = global_kontrastspeizung(segm)
-     
+
+def eye_mouth(segm):
+
+    corner = []
+
     segm_gray = cv2.cvtColor(segm, cv2.COLOR_BGR2GRAY)
 
     mask = (segm_gray == 5) | (segm_gray == 6) | (segm_gray == 7)
@@ -47,21 +48,30 @@ def marker(image,segm):
 
     image_binary[mask] = 255
 
-    _, segm_binary = cv2.threshold(segm_gray,cf["val1"],cf["val2"],cv2.THRESH_BINARY)
-
-    contours, hierarchy = cv2.findContours(image_binary,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
-
+    contours, _ = cv2.findContours(image_binary,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
+    print(len(contours))
     for idx, cont in enumerate(contours[:len(contours)]):
         # Berechne die Momente der Kontur, um den Mittelpunkt zu finden
         M = cv2.moments(cont)
         cx = int(M['m10'] / M['m00'])
         cy = int(M['m01'] / M['m00'])
+        
+        corner.append([cx, cy])
 
-        cv2.drawMarker(image,(cx,cy),(255,255,255))
+    return corner, image_binary
 
-    segm_binary= cv2.cvtColor(image_binary, cv2.COLOR_GRAY2BGR)
 
-    return np.hstack([image,segm_binary])
+def marker(image, segm):
+
+    corner, binary = eye_mouth(segm)
+
+    for cor in corner[2:]:
+        cv2.drawMarker(image,cor,(255,255,255))
+
+    seg = global_kontrastspeizung(segm)
+
+    return image, binary, seg
+    
 
 
 
@@ -77,15 +87,19 @@ def show_image(text, image):
 #show_image("test",marker(image,segm))
 
 def run(image,image2, result,settings=None): #Funktion zur Bildverarbeitung
+    mark, bin, seg = marker(image, image2)
+    result.append({"name":"res","data":mark})
+    result.append({"name":"binary","data":bin})
+    result.append({"name":"spreiz","data":seg})
+    
 
-    result.append({"name":"Gray","data":marker(image,image2)})
 
 
 if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
     image=cv2.imread("Images\Ball.jpg")
     result=[]
     print(result)
-    run(image,image2,result)   
+    run(image, image2, result)   
     for ele in result:
         cv2.imshow(ele["name"],ele["data"])
     cv2.waitKey(0)
