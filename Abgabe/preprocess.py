@@ -74,19 +74,21 @@ def cleanup(path):
 
 #____________________Ausführung________________
 
-data = json.load(open("Images/tag.json","r"))
+def preprocess():
 
-cleanup("Datensatz/Learn")
-cleanup("Datensatz/Test")
-
-all_m = "Datensatz/Learn/maennlich"
-all_w = "Datensatz/Learn/weiblich"
-
-split_genders(dst_m= all_m, dst_w= all_w ,gender_array=create_gender_array(data))
-
-print("Transformation abgeschlossen")
-
-train_test_split(source=all_m, dst="Datensatz/Test/maennlich", ratio=20)
-train_test_split(source=all_w, dst="Datensatz/Test/weiblich", ratio=20)
-
-print("Train_Test_Split abgeschlossen")
+    data = json.load(open("Images/tag.json","r"))
+    
+    cleanup("Datensatz/Learn")
+    cleanup("Datensatz/Test")
+    
+    all_m = "Datensatz/Learn/maennlich"
+    all_w = "Datensatz/Learn/weiblich"
+    
+    split_genders(dst_m= all_m, dst_w= all_w ,gender_array=create_gender_array(data))
+    
+    print("Transformation abgeschlossen")
+    
+    train_test_split(source=all_m, dst="Datensatz/Test/maennlich", ratio=20)
+    train_test_split(source=all_w, dst="Datensatz/Test/weiblich", ratio=20)
+    
+    print("Train_Test_Split abgeschlossen")
