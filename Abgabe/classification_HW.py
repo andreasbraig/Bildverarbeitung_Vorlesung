@@ -151,7 +151,7 @@ def test_model(test_data_dir, device):
     test_dataset = ImageFolder(test_data_dir, transform=None,loader=rgba_loader)
 
     try:
-        model.load_state_dict(torch.load("model.state"))
+        model.load_state_dict(torch.load("model90.state"))
         model.to(device)
     except:
         print("No model found")
@@ -182,7 +182,6 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    train_model(data_dir, device, epochs=5,modelname="model5.state")
     train_model(data_dir, device, epochs=30,modelname="model30.state")
     train_model(data_dir, device, epochs=60,modelname="model60.state")
     train_model(data_dir, device, epochs=90,modelname="model90.state")
