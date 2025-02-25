@@ -7,7 +7,9 @@ from torchvision import transforms
 from torchvision.utils import make_grid
 from torchvision.datasets import ImageFolder
 
-import matplotlib.pyplot as plt    
+import matplotlib.pyplot as plt   
+
+import preprocess as pr
 
 import os
 import time
@@ -149,7 +151,7 @@ def train_model(data_dir, device,epochs=5,modelname = "model.state"):
     trans = [transforms.ToTensor()]
 
     train_dataset = ImageFolder(data_dir, transform=None, loader=rgba_loader) 
-    train_dl = DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=4, pin_memory=True)
+    train_dl = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=4, pin_memory=True)
 
     model = CNNClassification()
 
@@ -216,13 +218,18 @@ def cleanup(path):
 
 
 if __name__ == '__main__':
+
+    #pr.preprocess()
+
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
-    fehl_data_dir = "Datensatz/fehl35" 
+     
 
-    model = "model35.state"
+    model = "model35_batch64.state"
 
     logfile = model[:-6]+"_testlog.csv"
+
+    fehl_data_dir = "Datensatz/"+model[:-6]+"fehl"
 
     # Geräteauswahl: "cuda", "mps" oder "cpu"
     preferred_device = "cuda"  # Beispiel: Manuelle Auswahl von MPS
@@ -232,9 +239,9 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    #train_model(data_dir, device, epochs=35,modelname="model35.state")
+    train_model(data_dir, device, epochs=35,modelname=model)
     #train_model(data_dir, device, epochs=40,modelname="model40.state")
-    #train_model(data_dir, device, epochs=90,modelname="model90.state")
+    #train_model(data_dir, device, epochs=60,modelname="model60.state")
     test_model(test_data_dir, device,model,logfile)
 
     #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 

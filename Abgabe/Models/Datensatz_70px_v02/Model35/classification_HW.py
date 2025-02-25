@@ -7,7 +7,9 @@ from torchvision import transforms
 from torchvision.utils import make_grid
 from torchvision.datasets import ImageFolder
 
-import matplotlib.pyplot as plt    
+import matplotlib.pyplot as plt   
+
+import preprocess as pr
 
 import os
 import time
@@ -216,11 +218,14 @@ def cleanup(path):
 
 
 if __name__ == '__main__':
+
+    pr.preprocess()
+
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
     fehl_data_dir = "Datensatz/fehl35" 
 
-    model = "model35.state"
+    model = "model35_v02.state"
 
     logfile = model[:-6]+"_testlog.csv"
 
@@ -232,9 +237,9 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    #train_model(data_dir, device, epochs=35,modelname="model35.state")
+    train_model(data_dir, device, epochs=35,modelname=model)
     #train_model(data_dir, device, epochs=40,modelname="model40.state")
-    #train_model(data_dir, device, epochs=90,modelname="model90.state")
+    #train_model(data_dir, device, epochs=60,modelname="model60.state")
     test_model(test_data_dir, device,model,logfile)
 
     #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 

@@ -7,7 +7,9 @@ from torchvision import transforms
 from torchvision.utils import make_grid
 from torchvision.datasets import ImageFolder
 
-import matplotlib.pyplot as plt    
+import matplotlib.pyplot as plt   
+
+import preprocess as pr
 
 import os
 import time
@@ -20,9 +22,15 @@ class CNNClassification(nn.Module):
         super().__init__()
         
         self.network = nn.Sequential(
-            nn.Conv2d(4, 32, kernel_size=3, padding=1),
+            nn.Conv2d(4, 16, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
+
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
 
@@ -39,7 +47,7 @@ class CNNClassification(nn.Module):
             nn.MaxPool2d(2,2),
             
             nn.Flatten(),
-            nn.Linear(256*26*35, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
+            nn.Linear(256*13*17, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
             nn.ReLU(),
             nn.Linear(2048, 128),
             nn.ReLU(),
@@ -216,13 +224,18 @@ def cleanup(path):
 
 
 if __name__ == '__main__':
+
+    #pr.preprocess()
+
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
-    fehl_data_dir = "Datensatz/fehl35" 
+     
 
-    model = "model35.state"
+    model = "model35_4Layer.state"
 
     logfile = model[:-6]+"_testlog.csv"
+
+    fehl_data_dir = "Datensatz/"+model[:-6]+"fehl"
 
     # Geräteauswahl: "cuda", "mps" oder "cpu"
     preferred_device = "cuda"  # Beispiel: Manuelle Auswahl von MPS
@@ -232,9 +245,9 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    #train_model(data_dir, device, epochs=35,modelname="model35.state")
+    train_model(data_dir, device, epochs=35,modelname=model)
     #train_model(data_dir, device, epochs=40,modelname="model40.state")
-    #train_model(data_dir, device, epochs=90,modelname="model90.state")
+    #train_model(data_dir, device, epochs=60,modelname="model60.state")
     test_model(test_data_dir, device,model,logfile)
 
     #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 

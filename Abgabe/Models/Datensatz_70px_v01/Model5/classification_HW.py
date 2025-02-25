@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 import os
 import time
 import csv
-import shutil
 
 # Definiert eine CNN-Klassifikation für Bilddatensätze
 class CNNClassification(nn.Module):
@@ -50,8 +49,7 @@ class CNNClassification(nn.Module):
         return self.network(xb)
 
     @torch.no_grad()  # Deaktiviert das Gradienten-Tracking (nützlich für Inferenz)
-    def inferenzSet(self, dataset, device,logfile):
-
+    def inferenzSet(self, dataset, device):
         self.eval()
         images = [sublist[0].to(device) for sublist in dataset]
         images = torch.stack(images).to(device)
@@ -59,18 +57,12 @@ class CNNClassification(nn.Module):
         labels = torch.tensor(labels).to(device)
 
         res = self(images)
-
+        print(res)
         _, preds = torch.max(res, dim=1)
+        print(preds)
+        print("Erg: " + str(torch.sum(preds == labels).item() / len(preds)))
 
-        accuracy = torch.sum(preds == labels).item() / len(preds)
-
-        log_test_results(dataset,preds.cpu().tolist(),logfile)
-
-        print("Erg: " + str(accuracy))
-
-        return preds,accuracy
-
-    def inferenzImages(self, device, dataset, start, length=1 ):
+    def inferenzImages(self, dataset, start, length=1, device="cpu"):
         with torch.no_grad():
             for i in range(start, start + length):
                 img, label = dataset[i]
@@ -78,7 +70,6 @@ class CNNClassification(nn.Module):
                 res = self(img[None, :, :, :])  # Fügt eine Batch-Dimension hinzu
                 _, pred = torch.max(res, dim=1)
                 print(f"Index: {i} Predicted class: {pred[0].item()} Defined class: {label}")
-
 
     def trainStart(self, epochs, lr, train_loader, device,modelname, opt_func=torch.optim.Adam):
         optimizer = opt_func(self.parameters(), lr)
@@ -129,17 +120,6 @@ class CNNClassification(nn.Module):
         acc = torch.tensor(torch.sum(preds == labels).item() / len(preds))
         return (loss.detach(), acc)
 
-def log_test_results(test_dataset, predictions, filename="test_results.csv"):
-        with open(filename, mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["Filename", "Label", "Prediction"])
-
-            for (img_path, label), pred in zip(test_dataset.samples, predictions):
-                filename = os.path.basename(img_path)
-                writer.writerow([filename, label, pred])
-        
-        print(f"Test results saved to {filename}")
-
 def rgba_loader(path):
         from PIL import Image
         img = Image.open(path).convert("RGBA")  # Ensure RGBA mode
@@ -165,23 +145,20 @@ def train_model(data_dir, device,epochs=5,modelname = "model.state"):
         torch.save(model.state_dict(), modelname)
 
 
-def test_model(test_data_dir, device,modelname,logfile):
+def test_model(test_data_dir, device):
     trans = [transforms.ToTensor()]
-     
     model = CNNClassification()
     test_dataset = ImageFolder(test_data_dir, transform=None,loader=rgba_loader)
 
-    print(modelname)
-
     try:
-        model.load_state_dict(torch.load(modelname))
+        model.load_state_dict(torch.load("model35.state"))
         model.to(device)
     except:
         print("No model found")
         return
 
-    preds,_ = model.inferenzSet(test_dataset, device,logfile)
-    #model.inferenzImages(dataset=test_dataset, device=device,  start=0, length=len(test_dataset))
+    model.inferenzSet(test_dataset, device)
+    model.inferenzImages(test_dataset, int(len(test_dataset) / 2), 2, device)
 
 
 def get_device(preferred_device=None):
@@ -191,38 +168,11 @@ def get_device(preferred_device=None):
         return torch.device("mps")
     else:
         return torch.device("cpu")
-    
-def copy_misclassified_images(csv_file, source_dir, target_dir):
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
-    
-    with open(csv_file, mode='r') as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip header
-        
-        for row in reader:
-            filename, label, prediction = row
-            if label != prediction:  # Copy only misclassified images
-                source_path = os.path.join(source_dir, filename)
-                target_path = os.path.join(target_dir, filename)
-                if os.path.exists(source_path):
-                    shutil.copy(source_path, target_path)
-
-def cleanup(path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
-    else:
-        print("Jibbet Nich")
 
 
 if __name__ == '__main__':
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
-    fehl_data_dir = "Datensatz/fehl35" 
-
-    model = "model35.state"
-
-    logfile = model[:-6]+"_testlog.csv"
 
     # Geräteauswahl: "cuda", "mps" oder "cpu"
     preferred_device = "cuda"  # Beispiel: Manuelle Auswahl von MPS
@@ -235,12 +185,6 @@ if __name__ == '__main__':
     #train_model(data_dir, device, epochs=35,modelname="model35.state")
     #train_model(data_dir, device, epochs=40,modelname="model40.state")
     #train_model(data_dir, device, epochs=90,modelname="model90.state")
-    test_model(test_data_dir, device,model,logfile)
+    test_model(test_data_dir, device)
 
-    #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 
-
-    cleanup(fehl_data_dir)
-
-    copy_misclassified_images(logfile,test_data_dir+"/maennlich",fehl_data_dir)
-    copy_misclassified_images(logfile,test_data_dir+"/weiblich",fehl_data_dir)
 

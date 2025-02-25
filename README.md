@@ -10,7 +10,7 @@ Dieses Repo wird für die Zusammenarbeit/ gemeinsame Bearbeitung der Laboraufgab
 
 ### Venv erstellen:
 
-Sinn ist, bugs zu vermeiden und wir können bei Komplikationen mit Heintz auch die requirements.txt übergeben. 
+Sinn ist, bugs zu vermeiden und wir können bei Komplikationen mit Heintz auch die requirements.txt übergeben.
 
 1. Venv im Verzeichnis erstellen
 
@@ -81,3 +81,19 @@ Sinn ist, bugs zu vermeiden und wir können bei Komplikationen mit Heintz auch d
 ### Zusammenführen der Channels zu einer Matrix
 
     cv.merge(rgb, dst);
+
+## CNN Infos
+
+### default Parameter:
+
+    batch: 128
+    lr: 0.001
+
+    ANMERKUNG: überall wo im Modellname nichts steht ist default hinterlegt
+
+### Erkenntnisse:
+
+* Etwa 35 Epochen bringen das Beste Ergebnis
+* Batch von 128 auf 64 verringern spart eine Minute Pro epoche Trainngszeit
+* Wenn die Layer näher aneinander sind von den Dimensionen, geht es schneller!
+*
