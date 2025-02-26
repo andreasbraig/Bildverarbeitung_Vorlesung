@@ -7,9 +7,7 @@ from torchvision import transforms
 from torchvision.utils import make_grid
 from torchvision.datasets import ImageFolder
 
-import matplotlib.pyplot as plt   
-
-import preprocess as pr
+import matplotlib.pyplot as plt    
 
 import os
 import time
@@ -22,15 +20,15 @@ class CNNClassification(nn.Module):
         super().__init__()
         
         self.network = nn.Sequential(
-            nn.Conv2d(4, 16, kernel_size=3, padding=1),
+            nn.Conv2d(4, 32, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
 
-            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
             nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),
 
@@ -41,7 +39,7 @@ class CNNClassification(nn.Module):
             nn.MaxPool2d(2,2),
             
             nn.Flatten(),
-            nn.Linear(256*37*50, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
+            nn.Linear(256*26*35, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
             nn.ReLU(),
             nn.Linear(2048, 128),
             nn.ReLU(),
@@ -98,7 +96,6 @@ class CNNClassification(nn.Module):
                 train_losses = []
                 for batch in train_loader:
                     images, labels = batch
-                    images = torch.stack([apply_augmentation(img) for img in images])
                     images, labels = images.to(device), labels.to(device)
                     loss = self.training_step((images, labels))
                     train_losses.append(loss)
@@ -115,7 +112,6 @@ class CNNClassification(nn.Module):
                     timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
                     print(f"Epoch {epoch}, loss: {epoch_loss}, acc: {epoch_acc}, Timestamp: {timestamp}")
                     writer.writerow([epoch, epoch_loss, epoch_acc, timestamp])
-            
 
 
     def training_step(self, batch):
@@ -132,12 +128,6 @@ class CNNClassification(nn.Module):
         _, preds = torch.max(out, dim=1)
         acc = torch.tensor(torch.sum(preds == labels).item() / len(preds))
         return (loss.detach(), acc)
-
-def apply_augmentation(image):
-    rgb, alpha = image[:3, :, :], image[3:, :, :]
-    augmentation = transforms.Compose([transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1)])
-    augmented_rgb = augmentation(rgb)
-    return torch.cat((augmented_rgb, alpha), dim=0)  # RGB + Alpha wieder zusammenfügen
 
 def log_test_results(test_dataset, predictions, filename="test_results.csv"):
         with open(filename, mode='w', newline='') as file:
@@ -156,9 +146,10 @@ def rgba_loader(path):
         return transforms.ToTensor()(img)  # Keep all 4 channels
 
 def train_model(data_dir, device,epochs=5,modelname = "model.state"):
+    trans = [transforms.ToTensor()]
 
     train_dataset = ImageFolder(data_dir, transform=None, loader=rgba_loader) 
-    train_dl = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=4, pin_memory=True)
+    train_dl = DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=4, pin_memory=True)
 
     model = CNNClassification()
 
@@ -225,18 +216,13 @@ def cleanup(path):
 
 
 if __name__ == '__main__':
-
-    #pr.preprocess(100)
-
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
-     
+    fehl_data_dir = "Datensatz/fehl35" 
 
-    model = "model30_aug_3Layer_100px_test.state"
+    model = "model35.state"
 
     logfile = model[:-6]+"_testlog.csv"
-
-    fehl_data_dir = "Datensatz/"+model[:-6]+"fehl"
 
     # Geräteauswahl: "cuda", "mps" oder "cpu"
     preferred_device = "cuda"  # Beispiel: Manuelle Auswahl von MPS
@@ -246,9 +232,9 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    train_model(data_dir, device, epochs=30,modelname=model)
+    #train_model(data_dir, device, epochs=35,modelname="model35.state")
     #train_model(data_dir, device, epochs=40,modelname="model40.state")
-    #train_model(data_dir, device, epochs=60,modelname="model60.state")
+    #train_model(data_dir, device, epochs=90,modelname="model90.state")
     test_model(test_data_dir, device,model,logfile)
 
     #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 

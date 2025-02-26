@@ -19,7 +19,7 @@ def create_gender_array(data):
 
     return array
 
-def split_genders(dst_m,dst_w,gender_array):
+def split_genders(dst_m,dst_w,gender_array,eye_dist=70):
 
     if not os.path.exists(dst_m):
         os.makedirs(dst_m)
@@ -40,7 +40,7 @@ def split_genders(dst_m,dst_w,gender_array):
             segm = cv2.imread(segmentpath)
 
             free,_ = sg.freistellen(image,segm)
-            warped = sg.transformation(free,segm)
+            warped = sg.transformation(free,segm,eye_dist)
 
             if element[1] == "M":
                 cv2.imwrite(os.path.join(dst_m, filename+data_suffix[1]),warped)
@@ -74,7 +74,7 @@ def cleanup(path):
 
 #____________________Ausführung________________
 
-def preprocess():
+def preprocess(eye_dist):
 
     data = json.load(open("Images/tag.json","r"))
     
@@ -84,7 +84,7 @@ def preprocess():
     all_m = "Datensatz/Learn/maennlich"
     all_w = "Datensatz/Learn/weiblich"
     
-    split_genders(dst_m= all_m, dst_w= all_w ,gender_array=create_gender_array(data))
+    split_genders(dst_m= all_m, dst_w= all_w ,gender_array=create_gender_array(data),eye_dist=eye_dist)
     
     print("Transformation abgeschlossen")
     
