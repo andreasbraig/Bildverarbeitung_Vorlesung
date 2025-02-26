@@ -10,8 +10,8 @@
 \markboth{\journalname, VOL. XX, NO. XX, XXXX 2020}
 {Author \MakeLowercase{\textit{et al.}}: Preparation of Papers for IEEE TRANSACTIONS ON MEDICAL IMAGING}
 \begin{document}
-\title{Preparation of Papers for IEEE TRANSACTIONS ON MEDICAL IMAGING}
-\author{First A. Author, \IEEEmembership{Fellow, IEEE}, Second B. Author,and Third C. Author, Jr., \IEEEmembership{Member, IEEE}
+\title{Verarbeitung von Gesichtsaufnahmen zur Genderklassifikation als Anwendung neuronaler Netze}
+\author{Gruppe: Niklas Herrhofer, Celine Schneider, Andreas Braig\IEEEmembership{TEL22AT1},
 \thanks{This paragraph of the first footnote will contain the date on which
 you submitted your paper for review. It will also contain support information,
 including sponsor and financial support acknowledgment. For example, 
@@ -29,33 +29,32 @@ Research Institute for Metals, Tsukuba, Japan (e-mail: author@nrim.go.jp).}}
 \maketitle
 
 \begin{abstract}
+    Brauchen wir echt ein Abstract? 
 \end{abstract}
 
+
 \begin{IEEEkeywords}
+    Neuronales Netz, Bildsegmentierung, Convolutional Neural Network, 
 \end{IEEEkeywords}
 
-\section{Introduction}
+\section{Problemstellung und Ziel dieser Arbeit}
 \label{sec:introduction}
-\IEEEPARstart{T}{his} document is a template for \LaTeX.
-You are encouraged to use it to prepare your manuscript.
-If you are reading a paper or PDF version of this document, please download the 
-\LaTeX .zip file from the IEEE Web site at \underline
-{https://www.embs.org/tmi/authors-instructions/} to prepare your manuscript.
-You can also explore using the Overleaf editor at 
-\underline
-{https://www.overleaf.com/blog/278-how-to-use-overleaf-with-}\discretionary{}{}{}\underline
-{ieee-collabratec-your-quick-guide-to-getting-started\#.}\discretionary{}{}{}\underline{xsVp6tpPkrKM9}
+\IEEEPARstart{D}{iese} Arbeit befasst sich Mit der Verarbeitung und Klassifikation einzelner Datenpunkte in einem Datensatz.
+Die hierbei verwendeten Daten sind Gesichtsaufnahmen verschiedener Personen verschiedenen Alters. 
 
-\section{Guidelines for Manuscript Preparation}
-Do not change the template font sizes or line spacing to squeeze more text into a limited number of pages.
-The preferred font is 10-pt Times New Roman. Use italics for emphasis; do not underline words.
+Die erste Teilaufgabe besteht in der Segmentierung und Verarbeitung dieses bereitgestellten Datensatzes, um die Gesichtselemente einheitlich im Bild zu positionieren. 
+Augen und Mund sollen hierbei immer ein gleichschenkliges Dreieck an einer festen Position im Bild bilden. 
 
-Place your figures in the text as you expect them to appear in print. Further instructions
-on figure usage appear in Section VI. Although IEEE will do the final formatting of your paper,
-we expect you to approximate the final form appearance for all versions
-submitted to TMI via ScholarOne\textregistered to the extent possible.
+Die zweite Teilaufgabe befasst sich mit dem Klassifikationsproblem. 
+Der verarbeitete Datensatz wird in ein Convolutional Neural Network geladen und das Geschlecht der abgebildeten Person klassifiziert. 
+Hierbei soll das Netz eine binäre Klassifikation zwischen Männlich (0) und Weiblich (1) durchführen.
 
-\subsection{Abbreviations and Acronyms}
+Für die Lösung dieser Aufgabe wurde die Programmiersprache Python mit den wesentlichen Bibliotheken "OpenCV", "numpy" und "Pytorch" verwendet. 
+
+\section{Stand der Technik}
+In diesem Kapitel wird der aktuelle Stand der Technik zur Bildsegmentierung und Klassifizierung Diskutiert.
+
+\subsection{Python}
 Define abbreviations and acronyms the first time they are used in the text, 
 even after they have already been defined in the abstract. Abbreviations 
 such as IEEE, SI, ac, and dc do not have to be defined. Abbreviations that 
@@ -63,7 +62,7 @@ incorporate periods should not have spaces: write ``C.N.R.S.,'' not ``C. N.
 R. S.'' Do not use abbreviations in the title unless they are unavoidable 
 (for example, ``IEEE'' in the title of this article).
 
-\subsection{Other Recommendations}
+\subsection{Klassifikationsprobleme}
 Use one space after periods and colons. Hyphenate complex modifiers: 
 ``zero-field-cooled magnetization.'' Avoid dangling participles, such as, 
 ``Using \eqref{eq}, the potential was calculated.'' It is not clear who or what 
@@ -91,8 +90,9 @@ instead of ``It was observed that $\ldots$''). Remember to check spelling. If
 your native language is not English, please have a native English-speaking 
 colleague to carefully proofread your paper.
 
-\section{Math}
-\subsection{Equations}
+\section{Der Datensatz}
+In diesem Kapitel wird der verwendete Datensatz vorgestellt. Es soll nachvollziehbar sein welche Herausforderungen bei der Arbeit mit diesen Daten auftreten. 
+\subsection{}
 Number equations consecutively with equation numbers in parentheses flush 
 with the right margin, as appears in \eqref{eq}. Refer to ``\eqref{eq},'' not ``Eq. \eqref{eq}'' 
 or ``equation \eqref{eq},'' except at the beginning of a sentence: ``Equation \eqref{eq} 
