@@ -82,10 +82,15 @@ class CNNClassification(nn.Module):
                 print(f"Index: {i} Predicted class: {pred[0].item()} Defined class: {label}")
 
 
-    def trainStart(self, epochs, lr, train_loader, device,modelname, opt_func=torch.optim.Adam):
+    def trainStart(self, epochs, lr, train_loader, device,modelname, opt_func=torch.optim.Adam,patience=5, lr_patience=3, lr_decay_factor=0.5):
         optimizer = opt_func(self.parameters(), lr)
         self.to(device)  # Verschiebt das Modell auf das angegebene Gerät
         self.train()
+
+        best_acc = 0.0
+        epochs_no_improve = 0
+        lr_stagnation = 0
+    
         
         log_file= modelname[:-6]+".csv"
         print("log saved to:",log_file)
@@ -116,6 +121,25 @@ class CNNClassification(nn.Module):
                     print(f"Epoch {epoch}, loss: {epoch_loss}, acc: {epoch_acc}, Timestamp: {timestamp}")
                     writer.writerow([epoch, epoch_loss, epoch_acc, timestamp])
             
+
+             # Early Stopping & Reduce LR
+                if epoch_acc > best_acc:
+                    best_acc = epoch_acc
+                    epochs_no_improve = 0  # Reset counter
+                    lr_stagnation = 0
+                else:
+                    epochs_no_improve += 1
+                    lr_stagnation += 1
+                    
+                    if lr_stagnation >= lr_patience:
+                        for param_group in optimizer.param_groups:
+                            param_group['lr'] *= lr_decay_factor
+                        print(f"Reducing LR to {optimizer.param_groups[0]['lr']}")
+                        lr_stagnation = 0  # Reset LR stagnation counter
+                    
+                    if epochs_no_improve >= patience:
+                        print("Early stopping triggered!")
+                        break
 
 
     def training_step(self, batch):
