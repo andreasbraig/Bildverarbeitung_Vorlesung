@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.14)  26 FEB 2025 20:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.14)  26 FEB 2025 21:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -292,16 +292,11 @@ File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10> not available
 (Font)              Font shape `OT1/phv/m/sl' tried instead on input line 57.
-
-Underfull \hbox (badness 7777) in paragraph at lines 94--95
-[]\OT1/ptm/m/n/10 In diesem Kapi-tel wird der ver-wen-dete Daten-satz
- []
-
-
-Underfull \hbox (badness 1552) in paragraph at lines 94--95
-\OT1/ptm/m/n/10 vorgestellt. Es soll nachvol-lziehbar sein welche Her-aus-
- []
-
+<images/Andi/binaere_klassifikation.png, id=1, 963.6pt x 542.025pt>
+File: images/Andi/binaere_klassifikation.png Graphic file (type png)
+<use images/Andi/binaere_klassifikation.png>
+Package pdftex.def Info: images/Andi/binaere_klassifikation.png  used on input line 73.
+(pdftex.def)             Requested size: 252.0pt x 141.75023pt.
 Package epstopdf Info: Source file: <LOGO-tmi-web.eps>
 (epstopdf)                    date: 2025-01-07 10:41:53
 (epstopdf)                    size: 250611 bytes
@@ -309,12 +304,12 @@ Package epstopdf Info: Source file: <LOGO-tmi-web.eps>
 (epstopdf)                    date: 2025-01-07 10:50:13
 (epstopdf)                    size: 16085 bytes
 (epstopdf)             Command: <repstopdf --outfile=LOGO-tmi-web-eps-converted-to.pdf LOGO-tmi-web.eps>
-(epstopdf)             \includegraphics on input line 103.
+(epstopdf)             \includegraphics on input line 99.
 Package epstopdf Info: Output file is already uptodate.
-<LOGO-tmi-web-eps-converted-to.pdf, id=1, 413.545pt x 57.21375pt>
+<LOGO-tmi-web-eps-converted-to.pdf, id=2, 413.545pt x 57.21375pt>
 File: LOGO-tmi-web-eps-converted-to.pdf Graphic file (type pdf)
 <use LOGO-tmi-web-eps-converted-to.pdf>
-Package pdftex.def Info: LOGO-tmi-web-eps-converted-to.pdf  used on input line 103.
+Package pdftex.def Info: LOGO-tmi-web-eps-converted-to.pdf  used on input line 99.
 (pdftex.def)             Requested size: 198.0pt x 27.39331pt.
 
 Overfull \hbox (109.0pt too wide) has occurred while \output is active
@@ -337,59 +332,83 @@ Overfull \vbox (21.77283pt too high) has occurred while \output is active []
  [1{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
- <./LOGO-tmi-web-eps-converted-to.pdf>]
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+ <./LOGO-tmi-web-eps-converted-to.pdf> <./images/Andi/binaere_klassifikation.png>]
+Underfull \hbox (badness 7777) in paragraph at lines 101--102
+[]\OT1/ptm/m/n/10 In diesem Kapi-tel wird der ver-wen-dete Daten-satz
+ []
+
+
+Underfull \hbox (badness 1552) in paragraph at lines 101--102
+\OT1/ptm/m/n/10 vorgestellt. Es soll nachvol-lziehbar sein welche Her-aus-
+ []
+
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <7> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 109.
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 111.
- (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 116.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 118.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 1742) in paragraph at lines 116--119
+Underfull \hbox (badness 1742) in paragraph at lines 123--126
 []\OT1/ptm/m/n/10 Do not use the [][]\OT1/pcr/m/n/10 {eqnarray} []\OT1/ptm/m/n/10 equa-tion en-vi-ron-ment.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--119
+Underfull \hbox (badness 10000) in paragraph at lines 123--126
 \OT1/ptm/m/n/10 Use [][]\OT1/pcr/m/n/10 {align} []\OT1/ptm/m/n/10 or [][]\OT1/pcr/m/n/10 {IEEEeqnarray} []\OT1/ptm/m/n/10 in-stead. The
  []
 
-LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 148.
+LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 155.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 148.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 155.
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 149.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 156.
 
-Overfull \hbox (8.91965pt too wide) in paragraph at lines 145--152
+Overfull \hbox (8.91965pt too wide) in paragraph at lines 152--159
  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 145--152
+Underfull \hbox (badness 10000) in paragraph at lines 152--159
 
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 157.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 164.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-<images/fig1.png, id=19, 249.3315pt x 189.22694pt>
-File: images/fig1.png Graphic file (type png)
-<use images/fig1.png>
-Package pdftex.def Info: images/fig1.png  used on input line 169.
-(pdftex.def)             Requested size: 252.0pt x 191.25339pt.
+<images/Architektur.png, id=20, 1975.38pt x 1203.49625pt>
+File: images/Architektur.png Graphic file (type png)
+<use images/Architektur.png>
+Package pdftex.def Info: images/Architektur.png  used on input line 176.
+(pdftex.def)             Requested size: 252.0pt x 153.52179pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 184.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 191.
 \width=\dimen165
 
-Underfull \hbox (badness 2591) in paragraph at lines 229--230
+Underfull \hbox (badness 2591) in paragraph at lines 236--237
 []\OT1/ptm/m/n/8 1 erg/(G$\OMS/cmsy/m/n/8 ^^A$\OT1/ptm/m/n/8 g) $\OT1/cmr/m/n/8 =$ \OT1/ptm/m/n/8 1 emu/g $\OMS/cmsy/m/n/8 !$ \OT1/ptm/m/n/8 1
  []
 
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 203--263
+Overfull \hbox (5.0pt too wide) in paragraph at lines 210--270
 [][]
  []
 
@@ -405,14 +424,8 @@ pdfTeX warning: pdflatex: pop empty color page stack 0
 
 
 pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
- <./images/fig1.png>]
-Underfull \hbox (badness 2941) in paragraph at lines 296--300
+ <./images/Architektur.png>]
+Underfull \hbox (badness 2941) in paragraph at lines 303--307
 \OT1/ptm/m/n/10 (red/green/blue) and CMYK (cyan/magenta/yellow/black).
  []
 
@@ -420,17 +433,17 @@ Underfull \hbox (badness 2941) in paragraph at lines 296--300
 Overfull \vbox (5.0pt too high) has occurred while \output is active []
 
  [3]
-Underfull \hbox (badness 10000) in paragraph at lines 420--422
+Underfull \hbox (badness 10000) in paragraph at lines 427--429
 []\OT1/ptm/m/n/10 A gen-eral IEEE styleguide is avail-able at
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 420--422
+Underfull \hbox (badness 10000) in paragraph at lines 427--429
 []$
  []
 
 
-Underfull \hbox (badness 8132) in paragraph at lines 441--441
+Underfull \hbox (badness 8132) in paragraph at lines 448--448
 [][][]\OT1/ptm/m/n/8 Supplementary ma-te-ri-als are avail-able in the sup-port-ing doc-u-
  []
 
@@ -444,18 +457,18 @@ L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3824 strings out of 474116
- 58217 string characters out of 5743682
+ 3834 strings out of 474116
+ 58678 string characters out of 5743682
  1956187 words of memory out of 5000000
- 26112 multiletter control sequences out of 15000+600000
+ 26122 multiletter control sequences out of 15000+600000
  630701 words of font info for 152 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,20n,72p,715b,360s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,19n,72p,715b,346s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on tmi.pdf (4 pages, 282946 bytes).
+Output written on tmi.pdf (4 pages, 370052 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 136 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

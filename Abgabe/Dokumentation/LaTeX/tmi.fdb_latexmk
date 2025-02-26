@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1740598610.2351 "/Users/andreasbraig/Documents/VSCode/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/tmi.tex" "tmi.pdf" "tmi" 1740598611.00483 0
-  "/Users/andreasbraig/Documents/VSCode/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/tmi.tex" 1740598610.02955 22614 ac7fe76bfad63825bd7f0373e2518aed ""
+["pdflatex"] 1740601319.7776 "/Users/andreasbraig/Documents/VSCode/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/tmi.tex" "tmi.pdf" "tmi" 1740601320.62638 0
+  "/Users/andreasbraig/Documents/VSCode/Bildverarbeitung_Vorlesung/Abgabe/Dokumentation/LaTeX/tmi.tex" 1740601318.6767 22849 ecc36baedd616b69c8caf211c301c7f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -117,10 +117,11 @@
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "LOGO-tmi-web.eps" 1736242913.41767 250611 da51dc99bef613b109df68e5b422e3fc ""
   "ieeecolor.cls" 1736242913.4184 219901 7e072bee66659efb3810acb228e1d578 ""
-  "images/fig1.png" 1740386663.57597 12716 d0e6ce6cee70beee4b53783ff51c1adc ""
-  "tmi.aux" 1740598610.93149 4182 323805a675a7705561ee913f570f9763 "pdflatex"
+  "images/Andi/binaere_klassifikation.png" 1740601250.49891 74372 db1829351cbfbd4e710fe14d00157c84 ""
+  "images/Architektur.png" 1740600897.83527 112618 df281aace5bc1addb2b5c4516e9a114f ""
+  "tmi.aux" 1740601320.5524 4386 04cf871cb31193fcd5df139daab02d42 "pdflatex"
   "tmi.sty" 1736242913.41995 199 3bf928ef55cb76ec037c0fad8decf8f1 ""
-  "tmi.tex" 1740598610.02955 22614 ac7fe76bfad63825bd7f0373e2518aed ""
+  "tmi.tex" 1740601318.6767 22849 ecc36baedd616b69c8caf211c301c7f4 ""
   (generated)
   "tmi.aux"
   "tmi.log"
