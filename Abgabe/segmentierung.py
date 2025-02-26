@@ -46,14 +46,12 @@ def freistellen(image, segm):
     return rgba_image, image_binary
 
 
-def transformation(image, segm):
+def transformation(image, segm,eye_dist=70):
     centr = get_corners(segm)
 
 
 
     # target_pts = np.float32([mouth, eyes[0], eyes[1]])
-
-    eye_dist = 70
 
     target_pts = np.float32([
         [eye_dist*3//2, eye_dist*3], 
