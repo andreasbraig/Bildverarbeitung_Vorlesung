@@ -19,3 +19,7 @@ Bilder
 **/*.png
 
 !Abgabe/Dokumentation/**/*.png
+
+Abgabe/Dokumentation/Latex/tmi.*
+
+!Abgabe/Dokumentation/Latex/tmi.tex
