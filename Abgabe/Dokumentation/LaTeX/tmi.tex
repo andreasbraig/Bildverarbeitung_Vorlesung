@@ -20,78 +20,103 @@
 \maketitle
 
 \begin{abstract}
-    Brauchen wir echt ein Abstract? 
+    Diese Arbeit untersucht die Anwendung neuronaler Netze zur Genderklassifikation von Gesichtsaufnahmen. Hierbei wird ein Convolutional Neural Network (CNN) verwendet, um das Geschlecht abgebildeter Personen basierend auf vorab segmentierten und verarbeiteten Gesichtsaufnahmen zu klassifizieren. Das Ziel dieser Arbeit ist es, den Prozess der Bildverarbeitung und Klassifikation effizient zu gestalten.
 \end{abstract}
 
 
 \begin{IEEEkeywords}
-    Neuronales Netz, Bildsegmentierung, Convolutional Neural Network, 
+    Neuronales Netz, Bildsegmentierung, Convolutional Neural Network, Genderklassifikation, Deep Learning
 \end{IEEEkeywords}
 
-\section{Problemstellung und Ziel dieser Arbeit}
+\section{Einleitung}
 \label{sec:introduction}
-\IEEEPARstart{D}{iese} Arbeit befasst sich Mit der Verarbeitung und Klassifikation einzelner Datenpunkte in einem Datensatz.
-Die hierbei verwendeten Daten sind Gesichtsaufnahmen verschiedener Personen verschiedenen Alters. 
+\IEEEPARstart{D}{iese} Arbeit befasst sich mit der Verarbeitung und Klassifikation von Gesichtsaufnahmen. Die verwendeten Daten bestehen aus Gesichtsaufnahmen von Personen unterschiedlichen Alters. 
 
-Die erste Teilaufgabe besteht in der Segmentierung und Verarbeitung dieses bereitgestellten Datensatzes, um die Gesichtselemente einheitlich im Bild zu positionieren. 
-Augen und Mund sollen hierbei immer ein gleichschenkliges Dreieck an einer festen Position im Bild bilden. 
+Die erste Teilaufgabe der Arbeit besteht in der Segmentierung und Verarbeitung des Datensatzes, um die Gesichtselemente (insbesondere Augen und Mund) in den Bildern einheitlich zu positionieren. Dies wird erreicht, indem ein gleichschenkliges Dreieck mit festen Positionen für die Augen und den Mund im Bild definiert wird. 
 
-Die zweite Teilaufgabe befasst sich mit dem Klassifikationsproblem. 
-Der verarbeitete Datensatz wird in ein Convolutional Neural Network geladen und das Geschlecht der abgebildeten Person klassifiziert. 
-Hierbei soll das Netz eine binäre Klassifikation zwischen Männlich (0) und Weiblich (1) durchführen.
+Die zweite Teilaufgabe konzentriert sich auf die Klassifikation des Geschlechts der abgebildeten Person. Ein Convolutional Neural Network wird trainiert, um eine binäre Klassifikation zwischen Männlich (0) und Weiblich (1) durchzuführen.
 
-Für die Lösung dieser Aufgabe wurde die Programmiersprache Python mit den wesentlichen Bibliotheken "OpenCV", "numpy" und "Pytorch" verwendet. 
+Für die Implementierung wurde die Programmiersprache Python verwendet, unterstützt durch die Bibliotheken OpenCV, numpy und Pytorch.
 
 \section{Stand der Technik}
-In diesem Kapitel wird der aktuelle Stand der Technik zur Bildsegmentierung und Klassifizierung Diskutiert.
+In diesem Kapitel wird der aktuelle Stand der Technik zur Bildsegmentierung und Klassifizierung im Kontext von neuronalen Netzen und Bildverarbeitung diskutiert.
 
-\subsection{Python}
+\subsection{Bildsegmentierung}
+Die Bildsegmentierung ist ein wichtiger Schritt in der Bildverarbeitung, um relevante Merkmale aus den Bildern zu extrahieren. Verschiedene Techniken und Algorithmen werden verwendet, um die Gesichtsmerkmale zu extrahieren und zu standardisieren.
 
+\subsection{Neuronale Netze und Pytorch}
+Pytorch hat sich als eine der führenden Deep-Learning-Bibliotheken etabliert. Hier wird die Funktionsweise von Convolutional Neural Networks (CNNs) erklärt, die besonders in der Bildklassifikation erfolgreich eingesetzt werden.
 
-\subsection{Klassifikationsprobleme}
+\subsection{Potenziale der Anwendung von Deep Learning}
 
+\section{Datensatz}
+In diesem Kapitel wird der verwendete Datensatz detailliert beschrieben. Dabei werden sowohl die Quelle des Datensatzes als auch die Herausforderungen bei der Arbeit mit diesen Daten erläutert.
+
+\subsection{Allgemeine Beschreibung des Datensatzes}
+Der Datensatz besteht aus Gesichtsaufnahmen, die von Personen unterschiedlichen Alters und mit unterschiedlichen Gesichtszügen aufgenommen wurden.
+
+\subsection{Herausforderungen bei der Datenverarbeitung}
+Bei der Arbeit mit Gesichtsaufnahmen treten Herausforderungen wie die Variation der Beleuchtung, der Gesichtsausdruck und die Position der Kamera auf. Diese müssen vor der Klassifikation in einem Preprocessing-Schritt berücksichtigt werden.
+
+\section{Implementierte Lösung}
+In diesem Kapitel wird die entwickelte Lösung zur Segmentierung und Klassifikation beschrieben. Dabei werden die einzelnen Schritte des Prozesses erklärt.
 
 \begin{figure}[!t]
+    \centerline{\includegraphics[width=\columnwidth]{Architektur.png}}
+    \caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes}
+    \label{fig:architecture}
+\end{figure}
+
+\subsection{Preprocessing}
+Das Preprocessing übernimmt die zentrale Aufgabe der Vorverarbeitung der Rohdaten für das Training des neuronalen Netzwerks.
+Durch die Funktion \texttt{cleanup} wird zunächst sichergestellt, dass sämtliche Datensätze in den Zielordnern gelöscht werden, um eine Vermischung mit einem veralteten Datensatz zu verhindern.
+Anschließend werden die Metadaten, einschließlich der Dateinamen und der Geschlechter, aus der \texttt{tag.json} extrahiert und in einem strukturierten 2D-Array gespeichert, sodass die Weiterverarbeitung der Daten erleichtert wird.
+Auf Grundlage der so gewonnenen Zuordnungen zwischen Bilddateien und Geschlecht erfolgt die Trennung der Bilddaten in zwei separate Ordner - einen für männliche und einen für weibliche Gesichter.
+Im nächsten Schritt wird die Funktion \texttt{freistellen} eingesetzt, um die Gesichter in den Bildern zu extrahieren.
+Nach dieser Extraktion erfolgt eine Transformation, die die Gesichter auf eine standardisierte Positionierung von Augen und Mund ausrichtet, um eine konsistente Eingabe für das Modell zu gewährleisten.
+Anschließend erfolgt mithilfe der Funktion \texttt{train\_test\_split} die Aufteilung der vorverarbeiteten Bilddaten in Trainings- und Testdatensätze.
+Hierbei wird ein zufällig ausge6wählter Prozentsatz der Bilder in den Testdatensatz überführt.
+Dieser Schritt ist entscheidend, um eine objektive Evaluierung des Modells zu ermöglichen und Überanpassung (Overfitting) zu vermeiden, wie in Abschnitt \ref{sec:overfitting} beschrieben.
+
+\subsection{Segmentierung}
+Im Segmentierungsschritt werden die Gesichtselemente wie Augen, Nase und Mund positioniert und normiert, um das Modell mit konsistenten Eingabedaten zu füttern.
+
+\subsection{CNN Modell}
+Das Convolutional Neural Network (CNN) wird verwendet, um das Geschlecht der abgebildeten Person zu klassifizieren. Hierbei kommen mehrere Convolutional Layers und Pooling Layers zum Einsatz, um aus den Eingabebildern tiefere Merkmale zu extrahieren.
+
+\section{Lösungsansätze im Vergleich}
+In diesem Abschnitt werden verschiedene Lösungsansätze und Modelle verglichen, die zur Geschlechtsklassifikation verwendet werden können.
+\begin{figure}[!t]
     \centerline{\includegraphics[width=\columnwidth]{Andi/binaere_klassifikation.png}}
-    \caption{Magnetization as a function of applied field.
-    It is good practice to explain the significance of the figure in the caption.}
+    \caption{Beispiel für die binäre Klassifikation.}
     \label{fig:binaere_klassifikation}
 \end{figure}
 
-
-
-\section{Der Datensatz}
-In diesem Kapitel wird der verwendete Datensatz vorgestellt. Es soll nachvollziehbar sein welche Herausforderungen bei der Arbeit mit diesen Daten auftreten. 
-
-
-\begin{figure}[!t]
-\centerline{\includegraphics[width=\columnwidth]{Architektur.png}}
-\caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes}
-\label{fig:architecture}
-\end{figure}
-
-
-
-
 \begin{figure}[!t]
     \centerline{\includegraphics[width=\columnwidth]{Andi/Loss_Acc_Gewinner.png}}
-    \caption{Trainingslog des CNN Modells, welches im Test die besten Ergebnisse Erzielt}
+    \caption{Trainingslog des CNN Modells, welches im Test die besten Ergebnisse erzielt hat.}
     \label{fig:winner}
 \end{figure}
 
+\subsection{Training und Evaluation}
+Das Training des CNN-Modells wird erläutert, ebenso wie die Evaluierung der Modellleistung anhand von Metriken wie der Genauigkeit und dem Verlust.
+
+\subsubsection{Overfitting} \label{sec:overfitting}
+
+\section{Fazit}
+Im Fazit werden die Ergebnisse der Arbeit zusammengefasst und diskutiert. Es wird reflektiert, inwiefern die gesetzten Ziele erreicht wurden und welche Verbesserungspotenziale noch bestehen.
 
 
 
 
-\section{Conclusion}
+
+
 
 
 \appendices
 
-\section*{Appendix and the Use of Supplemental Files}
+\section*{Appendix und die Nutzung von ergänzenden Dateien}
 
-
-\section*{Acknowledgment}
-
+\section*{Danksagung}
 
 \end{document}
