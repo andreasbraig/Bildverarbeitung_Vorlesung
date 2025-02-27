@@ -28,9 +28,15 @@ class CNNClassification(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
 
-            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
             nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
+
             nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),
 
@@ -41,12 +47,13 @@ class CNNClassification(nn.Module):
             nn.MaxPool2d(2,2),
             
             nn.Flatten(),
-            nn.Linear(256*37*50, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
+            nn.Linear(256*18*25, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
             nn.ReLU(),
             nn.Linear(2048, 128),
             nn.ReLU(),
             nn.Linear(128,2) #letzter schritt auf zwei vektoren umziehen 
         )
+
 
     def forward(self, xb):
         return self.network(xb)
@@ -61,6 +68,7 @@ class CNNClassification(nn.Module):
         labels = torch.tensor(labels).to(device)
 
         res = self(images)
+        
 
         _, preds = torch.max(res, dim=1)
 
@@ -127,7 +135,7 @@ class CNNClassification(nn.Module):
                     best_acc = epoch_acc
                     epochs_no_improve = 0  # Reset counter
                     lr_stagnation = 0
-                else:
+                elif epoch_acc>0.9:
                     epochs_no_improve += 1
                     lr_stagnation += 1
                     
@@ -256,7 +264,7 @@ if __name__ == '__main__':
     test_data_dir = "Datensatz/Test"
      
 
-    model = "model30_aug_3Layer_100px_test.state"
+    model = "model40_aug_4Layer_100px_ES.state"
 
     logfile = model[:-6]+"_testlog.csv"
 
@@ -270,7 +278,7 @@ if __name__ == '__main__':
 
     print(f"Using device: {device}")
 
-    train_model(data_dir, device, epochs=30,modelname=model)
+    train_model(data_dir, device, epochs=40,modelname=model)
     #train_model(data_dir, device, epochs=40,modelname="model40.state")
     #train_model(data_dir, device, epochs=60,modelname="model60.state")
     test_model(test_data_dir, device,model,logfile)
