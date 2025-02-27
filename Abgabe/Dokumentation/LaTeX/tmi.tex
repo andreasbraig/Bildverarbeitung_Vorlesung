@@ -7,6 +7,7 @@
 \usepackage{textcomp}
 \usepackage[nolist]{acronym}
 \usepackage[hidelinks]{hyperref}
+\usepackage{float}
 
 
 \markboth{\journalname, VOL. XX, NO. XX, XXXX 2020}
@@ -129,10 +130,10 @@ Das \ac{cnn} wird verwendet, um das Geschlecht der abgebildeten Person zu klassi
 In diesem Kapitel werden fünf Ansätze zur Implementierung des CNN vorgestellt. Insgesamt umfasst die Versuchsreihe 23 trainierte neuronale Netze unterschiedlicher einstellungen und Dimensionen.
 Um der Anforderung an diese Dokumentation gerecht zu werden fällt die Wahl auf 5 Modelle die sowohl den Fortschritt, als auch den Wissensgewinn repräsentieren.
 
-\begin{figure}[!t]
+\begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Erfolg_Dauer.png}}
     \caption{Vergleichsdiagramm zwischen Erfolgsquote des jeweiligen Modells im Test gegenüber der Dauer einer Trainingsepoche.}
-    \label{fig:architecture}
+    \label{fig:compareGraph}
 \end{figure}
 
 \subsection{Zeilicher Verlauf und Wissensgewinn}
