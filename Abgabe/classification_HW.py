@@ -129,17 +129,17 @@ class CNNClassification(nn.Module):
                     elif epoch_acc>0.9:
                         epochs_no_improve += 1
                         lr_stagnation += 1
-                        
+
                         if lr_stagnation >= lr_patience:
                             for param_group in optimizer.param_groups:
                                 param_group['lr'] *= lr_decay_factor
                             print(f"Reducing LR to {optimizer.param_groups[0]['lr']}")
                             lr_stagnation = 0  # Reset LR stagnation counter
-                        
+
                         if epochs_no_improve >= patience:
                             print("Early stopping triggered!")
                             break
-                        
+
                     
 
 
@@ -208,7 +208,7 @@ def test_model(test_data_dir, device,modelname,logfile):
     print(modelname)
 
     try:
-        model.load_state_dict(torch.load(modelname))
+        model.load_state_dict(torch.load(modelname,map_location="cpu"))
         model.to(device)
     except:
         print("No model found")
@@ -251,7 +251,7 @@ def cleanup(path):
 
 if __name__ == '__main__':
 
-    dg.preprocess(eye_dist=100)
+    #dg.preprocess(eye_dist=100)
 
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
@@ -264,14 +264,14 @@ if __name__ == '__main__':
     fehl_data_dir = "Datensatz/"+model[:-6]+"fehl"
 
     # Geräteauswahl: "cuda", "mps" oder "cpu"
-    preferred_device = "mps"  # Beispiel: Manuelle Auswahl von MPS
+    preferred_device = "cpu"  # Beispiel: Manuelle Auswahl von MPS
     device = get_device(preferred_device)
     if not os.path.exists(data_dir):
         print(f"Fehler: Der Ordner {data_dir} existiert nicht!")
 
     print(f"Using device: {device}")
 
-    train_model(data_dir, device, epochs=40,modelname=model)
+    #train_model(data_dir, device, epochs=40,modelname=model)
 
     test_model(test_data_dir, device,model,logfile)
 
