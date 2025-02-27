@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.18)  27 FEB 2025 12:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.18)  27 FEB 2025 14:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -288,36 +288,33 @@ LaTeX Font Info:    Trying to load font information for T1+phv on input line 31.
 (C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
+Underfull \hbox (badness 2326) in paragraph at lines 37--38
+\OT1/ptm/m/n/10 Klas-si-fika-tion zwis-chen M[]annlich (0) und Weib-lich (1)
+ []
+
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 48.
-<images/Andi/binaere_klassifikation.png, id=1, 963.6pt x 542.025pt>
-File: images/Andi/binaere_klassifikation.png Graphic file (type png)
-<use images/Andi/binaere_klassifikation.png>
-Package pdftex.def Info: images/Andi/binaere_klassifikation.png  used on input line 55.
-(pdftex.def)             Requested size: 252.0pt x 141.75023pt.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 44.
 
-Underfull \hbox (badness 7777) in paragraph at lines 64--65
-[]\OT1/ptm/m/n/10 In diesem Kapi-tel wird der ver-wen-dete Daten-satz
+
+
+Underfull \hbox (badness 6220) in paragraph at lines 59--60
+[]\OT1/ptm/m/n/10 Bei der Ar-beit mit Gesicht-sauf-nah-men treten Her-
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 64--65
-\OT1/ptm/m/n/10 vorgestellt. Es soll nachvol-lziehbar sein welche Her-aus-
+Underfull \hbox (badness 2662) in paragraph at lines 59--60
+\OT1/ptm/m/n/10 aus-forderun-gen wie die Vari-a-tion der Beleuch-tung, der
  []
 
-<images/Architektur.png, id=2, 1975.38pt x 1203.49625pt>
+<images/Architektur.png, id=1, 1975.38pt x 1203.49625pt>
 File: images/Architektur.png Graphic file (type png)
 <use images/Architektur.png>
-Package pdftex.def Info: images/Architektur.png  used on input line 68.
+Package pdftex.def Info: images/Architektur.png  used on input line 65.
 (pdftex.def)             Requested size: 252.0pt x 153.52179pt.
-<images/Andi/Loss_Acc_Gewinner.png, id=4, 563.049pt x 376.242pt>
-File: images/Andi/Loss_Acc_Gewinner.png Graphic file (type png)
-<use images/Andi/Loss_Acc_Gewinner.png>
-Package pdftex.def Info: images/Andi/Loss_Acc_Gewinner.png  used on input line 77.
-(pdftex.def)             Requested size: 252.0pt x 168.38876pt.
-
-
-
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 72.
+(C:\Users\celin\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
 
 Package epstopdf Info: Source file: <LOGO-tmi-web.eps>
 (epstopdf)                    date: 2025-01-07 10:30:42
@@ -326,12 +323,12 @@ Package epstopdf Info: Source file: <LOGO-tmi-web.eps>
 (epstopdf)                    date: 2025-01-07 10:44:02
 (epstopdf)                    size: 16085 bytes
 (epstopdf)             Command: <miktex-epstopdf --outfile=LOGO-tmi-web-eps-converted-to.pdf LOGO-tmi-web.eps>
-(epstopdf)             \includegraphics on input line 97.
+(epstopdf)             \includegraphics on input line 80.
 Package epstopdf Info: Output file is already uptodate.
-<LOGO-tmi-web-eps-converted-to.pdf, id=5, 413.545pt x 57.21375pt>
+<LOGO-tmi-web-eps-converted-to.pdf, id=3, 413.545pt x 57.21375pt>
 File: LOGO-tmi-web-eps-converted-to.pdf Graphic file (type pdf)
 <use LOGO-tmi-web-eps-converted-to.pdf>
-Package pdftex.def Info: LOGO-tmi-web-eps-converted-to.pdf  used on input line 97.
+Package pdftex.def Info: LOGO-tmi-web-eps-converted-to.pdf  used on input line 80.
 (pdftex.def)             Requested size: 198.0pt x 27.39331pt.
 
 Overfull \hbox (109.0pt too wide) has occurred while \output is active
@@ -354,31 +351,20 @@ Overfull \vbox (16.39331pt too high) has occurred while \output is active []
  [1{C:/Users/celin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
+ <./LOGO-tmi-web-eps-converted-to.pdf>]
+<images/Andi/binaere_klassifikation.png, id=18, 963.6pt x 542.025pt>
+File: images/Andi/binaere_klassifikation.png Graphic file (type png)
+<use images/Andi/binaere_klassifikation.png>
+Package pdftex.def Info: images/Andi/binaere_klassifikation.png  used on input line 90.
+(pdftex.def)             Requested size: 252.0pt x 141.75023pt.
+<images/Andi/Loss_Acc_Gewinner.png, id=19, 563.049pt x 376.242pt>
+File: images/Andi/Loss_Acc_Gewinner.png Graphic file (type png)
+<use images/Andi/Loss_Acc_Gewinner.png>
+Package pdftex.def Info: images/Andi/Loss_Acc_Gewinner.png  used on input line 96.
+(pdftex.def)             Requested size: 252.0pt x 168.38876pt.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 106.
 
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
-
-
-pdfTeX warning: pdflatex: pop empty color page stack 0
- <./LOGO-tmi-web-eps-converted-to.pdf> <./images/Andi/binaere_klassifikation.png> <./images/Architektur.png>]
 
 
 
@@ -392,24 +378,38 @@ pdfTeX warning: pdflatex: pop empty color page stack 0
 
 pdfTeX warning: pdflatex: pop empty color page stack 0
 
- <./images/Andi/Loss_Acc_Gewinner.png>] (tmi.aux)
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+
+
+pdfTeX warning: pdflatex: pop empty color page stack 0
+ <./images/Architektur.png> <./images/Andi/binaere_klassifikation.png> <./images/Andi/Loss_Acc_Gewinner.png>] (tmi.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3730 strings out of 473682
- 58148 string characters out of 5719215
- 450830 words of memory out of 5000000
- 26770 multiletter control sequences out of 15000+600000
- 614388 words of font info for 123 fonts, out of 8000000 for 9000
+ 3774 strings out of 473682
+ 58807 string characters out of 5719215
+ 457867 words of memory out of 5000000
+ 26808 multiletter control sequences out of 15000+600000
+ 616789 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,19n,65p,681b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
-Output written on tmi.pdf (2 pages, 348303 bytes).
+<C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/celin/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
+Output written on tmi.pdf (2 pages, 368772 bytes).
 PDF statistics:
- 50 PDF objects out of 1000 (max. 8388607)
+ 55 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
