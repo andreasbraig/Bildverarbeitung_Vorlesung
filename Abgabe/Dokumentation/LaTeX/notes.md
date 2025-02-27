@@ -2,9 +2,17 @@
 
 ## Gleiderung
 * Probelemstellung
+* Stand der Technik
+    * Python
+    * PyTorch
+    * was ist möglich (big data, deeplearning, ...)
 * Datensatz
-* Preprocessing
-* CNN Modell
-* Training und Evaluation
-* Anwendung
+    * Herausforderungen
+    * Allgemein
+* Code
+    * Preprocessing
+    * Segmentierung
+    * CNN Modell
+* Lösungsansätze im Vergeleich
+    * Training und Evaluation
 * Fazit
