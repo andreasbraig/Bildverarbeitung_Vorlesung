@@ -9,7 +9,7 @@ from torchvision.datasets import ImageFolder
 
 import matplotlib.pyplot as plt   
 
-import preprocess as pr
+import data_generation as dg
 
 import os
 import time
@@ -80,17 +80,8 @@ class CNNClassification(nn.Module):
 
         return preds,accuracy
 
-    def inferenzImages(self, device, dataset, start, length=1 ):
-        with torch.no_grad():
-            for i in range(start, start + length):
-                img, label = dataset[i]
-                img = img.to(device)
-                res = self(img[None, :, :, :])  # Fügt eine Batch-Dimension hinzu
-                _, pred = torch.max(res, dim=1)
-                print(f"Index: {i} Predicted class: {pred[0].item()} Defined class: {label}")
 
-
-    def trainStart(self, epochs, lr, train_loader, device,modelname, opt_func=torch.optim.Adam,patience=5, lr_patience=3, lr_decay_factor=0.5):
+    def trainStart(self, epochs, lr, train_loader, device,modelname, opt_func=torch.optim.Adam, patience=5, lr_patience=3, lr_decay_factor=0.5):
         optimizer = opt_func(self.parameters(), lr)
         self.to(device)  # Verschiebt das Modell auf das angegebene Gerät
         self.train()
@@ -130,24 +121,26 @@ class CNNClassification(nn.Module):
                     writer.writerow([epoch, epoch_loss, epoch_acc, timestamp])
             
 
-             # Early Stopping & Reduce LR
-                if epoch_acc > best_acc:
-                    best_acc = epoch_acc
-                    epochs_no_improve = 0  # Reset counter
-                    lr_stagnation = 0
-                elif epoch_acc>0.9:
-                    epochs_no_improve += 1
-                    lr_stagnation += 1
+                        #Early Stopping & Reduce LR
+                    if epoch_acc > best_acc:
+                        best_acc = epoch_acc
+                        epochs_no_improve = 0  # Reset counter
+                        lr_stagnation = 0
+                    elif epoch_acc>0.9:
+                        epochs_no_improve += 1
+                        lr_stagnation += 1
+                        
+                        if lr_stagnation >= lr_patience:
+                            for param_group in optimizer.param_groups:
+                                param_group['lr'] *= lr_decay_factor
+                            print(f"Reducing LR to {optimizer.param_groups[0]['lr']}")
+                            lr_stagnation = 0  # Reset LR stagnation counter
+                        
+                        if epochs_no_improve >= patience:
+                            print("Early stopping triggered!")
+                            break
+                        
                     
-                    if lr_stagnation >= lr_patience:
-                        for param_group in optimizer.param_groups:
-                            param_group['lr'] *= lr_decay_factor
-                        print(f"Reducing LR to {optimizer.param_groups[0]['lr']}")
-                        lr_stagnation = 0  # Reset LR stagnation counter
-                    
-                    if epochs_no_improve >= patience:
-                        print("Early stopping triggered!")
-                        break
 
 
     def training_step(self, batch):
@@ -258,7 +251,7 @@ def cleanup(path):
 
 if __name__ == '__main__':
 
-    #pr.preprocess(100)
+    dg.preprocess(eye_dist=100)
 
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
@@ -271,7 +264,7 @@ if __name__ == '__main__':
     fehl_data_dir = "Datensatz/"+model[:-6]+"fehl"
 
     # Geräteauswahl: "cuda", "mps" oder "cpu"
-    preferred_device = "cuda"  # Beispiel: Manuelle Auswahl von MPS
+    preferred_device = "mps"  # Beispiel: Manuelle Auswahl von MPS
     device = get_device(preferred_device)
     if not os.path.exists(data_dir):
         print(f"Fehler: Der Ordner {data_dir} existiert nicht!")
@@ -279,8 +272,7 @@ if __name__ == '__main__':
     print(f"Using device: {device}")
 
     train_model(data_dir, device, epochs=40,modelname=model)
-    #train_model(data_dir, device, epochs=40,modelname="model40.state")
-    #train_model(data_dir, device, epochs=60,modelname="model60.state")
+
     test_model(test_data_dir, device,model,logfile)
 
     #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 
