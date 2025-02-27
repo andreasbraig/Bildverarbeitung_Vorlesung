@@ -1,94 +1,89 @@
-import cv2 
-import numpy as np 
-from matplotlib import pyplot as plt
-import json
-import os
-import shutil
-import random
+import cv2 #Importieren OpenCV
+import numpy as np #Importieren Numpy
 
-import segmentierung as sg
+def freistellen(image, segm):
 
-def create_gender_array(data):
+    segm_gray = cv2.cvtColor(segm, cv2.COLOR_BGR2GRAY)
+    image_binary = np.zeros_like(segm_gray)
 
-    array = []  # Initialisiere ein leeres 2D-Array
+    mask = (segm_gray != 0)
 
-    for info in data:
-        name = info.get("name", "Unknown")  # Falls "name" fehlt, setze "Unknown"
-        gender = info.get("gender", "Unknown")  # Falls "gender" fehlt, setze "Unknown"
-        array.append([name, gender])  # Füge als neue Zeile hinzu
+    image_binary[mask] = 255
 
-    return array
-
-def split_genders(dst_m,dst_w,gender_array,eye_dist=70):
-
-    if not os.path.exists(dst_m):
-        os.makedirs(dst_m)
-        
-    if not os.path.exists(dst_w):
-        os.makedirs(dst_w)
+    result =  cv2.bitwise_and(image,image, mask=image_binary)
     
-    data_suffix = [".jpg",".png"]
+    b,g,r = cv2.split(result)
 
-    for element in gender_array:
-        #print(element[0][-4:])
-        path = element[0]
-        filename = path[7:-4]
-        if path[-4:] == data_suffix[0]:
-            
-            image=cv2.imread(path)
-            segmentpath = path[:-4]+data_suffix[1]
-            segm = cv2.imread(segmentpath)
+    rgba_image = cv2.merge([b, g, r, image_binary])
 
-            free,_ = sg.freistellen(image,segm)
-            warped = sg.transformation(free,segm,eye_dist)
+    return rgba_image
 
-            if element[1] == "M":
-                cv2.imwrite(os.path.join(dst_m, filename+data_suffix[1]),warped)
-            elif element[1] == "W":
-                cv2.imwrite(os.path.join(dst_w, filename+data_suffix[1]),warped)
-            else:
-                print("Fehler, Kein eindeutiges Gender")
+
+def transformation(image, segm,eye_dist=70):
+    centr = get_corners(segm)
+   
+
+    target_pts = np.float32([
+        [eye_dist*3//2, eye_dist*3], 
+        [eye_dist*2, eye_dist*2], 
+        [eye_dist, eye_dist*2]
+    ])
+    src_pts = np.float32([centr[2], centr[1], centr[0]])
     
-def train_test_split(source,dst,ratio=20):
-
-    if not os.path.exists(dst):
-        os.makedirs(dst)
-
-    files = [f for f in os.listdir(source)]
-
-    random_samples = random.sample(files, int(len(files)*(ratio/100)))
-
-    for file in random_samples:
-        shutil.move(os.path.join(source,file),os.path.join(dst,file))
-
- 
-def cleanup(path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
-    else:
-        print("Jibbet Nich")
-
-
-
-
-
-#____________________Ausführung________________
-
-def preprocess(eye_dist):
-
-    data = json.load(open("Images/tag.json","r"))
+    # Transformation berechnen
+    matrix = cv2.getAffineTransform(src_pts, target_pts)
+    warped = cv2.warpAffine(image, matrix, (eye_dist*3, eye_dist*4))
     
-    cleanup("Datensatz/Learn")
-    cleanup("Datensatz/Test")
-    
-    all_m = "Datensatz/Learn/maennlich"
-    all_w = "Datensatz/Learn/weiblich"
-    
-    split_genders(dst_m= all_m, dst_w= all_w ,gender_array=create_gender_array(data),eye_dist=eye_dist)
-    
-    print("Transformation abgeschlossen")
-    
-    train_test_split(source=all_m, dst="Datensatz/Test/maennlich", ratio=20)
-    train_test_split(source=all_w, dst="Datensatz/Test/weiblich", ratio=20)
-    
-    print("Train_Test_Split abgeschlossen")
+    # Bild speichern
+    return warped
+
+def get_lastpoint(centr):
+
+    vec = np.subtract(centr[1] , centr[0])
+    vec2 = [vec[1], vec[0]]
+
+    last = np.add(centr[0], vec//2)
+    last = np.add(last, vec2)
+    return last
+
+def get_single_center(segm,value):
+
+    segm_gray = cv2.cvtColor(segm, cv2.COLOR_BGR2GRAY)
+
+    mask = (segm_gray == value)
+
+    image_binary = np.zeros_like(segm_gray,dtype=np.uint8)
+
+    image_binary[mask] = 255
+
+    contours, _ = cv2.findContours(image_binary,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
+
+    if len(contours)==0:
+        return 0
+    else: 
+
+        largest = max(contours, key=cv2.contourArea)
+
+        M = cv2.moments(largest)
+
+        cx = int(M['m10'] / M['m00'])
+        cy = int(M['m01'] / M['m00'])
+
+        return [cx,cy]
+
+def get_corners(segm):
+    result=[]
+    contours = [5,6,7]
+
+    for ele in contours:
+        coordinates = get_single_center(segm,ele)
+        if coordinates != 0:
+            result.append(coordinates)
+
+    if len(result) != 3:       
+        result.append(get_lastpoint(result))
+
+    return result
+
+if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
+    pass
