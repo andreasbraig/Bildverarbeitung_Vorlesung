@@ -17,3 +17,5 @@ Abgabe/Datensatz
 Bilder
 
 **/*.png
+
+!Abgabe/Dokumentation/**/*.png
