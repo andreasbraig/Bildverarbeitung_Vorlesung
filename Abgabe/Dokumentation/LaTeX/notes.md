@@ -45,7 +45,7 @@ OpenCV ist eine Biblioethek für Python, die es ermöglicht Bilder zu laden, zu 
 ## Datensatz
 Hier gehts um die Bilder lol.
 ### Allgemein
-Der Datensatz für dieses Projekt besteht aus den Bildern und den dazugehörigen Masken, sowie der tagging.json Datei. Auf dieser JSON-Datei sind über die Dateinamen jeweils das Geschlecht der abgebildeten Person zugeordnet. Hiermit lässt  sich also der Datensatz in die Kategorien "männlich" und "weiblich" einteilen.
+Der Datensatz für dieses Projekt besteht aus den Bildern und den dazugehörigen Masken, sowie der tag.json Datei. Auf dieser JSON-Datei sind über die Dateinamen jeweils das Geschlecht der abgebildeten Person zugeordnet. Hiermit lässt  sich also der Datensatz in die Kategorien "männlich" und "weiblich" einteilen.
 ### Herausforderungen
 Das Verarbeiten der Bilder auf einen gemeinsamen Nenner bietet eine gewisse Herausforderung. Hier ist jeweils aus der Maske die Information für die Position der Augen und des Mundes zu bestimmen. Mithilfe dieser Informationen werden die Bilder auf eine gemeinsame Bildgröße Verkleinert und die Augen und der Mund auf die selbe Position gebracht. Dadurch wird gewährleistet, dass das neuronale Netzwerk diese drei Punkte als Anhaltspunkte für den Vergleich und das Einlernen der Unterscheidungsmerkmale nutzen kann. 
 
@@ -55,7 +55,7 @@ Hier geht's um den eigentlichen Code (ohne Code-Snippets)
 ### Segmentierung
 Die Datei "preprocess.py" dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in Position zu transformieren. 
 
-Für die Transformation wird die Affine Transformation aus der Bibliothek "OpenCV" verwendet. Diese
+Für die Transformation wird die Affine Transformation aus der Bibliothek "OpenCV" verwendet. Diese bewirkt, dass gewisse Mekrmale im Bild erhalten bleiben, wie zum Beispiel die Parallelität von Elementen im Bild. Hierzu werden die Scherpunktpositionen der Konturen von Augen und Mund verwendet. 
 
 Der Code in "segmentierung.py" führt verschiedene Bildverarbeitungsaufgaben durch, um die Person im Vordergrund zu isolieren und auf eine gemeinsame Zielmatrix zu transformieren. Hierzu sind einige Funktionen implementiert.
 
