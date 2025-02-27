@@ -51,11 +51,17 @@ Das Verarbeiten der Bilder auf einen gemeinsamen Nenner bietet eine gewisse Hera
 
 
 ## Code
-Hier geht's um den eigentlichen Code (vielleicht mit Code-Snippets)
+Hier geht's um den eigentlichen Code (ohne Code-Snippets)
 ### Segmentierung
-Der Code in `segmentierung.py` führt verschiedene Bildverarbeitungsaufgaben durch, um die person im Vordergrund zu isolieren und auf eine gemeinsame Zielmatrix zu transformieren. Die Hauptfunktionen umfassen:
+Die Datei "preprocess.py" dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in Position zu transformieren. 
 
-- `freistellen(image, segm)`: Segmentiert das Bild basierend auf einer Maske und erstellt ein RGBA-Bild.
+Für die Transformation wird die Affine Transformation aus der Bibliothek "OpenCV" verwendet. Diese
+
+Der Code in "segmentierung.py" führt verschiedene Bildverarbeitungsaufgaben durch, um die Person im Vordergrund zu isolieren und auf eine gemeinsame Zielmatrix zu transformieren. Hierzu sind einige Funktionen implementiert.
+
+Mit der Funktion "freistellen" erwartet die Parameter "image" und "segm". "image" ist ein Bild im BGR-Format und "segm" die dazugehörige Segmentierungsmaske im selbigen Format. Diese Maske wird dazu verwendet, um die Person im Bild isolieren und den Hintergrund transparent bzw. mit schwarzem Alpha Wert einzufärben. Ausgabe dieser Funktion ist ein Bild im BGRA-Format. 
+
+
 - `transformation(image, segm, eye_dist=70)`: Transformiert das Bild, um Augen und Mund auf eine feste Position zu bringen.
 - `get_corners(segm)`: Bestimmt die Positionen der Augen und des Mundes aus der Maske.
 - `get_single_center(segm, value)`: Findet das Zentrum eines bestimmten Segments im Bild.
@@ -64,7 +70,26 @@ Der Code in `segmentierung.py` führt verschiedene Bildverarbeitungsaufgaben dur
 Diese Funktionen helfen dabei, die Bilder auf eine einheitliche Größe zu bringen und die relevanten Gesichtspunkte zu normalisieren, um sie für ein neuronales Netzwerk vorzubereiten.
 
 ### Preprocessing
+
 ### CNN Modell
+Der Code in `classification_HW.py` implementiert ein Convolutional Neural Network (CNN) zur Klassifikation von Gesichtsaufnahmen. Die Hauptkomponenten und Funktionen umfassen:
+
+- `CNNClassification`: Eine Klasse, die das CNN-Modell definiert. Das Netzwerk besteht aus mehreren Convolutional Layers, ReLU-Aktivierungen und MaxPooling Layers, gefolgt von Fully Connected Layers.
+- `forward(xb)`: Führt einen Vorwärtsdurchlauf durch das Netzwerk durch.
+- `inferenzSet(dataset, device, logfile)`: Führt die Inferenz auf einem Datensatz durch und speichert die Ergebnisse in einer Logdatei.
+- `trainStart(epochs, lr, train_loader, device, modelname, opt_func, patience, lr_patience, lr_decay_factor)`: Startet das Training des Modells mit Early Stopping und Learning Rate Decay.
+- `training_step(batch)`: Berechnet den Verlust für einen Trainingsbatch.
+- `validation_step(batch, device)`: Berechnet den Verlust und die Genauigkeit für einen Validierungsbatch.
+- `apply_augmentation(image)`: Wendet Datenaugmentation auf ein Bild an.
+- `log_test_results(test_dataset, predictions, filename)`: Protokolliert die Testergebnisse in einer CSV-Datei.
+- `rgba_loader(path)`: Lädt ein Bild im RGBA-Format.
+- `train_model(data_dir, device, epochs, modelname)`: Trainiert das Modell mit den angegebenen Parametern.
+- `test_model(test_data_dir, device, modelname, logfile)`: Testet das Modell auf einem Testdatensatz und speichert die Ergebnisse.
+- `get_device(preferred_device)`: Wählt das bevorzugte Gerät (CPU, CUDA, MPS) für die Berechnungen aus.
+- `copy_misclassified_images(csv_file, source_dir, target_dir)`: Kopiert falsch klassifizierte Bilder in ein Zielverzeichnis.
+- `cleanup(path)`: Löscht den angegebenen Pfad.
+
+Diese Funktionen und Klassen ermöglichen das Training, die Validierung und die Inferenz eines CNN-Modells zur Geschlechtsklassifikation von Gesichtsaufnahmen.
 
 
 ## Lösungsansätze im Vergleich
