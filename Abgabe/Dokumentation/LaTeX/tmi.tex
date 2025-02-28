@@ -65,19 +65,20 @@ Diese Werkzeuge erleichtern die Implementierung komplexer neuronaler Netzarchite
 OpenCV ergänzt diese Fähigkeiten durch effiziente Algorithmen für Filterung, Merkmalsextraktion und Transformationen.
 
 \subsection{Deep Learning in der Bildanalyse}  % Das hier ist irgendwie trash
-Deep Learning-Methoden, insbesondere \acp{cnn}, haben die Bildanalyse signifikant verbessert.
-\acp{cnn} extrahieren hierarchische Merkmale durch Faltungsoperationen und ermöglichen effiziente Objekterkennung sowie Klassifikation.
+Deep Learning-Methoden, insbesondere \ac{cnn}, haben die Bildanalyse signifikant verbessert.
+\ac{cnn} extrahieren hierarchische Merkmale durch Faltungsoperationen und ermöglichen effiziente Objekterkennung sowie Klassifikation.
 Aktuelle Anwendungen umfassen Bildklassifizierung, Objektdetektion und semantische Segmentierung.
 
 Transfer Learning reduziert den Trainingsaufwand durch Nutzung vortrainierter Modelle.
 In der industriellen Bildverarbeitung finden Deep Learning-Techniken zunehmend Anwendung, etwa in der automatisierten Qualitätskontrolle und Werkstoffprüfung.
 Die kontinuierliche Weiterentwicklung dieser Techniken verspricht weitere Fortschritte, insbesondere in der medizinischen Bildanalyse und industriellen Anwendungen.
 
+
 \section{Datensatz} \label{sec:dataset}
 In diesem Kapitel wird der verwendete Datensatz sowie die damit einhergehenden Herausforderungen beschrieben.
 
 \subsection{Allgemeine Beschreibung des Datensatzes}
-Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche die relevanten Bildbereiche kennzeichnet. Zusätzlich enthält der Datensatz eine tags.json-Datei, die für jedes Bild das Geschlecht der abgebildeten Person angibt. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen. Dieser Datensatz eignet sich insbesondere für Anwendungen im Bereich der Bildsegmentierung, geschlechtsspezifischen Bildanalysen und Deep-Learning-gestützten Erkennungsaufgaben.
+Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche Segmentierung beinhaltet. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die für jedes Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen.
 
 \subsection{Herausforderungen bei der Datenverarbeitung}  
 Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken die Modellleistung negativ beeinflussen könnten. Auch die Labels in der tags.json-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz. 
@@ -112,7 +113,7 @@ Die Datei \texttt{preprocess.py} dient der Verarbeitung des Datensatzes. Hier we
 
 Die Transformation erfolgt über die so genannte affine Transformation. Diese bewirkt, dass geometrische Merkmale nach der Transformation weiterhin erhalten bleiben. Somit bleiben beispielsweise parallele Linien weiterhin parallel.
 
-Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Musndes benötigt. Diese dienen dem neuronalen Netzwerk später als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der "Shape" auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
+Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Mundes benötigt. Diese dienen dem neuronalen Netzwerk als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der Zielform auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
 
 \subsection{Klassifikation}
 Das Herzstück der Implementierung ist die Klassifikation der Gesichter anhand des Geschlechts. Hierfür wird ein Convolutional Neural Network (CNN) verwendet, das auf dem PyTorch-Framework basiert. Das CNN besteht aus mehreren Convolutional Layers und Pooling Layers, die dazu dienen, tiefere Merkmale aus den Eingabebildern zu extrahieren. Die Ausgabe des CNN wird durch eine Fully Connected Layer und eine Sigmoid-Aktivierungsfunktion in eine Wahrscheinlichkeit für die Klassifikation als männlich oder weiblich umgewandelt. Das Training des CNN erfolgt über mehrere Epochen, wobei die Gewichte des Netzwerks iterativ angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Die Evaluierung des trainierten Modells erfolgt anhand eines separaten Testdatensatzes, um die Generalisierbarkeit und Leistungsfähigkeit des Modells zu überprüfen.
