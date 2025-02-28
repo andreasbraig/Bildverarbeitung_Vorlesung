@@ -34,10 +34,13 @@ Für die Lösung dieser Aufgabe wurde die Programmiersprache Python mit den wese
 
 ## Stand der Technik
 ### Python: 
-Python ist eine interpretierte Datenorientierte Programmiersorache, mit welcher in kürzester Zeit mächtige Prorammabläufe durchgeführt werden können. 
+Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich sehr gut für die Bildverarbeitung eignet. Die Bibliothek OpenCV bietet hier umfangreiche Unterstützung für Bildanalyse, Filterung, Merkmalsextraktion und Segmentierung. Die Kombination mit Deep-Learning-Frameworks wie z.B. PyTorch ermöglicht die Entwicklung fortschrittlicher Bildverarbeitungsalgorithmen, darunter Objekterkennung, Segmentierung und Bildklassifikation. Aufgrund seiner einfachen Syntax, plattformübergreifenden Kompatibilität und starken Community ist Python eine bevorzugte Wahl für Forschung und industrielle Anwendungen im Bereich der computergestützten Bildverarbeitung.
+
 ### OpenCV:
-OpenCV ist eine Biblioethek für Python, die es ermöglicht Bilder zu laden, zu verändern und wieder abzuspeichern. Vorteile dieser Bibliothek sind die bereits implementierten Funktionen.
+OpenCV (Open Source Computer Vision Library) ist eine leistungsstarke, quelloffene Bibliothek für die Bild- und Videoverarbeitung. Sie bietet eine breite Palette an Algorithmen für Aufgaben wie Bildfilterung, Merkmalsextraktion, Objekterkennung, Bewegungsverfolgung und Deep-Learning-gestützte Bildanalyse. OpenCV unterstützt mehrere Programmiersprachen, darunter Python, C++ und Java, und ist für verschiedene Plattformen verfügbar. Durch ihre hohe Effizienz und Kompatibilität mit Bibliotheken wie NumPy und PyTorch wird OpenCV sowohl in der Forschung als auch in industriellen Anwendungen, etwa in der Robotik, Medizintechnik und autonomen Systemen, eingesetzt.
+
 ### PyTorch: 
+PyTorch ist ein leistungsstarkes, quelloffenes Deep-Learning-Framework, das von Meta AI entwickelt wurde. Es bietet eine dynamische Berechnungsgrafik, die eine flexible Modellentwicklung ermöglicht. PyTorch wird besonders in der Forschung und Entwicklung von neuronalen Netzen eingesetzt, insbesondere für Computer Vision und Natural Language Processing. Dank seiner tiefen Integration mit Python sowie Unterstützung für GPU-Beschleunigung bietet es eine hohe Performance und Skalierbarkeit. Mit Bibliotheken wie TorchVision und TorchAudio erweitert PyTorch seine Funktionalität für spezifische Anwendungen in Bild- und Sprachverarbeitung.
 
 ### Möglichkeiten:
 
@@ -46,28 +49,29 @@ OpenCV ist eine Biblioethek für Python, die es ermöglicht Bilder zu laden, zu 
 Hier gehts um die Bilder lol.
 ### Allgemein
 Der Datensatz für dieses Projekt besteht aus den Bildern und den dazugehörigen Masken, sowie der tag.json Datei. Auf dieser JSON-Datei sind über die Dateinamen jeweils das Geschlecht der abgebildeten Person zugeordnet. Hiermit lässt  sich also der Datensatz in die Kategorien "männlich" und "weiblich" einteilen.
+
+Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche die relevanten Bildbereiche kennzeichnet. Zusätzlich enthält der Datensatz eine tags.json-Datei, die für jedes Bild das Geschlecht der abgebildeten Person angibt. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen. Dieser Datensatz eignet sich insbesondere für Anwendungen im Bereich der Bildsegmentierung, geschlechtsspezifischen Bildanalysen und Deep-Learning-gestützten Erkennungsaufgaben.
+
 ### Herausforderungen
 Das Verarbeiten der Bilder auf einen gemeinsamen Nenner bietet eine gewisse Herausforderung. Hier ist jeweils aus der Maske die Information für die Position der Augen und des Mundes zu bestimmen. Mithilfe dieser Informationen werden die Bilder auf eine gemeinsame Bildgröße Verkleinert und die Augen und der Mund auf die selbe Position gebracht. Dadurch wird gewährleistet, dass das neuronale Netzwerk diese drei Punkte als Anhaltspunkte für den Vergleich und das Einlernen der Unterscheidungsmerkmale nutzen kann. 
+
+Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken die Modellleistung negativ beeinflussen könnten. Auch die Labels in der tags.json-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz, insbesondere bei hochauflösenden Daten. 
+
+Falls die Bilder reale Personen zeigen, müssen zudem Datenschutzrichtlinien wie die DSGVO beachtet werden. 
+
+Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etwa wenn die Segmentierungsqualität oder Perspektivenvielfalt die Leistung eines Erkennungsmodells beeinträchtigt. Diese Aspekte sollten bei der Vorverarbeitung und Modellentwicklung sorgfältig berücksichtigt werden, um Verzerrungen zu minimieren und robuste Ergebnisse zu erzielen.
 
 
 ## Code
 Hier geht's um den eigentlichen Code (ohne Code-Snippets)
 ### Segmentierung
-Die Datei "preprocess.py" dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in Position zu transformieren. 
+Die Datei "preprocess.py" dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in die gewünschte Position und Ausrichtung zu transformieren. 
 
-Für die Transformation wird die Affine Transformation aus der Bibliothek "OpenCV" verwendet. Diese bewirkt, dass gewisse Mekrmale im Bild erhalten bleiben, wie zum Beispiel die Parallelität von Elementen im Bild. Hierzu werden die Scherpunktpositionen der Konturen von Augen und Mund verwendet. 
+Die Transformation erfolgt über die so genannte affine Transformation. Diese bewirkt, dass geometrische Merkmale nach der Transformation weiterhin erhalten bleiben. Somit bleiben beispielsweise parallele Linien weiterhin parallel.
 
-Der Code in "segmentierung.py" führt verschiedene Bildverarbeitungsaufgaben durch, um die Person im Vordergrund zu isolieren und auf eine gemeinsame Zielmatrix zu transformieren. Hierzu sind einige Funktionen implementiert.
+Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Musndes benötigt. Diese dienen dem neuronalen Netzwerk später als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der "Shape" auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
 
-Mit der Funktion "freistellen" erwartet die Parameter "image" und "segm". "image" ist ein Bild im BGR-Format und "segm" die dazugehörige Segmentierungsmaske im selbigen Format. Diese Maske wird dazu verwendet, um die Person im Bild isolieren und den Hintergrund transparent bzw. mit schwarzem Alpha Wert einzufärben. Ausgabe dieser Funktion ist ein Bild im BGRA-Format. 
-
-
-- `transformation(image, segm, eye_dist=70)`: Transformiert das Bild, um Augen und Mund auf eine feste Position zu bringen.
-- `get_corners(segm)`: Bestimmt die Positionen der Augen und des Mundes aus der Maske.
-- `get_single_center(segm, value)`: Findet das Zentrum eines bestimmten Segments im Bild.
-- `get_lastpoint(centr)`: Berechnet den letzten Punkt basierend auf den Positionen der Augen.
-
-Diese Funktionen helfen dabei, die Bilder auf eine einheitliche Größe zu bringen und die relevanten Gesichtspunkte zu normalisieren, um sie für ein neuronales Netzwerk vorzubereiten.
+(Neben der Transformation und dem Freistellen wird gemäß der Aufgabenstellung auch ein zusätzlicher Kanal eingefügt. Hier handelt es sich um den Alpha Kanal.)
 
 ### Preprocessing
 

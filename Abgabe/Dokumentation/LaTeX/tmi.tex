@@ -10,8 +10,8 @@
 \usepackage{float}
 
 
-\markboth{\journalname, VOL. XX, NO. XX, XXXX 2020}
-{Author \MakeLowercase{\textit{et al.}}: Preparation of Papers for IEEE TRANSACTIONS ON MEDICAL IMAGING}
+\markboth{\journalname, VOL. 01, NO. 01, MARCH 2020}
+{TEL22AT1 \MakeLowercase{\textit{et al.}}: Verarbeitung von Gesichtsaufnahmen zur Geschlechterklassifikation als Anwendung neuronaler Netze}
 
 \begin{document}
 
@@ -28,9 +28,9 @@
 
 \maketitle
 
-\begin{abstract}
+% \begin{abstract}
     
-\end{abstract}
+% \end{abstract}
 
 
 \begin{IEEEkeywords}
@@ -49,7 +49,8 @@ Für die Implementierung wurde die Programmiersprache Python verwendet, unterst�
 
 
 \section{Stand der Technik}
-ACHTUNG, DAS HAT DIE KATZE GESCHRIEBEN OKAY ABER HIER VOR DIE SUBSEKTION MUSS NOCH TEXT; WEIL DAS MACHT MAN SO
+In diesem Kapitel werden Techniken und Methoden vorgestellt, die für die Verarbeitung von Bildern und die Klassifikation von Gesichtern relevant sind. Dazu gehören Bildsegmentierung, neuronale Netze und Deep Learning-Frameworks, sowie deren Anwendung in der Bildanalyse.
+
 \subsection{Bildsegmentierung}  
 Die Bildsegmentierung ist eine Technik der Computer Vision, die ein digitales Bild in einzelne Pixelgruppen unterteilt, um die Objekterkennung und verwandte Aufgaben zu unterstützen.  
 Traditionelle Methoden analysieren visuelle Merkmale wie Farbe oder Helligkeit, während moderne Ansätze auf Deep Learning basieren und komplexe neuronale Netze für anspruchsvolle Mustererkennung einsetzen.  
@@ -72,23 +73,18 @@ Transfer Learning reduziert den Trainingsaufwand durch Nutzung vortrainierter Mo
 In der industriellen Bildverarbeitung finden Deep Learning-Techniken zunehmend Anwendung, etwa in der automatisierten Qualitätskontrolle und Werkstoffprüfung.
 Die kontinuierliche Weiterentwicklung dieser Techniken verspricht weitere Fortschritte, insbesondere in der medizinischen Bildanalyse und industriellen Anwendungen.
 
-\section{Datensatz}
+\section{Datensatz} \label{sec:dataset}
 In diesem Kapitel wird der verwendete Datensatz sowie die damit einhergehenden Herausforderungen beschrieben.
 
 \subsection{Allgemeine Beschreibung des Datensatzes}
-Der Datensatz besteht aus Gesichtsaufnahmen, die von Personen unterschiedlichen Alters und mit unterschiedlichen Gesichtszügen aufgenommen wurden.
-Zusätzlich zu diesen Bildern umfasst der Datensatz ebenfalls zu jedem Bild eine dazugehörige Maske, sowie die tagging.json Datei.
-In dieser JSON-Datei sind über die Dateinamen jeweils das Geschlecht der abgebildeten Person zugeordnet.
-Hiermit lässt sich also der Datensatz in die Kategorien "männlich" und "weiblich" einteilen.
+Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche die relevanten Bildbereiche kennzeichnet. Zusätzlich enthält der Datensatz eine tags.json-Datei, die für jedes Bild das Geschlecht der abgebildeten Person angibt. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen. Dieser Datensatz eignet sich insbesondere für Anwendungen im Bereich der Bildsegmentierung, geschlechtsspezifischen Bildanalysen und Deep-Learning-gestützten Erkennungsaufgaben.
 
 \subsection{Herausforderungen bei der Datenverarbeitung}  
-Bei der Vorverarbeitung treten mehrere Herausforderungen auf: Unterschiedliche Bildgrößen, variierende Gesichtsgrößen und abweichende Positionen von Augen und Mund erfordern eine Normalisierung.
-Kopfneigungen und Drehungen erschweren die Standardisierung zusätzlich. Ein besonderes Problem sind verdeckte Gesichter, etwa durch Masken, sowie extreme Gesichtsausdrücke wie weit geöffnete Münder oder herausgestreckte Zungen, die die Merkmalsextraktion beeinträchtigen.
+Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken die Modellleistung negativ beeinflussen könnten. Auch die Labels in der tags.json-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz, insbesondere bei hochauflösenden Daten. 
 
-Um diesen Herausforderungen zu begegnen, wird in der Vorverarbeitung ein Verfahren eingesetzt, bei dem die Bilder auf eine einheitliche Größe skaliert und die Augen und der Mund auf einheitliche Positionen im Bild ausgerichtet werden.
-Hierfür müssen die Positionen der Augen und des Mundes mithilfe der Masken ermittelt werden.
-Dies ermöglicht es dem neuronalen Netzwerk, diese markanten Punkte als Referenz für den Vergleich und das Einlernen der Unterscheidungsmerkmale der Geschlechtern zu nutzen.
+Falls die Bilder reale Personen zeigen, müssen zudem Datenschutzrichtlinien wie die DSGVO beachtet werden. 
 
+Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etwa wenn die Segmentierungsqualität oder Perspektivenvielfalt die Leistung eines Erkennungsmodells beeinträchtigt. Diese Aspekte sollten bei der Vorverarbeitung und Modellentwicklung sorgfältig berücksichtigt werden, um Verzerrungen zu minimieren und robuste Ergebnisse zu erzielen.
 
 \section{Implementierte Lösung}
 
@@ -98,7 +94,10 @@ Dies ermöglicht es dem neuronalen Netzwerk, diese markanten Punkte als Referenz
     \label{fig:architecture}
 \end{figure}
 
-\subsection{Preprocessing}
+Die in Abbildung \ref{fig:architecture} dargetsellte Workflow beschreibt anschaulich die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz.
+Im Folgenden wird eine genauere Beschreibung des Lösungsvorgansg gegeben.
+
+\subsection{Get Dataset}
 Das Preprocessing übernimmt die zentrale Aufgabe der Vorverarbeitung der Rohdaten für das Training des neuronalen Netzwerks.
 Durch die Funktion \texttt{cleanup} wird zunächst sichergestellt, dass sämtliche Datensätze in den Zielordnern gelöscht werden, um eine Vermischung mit einem veralteten Datensatz zu verhindern.
 Anschließend werden die Metadaten, einschließlich der Dateinamen und der Geschlechter, aus der \texttt{tag.json} extrahiert und in einem strukturierten 2D-Array gespeichert, sodass die Weiterverarbeitung der Daten erleichtert wird.
@@ -109,10 +108,15 @@ Anschließend erfolgt mithilfe der Funktion \texttt{train\_test\_split} die Auft
 Hierbei wird ein zufällig ausgewählter Prozentsatz der Bilder in den Testdatensatz überführt.
 Dieser Schritt ist entscheidend, um eine objektive Evaluierung des Modells zu ermöglichen und Überanpassung (Overfitting) zu vermeiden, wie in Abschnitt \ref{sec:overfitting} beschrieben.
 
-\subsection{Segmentierung}
-Im Segmentierungsschritt werden die Gesichtselemente wie Augen, Nase und Mund positioniert und normiert, um das Modell mit konsistenten Eingabedaten zu füttern.
+\subsection{Preprocessing}
 
-\subsection{\ac{cnn} Modell}
+Die Datei \texttt{preprocess.py} dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in die gewünschte Position und Ausrichtung zu transformieren. 
+
+Die Transformation erfolgt über die so genannte affine Transformation. Diese bewirkt, dass geometrische Merkmale nach der Transformation weiterhin erhalten bleiben. Somit bleiben beispielsweise parallele Linien weiterhin parallel.
+
+Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Musndes benötigt. Diese dienen dem neuronalen Netzwerk später als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der "Shape" auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
+
+\subsection{CNN Modell}
 Das \ac{cnn} wird verwendet, um das Geschlecht der abgebildeten Person zu klassifizieren. Hierbei kommen mehrere Convolutional Layers und Pooling Layers zum Einsatz, um aus den Eingabebildern tiefere Merkmale zu extrahieren.
 
 % Da eine Anforderung an die Aufgabe darin besteht, die Bilder mit allen vier Kanälen zu verarbeiten muss die Standardfunktion, welche das Bild an das Netz übergibt ersetzt werden.
@@ -177,7 +181,7 @@ Im Fazit werden die Ergebnisse der Arbeit zusammengefasst und diskutiert. Es wir
 
 \appendices
 
-\section*{Appendix und die Nutzung von ergänzenden Dateien}
+% \section*{Appendix und die Nutzung von ergänzenden Dateien}
 
 \section*{Danksagung}
 
