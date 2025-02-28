@@ -275,7 +275,6 @@ if __name__ == '__main__':
 
     test_model(test_data_dir, device,model,logfile)
 
-    #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 
 
     cleanup(fehl_data_dir)
 

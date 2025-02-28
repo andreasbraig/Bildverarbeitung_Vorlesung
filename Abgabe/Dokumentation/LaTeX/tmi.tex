@@ -166,6 +166,17 @@ Die dazwischen getesteten Modelle stellen verschiedene Optimierungsversuche dar,
 
 \subsection{Ausführung des Python Codes}
 
+In diesem Kapitel wird beschrieben, wie der mit diesem Paper abgegebene Python Code ausgeführt werden kann.
+Um die pipline der Datenverarbeitung mit Training der Daten und anschließendem Test des Modells durchzuführen, muss die Datei \texttt{classification.py} ausgeführt werden. Alle drei Dateien müssen im selben Verzeichnis liegen.
+
+Hierfür muss sich ebenfalls im selben Verzeichnis wie die Datei \texttt{classification.py} ein Verzeichnis \texttt{Images} befinden, welches die Bilder und Masken enthält. Innerhalb dieses Verzeichnisses wird ebenfalls eine Datei \texttt{tags.json} benötigt, welche die Labels der Bilder enthält.
+
+Der Ordner \texttt{Datensatz}, welcher später die Sortierten Bilder enthält, wird automatisch erstellt und in zwei Unterordner \texttt{Train} und \texttt{Test} unterteilt.
+
+Falls es beim Ausführen des Codes zu Problemen kommt, kann es sein, dass die benötigten Bibliotheken nicht installiert sind. Diese können mit dem Befehl \texttt{pip install -r requirements.txt} installiert werden.
+
+Damit nur ein Test des Modells durchgeführt wird können die Funktion \texttt{train\_model()} und \texttt{dg.preprocess()} in der Datei \texttt{classification.py} auskommentiert werden.
+
 
 \section{Fazit}
 Im Fazit werden die Ergebnisse der Arbeit zusammengefasst und diskutiert. Es wird reflektiert, inwiefern die gesetzten Ziele erreicht wurden und welche Verbesserungspotenziale noch bestehen.
