@@ -134,81 +134,79 @@ Das in Kapitel \ref{sec:training} trainierte und gespeicherte Modell wird für d
 
 Hierbei wird dem Modell der Testdatensatz batchweise übergeben. Dieser unterscheidet sich von dem Traingsdatensatz und ermöglicht somit eine objektive Bewertung der Modellleistung. Die Klassifikationsergebnisse werden mit den tatsächlichen Labels verglichen, um die Genauigkeit des Modells zu bestimmen. Das Ergebnis wird in Form einer Erfolgsquote ausgegeben, die die Klassifikationsgenauigkeit bei der Geschlechtererkennung angibt.
 
-Zudem werden die falsch Klassifizierten Bilder in ein separates Verzeichnis gespeichert, um eine gezielte Fehleranalyse zu ermöglichen.
+Zudem werden die falsch klassifizierten Bilder in ein separates Verzeichnis gespeichert, um eine gezielte Fehleranalyse zu ermöglichen.
 
 
 \subsection{Ausführung des Python Codes}
 
-In diesem Kapitel wird beschrieben, wie der mit diesem Paper abgegebene Python Code ausgeführt werden kann.
-Um die pipline der Datenverarbeitung mit Training der Daten und anschließendem Test des Modells durchzuführen, muss die Datei \texttt{classification.py} ausgeführt werden. Alle drei Dateien müssen im selben Verzeichnis liegen.
+In diesem Abschnitt wird beschrieben, wie der mit diesem Paper abgegebene Python-Code ausgeführt werden kann.
 
-Hierfür muss sich ebenfalls im selben Verzeichnis wie die Datei \texttt{classification.py} ein Verzeichnis \texttt{Images} befinden, welches die Bilder und Masken enthält. Innerhalb dieses Verzeichnisses wird ebenfalls eine Datei \texttt{tags.json} benötigt, welche die Labels der Bilder enthält.
+Um die vollständige Pipeline der Datenverarbeitung, das Training des Modells und den anschließende Test durchzuführen, muss die Datei \texttt{classification.py} ausgeführt werden. Dazu müssen alle drei Dateien im selben Verzeichnis liegen.
 
-Der Ordner \texttt{Datensatz}, welcher später die Sortierten Bilder enthält, wird automatisch erstellt und in zwei Unterordner \texttt{Train} und \texttt{Test} unterteilt.
+Im selben Verzeichnis wie die Datei \texttt{classification.py} muss sich ebenfalls ein Verzeichnis \texttt{Images} befinden, welches die zu verarbeitenden Bilder sowie die zugehörigen Segmentierungsmasken enthält. Zudem wird innerhalb dieses Verzeichnisses eine Datei \texttt{tags.json} benötigt, die die Labels der Bilder enthält.
 
-Falls es beim Ausführen des Codes zu Problemen kommt, kann es sein, dass die benötigten Bibliotheken nicht installiert sind. Diese können mit dem Befehl \texttt{pip install -r requirements.txt} installiert werden.
 
-Damit nur ein Test des Modells durchgeführt wird können die Funktion \texttt{train\_model()} und \texttt{dg.preprocess()} in der Datei \texttt{classification.py} auskommentiert werden.
+Während der Verarbeitung wird automatisch ein Ordner \texttt{Datensatz} erstellt, der die sortierten Bilder enthält und in zwei Unterordner \texttt{Train} und \texttt{Test} unterteilt wird.
+
+Sollte es beim Ausführen des Codes zu Problemen kommen, kann dies darauf hindeuten, dass die benötigten Bibliotheken nicht installiert sind. Diese können mit dem Befehl \texttt{pip install -r requirements.txt} installiert werden.
+
+Falls ausschließlich das trainierte Modell getestet werden soll, können die Funktionen \texttt{train\_model()} und \texttt{dg.preprocess()} in der Datei \texttt{classification.py} auskommentiert werden.
 
 
 \section{Lösungsansätze im Vergleich}
-In diesem Kapitel werden fünf Ansätze zur Implementierung des CNN vorgestellt. Insgesamt umfasst die Versuchsreihe 23 trainierte neuronale Netze unterschiedlicher einstellungen und Dimensionen.
-Um der Anforderung an diese Dokumentation gerecht zu werden fällt die Wahl auf 5 Modelle die sowohl den Fortschritt, als auch den Wissensgewinn über die Zeit repräsentieren.
+In diesem Kapitel werden fünf Ansätze zur Implementierung des \ac{cnn} vorgestellt. Insgesamt umfasst die Versuchsreihe 23 trainierte neuronale Netze unterschiedlicher Einstellungen und Dimensionen.
+
+Um die zentralen Erkenntnisse und den Fortschritt über die Trainingsphasen hinweg darzustellen, wurden fünf repräsentative Modelle ausgewählt. Diese Modelle verdeutlichen sowohl die Entwicklung der Klassifikationsgenauigkeit als auch den Einfluss der gewählten Architektur auf die Trainingsdauer und die Generalisierungsfähigkeit des Netzwerks.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Erfolg_Dauer.png}}
-    \caption{Vergleichsdiagramm zwischen Erfolgsquote des jeweiligen Modells im Test gegenüber der Dauer einer Trainingsepoche.}
+    \caption{Vergleich der Testgenauigkeit der jeweiligen Modelle in Abhängigkeit von der Dauer einer Trainingsepoche.}
     \label{fig:compareGraph}
 \end{figure}
 
 \subsection{Ablauf der Optimierung}
 \label{sec:optimization}
-Als Grundlage für das Design des neuronalen Netzes dient ein im Labor verwendeter Python-PyTorch Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
+Die Grundlage für das Design des neuronalen Netzes bildet ein im Labor verwendeter PyTorch-Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
 
 Mit dem ersten Programmentwurf entsteht das Netz "Model35", welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 256*26*35 linearen Datenpunkten ausgestattet.
-Es wurde für den Test in 35 Epochen trainiert und liefert $92,7\%$ Genauigkeit im Test (siehe Abbildung: \ref{fig:compareGraph}).
+Es wurde für den Test in 35 Epochen trainiert und liefert $92,7\%$ Genauigkeit im Test (siehe Abbildung \ref{fig:compareGraph}).
 
-Der erste Ansatz der Optimierung ist die Erhöhung der Trainingsepochen. Bei gleichbleibenden Modellparametern wird mit 90 statt 35 Epochen trainiert.
-Dies hat maßgeblichen Einfluss auf die Gesamtdauer, die mit 386 Minuten deutlich über den 129 Minuten des Vorgängers liegt (siehe Abbildung: \ref{fig:compareGraph}). Dies hat keinen positiven Effekt auf den Erfolg des Tests.
+Der erste Optimierungsansatz besteht in der Erhöhung der Trainingsepochen. Bei gleichbleibenden Modellparametern wird das Netz mit 90 statt 35 Epochen trainiert. Dies hat maßgeblichen Einfluss auf die Gesamtdauer, die mit 386 Minuten deutlich über den 129 Minuten des Vorgängers liegt (siehe Abbildung \ref{fig:compareGraph}), ohne dabei eine Verbesserung der Testgenauigkeit zu bewirken.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Erfolg_Groesse.png}}
-    \caption{Vergleichsdiagramm zwischen Erfolgsquote des jeweiligen Modells im Test gegenüber dem verbrauchten Speicherplatz.}
+    \caption{Vergleich der Testgenauigkeit verschiedener Modelle in Abhängigkeit vom benötigten Speicherplatz.}
     \label{fig:compareSize}
 \end{figure}
 
-Der nächste Optimierungsansatz besteht in der Erhöhung der Bildauflösung. Die zuvor festgelegten 70px für den Augenabstand werden auf 100px erhöht, was eine Auflösungserhöhung von 210x280 auf 300x400 bedeutet.
-Der Augenabstand ist die maßgebliche Größe, um die Segmentierung und Transformation des Bildes durchzuführen.
+Der nächste Optimierungsansatz besteht in der Erhöhung der Bildauflösung. Der zuvor definierte Augenabstand von 70 Pixeln wird auf 100 Pixel erhöht, was eine Erhöhung der Bildauflösung von 210x280 auf 300x400 bedeutet. Der Augenabstand ist hierbei die maßgebliche Größe für die Segmentierung und Transformation der Bilder.
 
-Diese Erhöhung sorgt für eine Steigerung der Modellkomplexität, da die zuvor verwendeten 256*26*35 Datenpunkte nun auf 256*37*50 erhöht wurden. 
-Durch die zusätzlichen Informationen ist eine Steigerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (siehe Abbildung \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
+Diese Anpassung führt zu einer Steigerung der Modellkomplexität, da die zuvor verwendeten 256*26*35 Datenpunkte nun auf 256*37*50 erhöht wurden. 
+Durch die zusätzlichen Informationen ist eine Steigerung des Erfolges um $0,2 \%$ möglich. Mit der Erhöhung der Modellkomplexität und damit auch der Kapazität auf nahezu das Doppelte (siehe Abbildung \ref{fig:compareSize}), wird jedoch die Problematik des Overfittings besonders relevant und erfordert eine genauere Analyse.
 
 Um dieser Problematik entgegenzuwirken, wurden die im Kapitel \ref{sec:training} erklärten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
 
-Das Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Trainingserfolges, sondern verschlechtert diesen mit $91,22\%$. 
-Ohne den Augmentation-Ansatz zu verwerfen, ist die nächste Optimierung die Ergänzung einer weiteren Faltungsebene. 
-Dies reduziert die linearen Parameter und damit auch die Komplexität des Modells, was sich positiv auf die Trainingsdauer auswirkt. 
-In einem ersten Test konnte dieses letzte Modell (model40\_AUG\_3Layer\_100px\_ES) zunächst $94\%$ und in einem zweiten Test $99\%$ erzielen.
+Das daraus resultierende Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Trainingserfolges, sondern verschlechtert diesen mit $91,22 \%$. 
+
+Ohne den Augmentation-Ansatz zu verwerfen, besteht die nächste Optimierung in der Ergänzung einer weiteren Faltungsebene. Dies reduziert die linearen Parameter und damit auch die Komplexität des Modells, was sich positiv auf die Trainingsdauer auswirkt. In einem ersten Test erziehlt dieses letzte Modell (model40\_AUG\_3Layer\_100px\_ES) zunächst $94 \%$ und in einem zweiten Test $99 \%$.
 
 \subsection{Diskussion der Lösungsansätze}
-Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $80\%$. Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit einer moderaten Trainingsdauer und Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht (Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}).
+Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $80 \%$. Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit einer moderaten Trainingsdauer und Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht (siehe Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}).
 
 Die anderen Modelle liefern hinsichtlich des Erfolges ebenfalls solide Resultate. 
-Unter Berücksichtigung der zeitlichen Komponente des Optimierungsfortschrittes hinsichtlich des Codeaufbaus der fünf Modelle sind die anfangs erreichten $92,75\%$ ebenfalls nicht zu vernachlässigen. Hier wurden $7\%$ weniger erzielt als beim besten Modell, allerdings mit fünf Tagen weniger Arbeitsaufwand für die Codeoptimierung. 
+Unter Berücksichtigung der zeitlichen Komponente des Optimierungsfortschrittes hinsichtlich des Codeaufbaus der fünf Modelle sind die anfangs erreichten $92,75 \%$ ebenfalls nicht zu vernachlässigen. Hier wurden $ 7\%$ weniger erzielt als beim besten Modell, allerdings mit fünf Tagen weniger Arbeitsaufwand für die Codeoptimierung. 
 
-Die dazwischen getesteten Modelle stellen verschiedene Optimierungsversuche dar, die im Laufe der Entwicklung durchgeführt wurden. Die Beschreibung dieser Optimierungen und deren Auswirkungen auf die Modellleistung sind im letzten Kapitel (Kapitel: \ref{sec:optimization}) dokumentiert.
+Die dazwischen getesteten Modelle stellen verschiedene Optimierungsversuche dar, die im Laufe der Entwicklung durchgeführt wurden. Die Beschreibung dieser Optimierungen und deren Auswirkungen auf die Modellleistung sind im letzten Kapitel (Kapitel \ref{sec:optimization}) dokumentiert.
 
 \section{Fazit}
 \label{sec:conclusion}
 In dieser Arbeit wurde die Verarbeitung und Klassifikation von Gesichtsaufnahmen zur Geschlechterklassifikation mittels neuronaler Netze untersucht. Der Wissensgewinn über die Zeit war erheblich, da verschiedene Modelle und Optimierungsansätze getestet und evaluiert wurden. Beginnend mit einem einfachen Modell, das bereits eine solide Genauigkeit erzielte, wurden durch schrittweise Optimierungen wie die Erhöhung der Bildauflösung, die Implementierung von Data Augmentation und Early Stopping sowie die Anpassung der Netzwerkarchitektur signifikante Verbesserungen erreicht.
 
-Die besten Ergebnisse wurden mit einem Modell erzielt, das Data Augmentation und eine zusätzliche Faltungsebene nutzte, was die Genauigkeit auf bis zu $99\%$ steigerte. Dies zeigt, dass durch gezielte Optimierungen und Anpassungen erhebliche Leistungssteigerungen möglich sind.
+Die besten Ergebnisse wurden mit einem Modell erzielt, das Data Augmentation und eine zusätzliche Faltungsebene nutzte, was die Genauigkeit auf bis zu $99 \%$ steigerte. Dies zeigt, dass durch gezielte Optimierungen und Anpassungen erhebliche Leistungssteigerungen möglich sind.
 
 Als Ausblick soll nicht unerwähnt bleiben, dass weitere Verbesserungen durch den Einsatz fortschrittlicherer Aktivierungsfunktionen wie Sigmoid möglich gewesen wären. Diese könnten die Klassifikationsgenauigkeit weiter erhöhen, indem sie nichtlineare Beziehungen in den Daten besser modellieren. Zukünftige Arbeiten könnten sich darauf konzentrieren, diese und andere fortschrittliche Techniken zu integrieren, um die Modellleistung weiter zu optimieren.
 
 Insgesamt zeigt diese Arbeit, dass durch iterative Optimierung und den Einsatz moderner Techniken in der Bildverarbeitung und im maschinellen Lernen robuste und leistungsfähige Modelle zur Geschlechterklassifikation entwickelt werden können.
-
-
 
 
 \end{document}
