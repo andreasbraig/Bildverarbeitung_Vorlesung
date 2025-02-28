@@ -69,10 +69,11 @@ Eine weit verbreitete Bibliothek für die Bildverarbeitung ist OpenCV, die zahlr
 
 \subsection{Computer Vision}
 \label{sec:computer_vision} 
-Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde ausschließlich überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um Vorhersagen zu treffen. Neuronale Netze, inspiriert von biologischen Neuronen, bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch Faltungsebenen extrahieren und dann damit klassifizieren.
+Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird. Neuronale Netze bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch spezielle Faltungsebenen extrahieren.
 
-Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Während Klassifikation Daten in Gruppen einteilt, beschreibt Regression Zusammenhänge anhand mathematischer Funktionen. Die binäre Klassifikation unterscheidet zwei Klassen, dargestellt in Abbildung : \ref{fig:bin_class} Kreise (Klasse 0) und Quadrate (Klasse 1). Eine Entscheidungsgrenze trennt beide Klassen, wobei einige Datenpunkte nahe der Grenze liegen. Durch Training optimiert sich das Modell, um neue Objekte korrekt einer Klasse zuzuordnen. In dieser Arbeit wird binäre Klassifikation verwendet, um zu erkennen, welches Geschlecht auf einem Bild abgebildet ist.
-\subsubsection{Vortrainierte Modelle}
+Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Klassifikation teilt Daten in Gruppen ein, während Regression Zusammenhänge beschreibt. Die binäre Klassifikation unterscheidet zwei Klassen, dargestellt in Abbildung \ref{fig:bin_class}. Eine Entscheidungsgrenze trennt beide Klassen. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
+
+Neben dem Training eigener Modelle können auch vortrainierte Modelle von Plattformen wie TensorFlow oder PyTorch geladen und feinabgestimmt werden.
 
 
 \section{Datensatz} 
