@@ -1,71 +1,77 @@
 # Doku
 
 ## Gleiderung
+
 * Probelemstellung
 * Stand der Technik
-    * Python
-    * OpenCV
-    * PyTorch
-    * was ist möglich (big data, deeplearning, ...)
+  * Python
+  * OpenCV
+  * PyTorch
+  * was ist möglich (big data, deeplearning, ...)
 * Datensatz
-    * Herausforderungen
-    * Allgemein
+  * Herausforderungen
+  * Allgemein
 * Code
-    * Preprocessing
-    * Segmentierung
-    * CNN Modell
+  * Preprocessing
+  * Segmentierung
+  * CNN Modell
 * Lösungsansätze im Vergeleich
-    * Training und Evaluation
+  * Training und Evaluation
 * Fazit
 
 ## Problemstellung
+
 Diese Arbeit befasst sich Mit der Verarbeitung und Klassifikation einzelner Datenpunkte in einem Datensatz.
-Die hierbei verwendeten Daten sind Gesichtsaufnahmen verschiedener Personen verschiedenen Alters. 
+Die hierbei verwendeten Daten sind Gesichtsaufnahmen verschiedener Personen verschiedenen Alters.
 
-Die erste Teilaufgabe besteht in der Segmentierung und Verarbeitung dieses bereitgestellten Datensatzes, um die Gesichtselemente einheitlich im Bild zu positionieren. 
-Augen und Mund sollen hierbei immer ein gleichschenkliges Dreieck an einer festen Position im Bild bilden. 
+Die erste Teilaufgabe besteht in der Segmentierung und Verarbeitung dieses bereitgestellten Datensatzes, um die Gesichtselemente einheitlich im Bild zu positionieren.
+Augen und Mund sollen hierbei immer ein gleichschenkliges Dreieck an einer festen Position im Bild bilden.
 
-Die zweite Teilaufgabe befasst sich mit dem Klassifikationsproblem. 
-Der verarbeitete Datensatz wird in ein Convolutional Neural Network geladen und das Geschlecht der abgebildeten Person klassifiziert. 
+Die zweite Teilaufgabe befasst sich mit dem Klassifikationsproblem.
+Der verarbeitete Datensatz wird in ein Convolutional Neural Network geladen und das Geschlecht der abgebildeten Person klassifiziert.
 Hierbei soll das Netz eine binäre Klassifikation zwischen Männlich (0) und Weiblich (1) durchführen.
 
-Für die Lösung dieser Aufgabe wurde die Programmiersprache Python mit den wesentlichen Bibliotheken "OpenCV", "numpy" und "Pytorch" verwendet. 
-
+Für die Lösung dieser Aufgabe wurde die Programmiersprache Python mit den wesentlichen Bibliotheken "OpenCV", "numpy" und "Pytorch" verwendet.
 
 ## Stand der Technik
-### Entwicklungswerkzeuge: 
+
+### Entwicklungswerkzeuge:
+
 Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich sehr gut für die Bildverarbeitung eignet. Die Bibliothek OpenCV bietet hier umfangreiche Unterstützung für Bildanalyse, Filterung, Merkmalsextraktion und Segmentierung. Die Kombination mit Deep-Learning-Frameworks wie z.B. PyTorch ermöglicht die Entwicklung fortschrittlicher Bildverarbeitungsalgorithmen, darunter Objekterkennung, Segmentierung und Bildklassifikation. Aufgrund seiner einfachen Syntax, plattformübergreifenden Kompatibilität und starken Community ist Python eine bevorzugte Wahl für Forschung und industrielle Anwendungen im Bereich der computergestützten Bildverarbeitung.
 
 ### Bildverarbeitung:
 
 ### Klassifikation:
 
-
-
 ### Möglichkeiten:
 
-
 ## Datensatz
+
 Hier gehts um die Bilder lol.
+
 ### Allgemein
+
 Der Datensatz für dieses Projekt besteht aus den Bildern und den dazugehörigen Masken, sowie der tag.json Datei. Auf dieser JSON-Datei sind über die Dateinamen jeweils das Geschlecht der abgebildeten Person zugeordnet. Hiermit lässt  sich also der Datensatz in die Kategorien "männlich" und "weiblich" einteilen.
 
 Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche die relevanten Bildbereiche kennzeichnet. Zusätzlich enthält der Datensatz eine tags.json-Datei, die für jedes Bild das Geschlecht der abgebildeten Person angibt. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen. Dieser Datensatz eignet sich insbesondere für Anwendungen im Bereich der Bildsegmentierung, geschlechtsspezifischen Bildanalysen und Deep-Learning-gestützten Erkennungsaufgaben.
 
 ### Herausforderungen
-Das Verarbeiten der Bilder auf einen gemeinsamen Nenner bietet eine gewisse Herausforderung. Hier ist jeweils aus der Maske die Information für die Position der Augen und des Mundes zu bestimmen. Mithilfe dieser Informationen werden die Bilder auf eine gemeinsame Bildgröße Verkleinert und die Augen und der Mund auf die selbe Position gebracht. Dadurch wird gewährleistet, dass das neuronale Netzwerk diese drei Punkte als Anhaltspunkte für den Vergleich und das Einlernen der Unterscheidungsmerkmale nutzen kann. 
 
-Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken die Modellleistung negativ beeinflussen könnten. Auch die Labels in der tags.json-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz, insbesondere bei hochauflösenden Daten. 
+Das Verarbeiten der Bilder auf einen gemeinsamen Nenner bietet eine gewisse Herausforderung. Hier ist jeweils aus der Maske die Information für die Position der Augen und des Mundes zu bestimmen. Mithilfe dieser Informationen werden die Bilder auf eine gemeinsame Bildgröße Verkleinert und die Augen und der Mund auf die selbe Position gebracht. Dadurch wird gewährleistet, dass das neuronale Netzwerk diese drei Punkte als Anhaltspunkte für den Vergleich und das Einlernen der Unterscheidungsmerkmale nutzen kann.
 
-Falls die Bilder reale Personen zeigen, müssen zudem Datenschutzrichtlinien wie die DSGVO beachtet werden. 
+Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken die Modellleistung negativ beeinflussen könnten. Auch die Labels in der tags.json-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz, insbesondere bei hochauflösenden Daten.
+
+Falls die Bilder reale Personen zeigen, müssen zudem Datenschutzrichtlinien wie die DSGVO beachtet werden.
 
 Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etwa wenn die Segmentierungsqualität oder Perspektivenvielfalt die Leistung eines Erkennungsmodells beeinträchtigt. Diese Aspekte sollten bei der Vorverarbeitung und Modellentwicklung sorgfältig berücksichtigt werden, um Verzerrungen zu minimieren und robuste Ergebnisse zu erzielen.
 
-
 ## Code
+
 Hier geht's um den eigentlichen Code (ohne Code-Snippets)
+
 ### Segmentierung
-Die Datei "preprocess.py" dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in die gewünschte Position und Ausrichtung zu transformieren. 
+
+Die Datei "preprocess.py" dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in die gewünschte Position und Ausrichtung zu transformieren.
 
 Die Transformation erfolgt über die so genannte affine Transformation. Diese bewirkt, dass geometrische Merkmale nach der Transformation weiterhin erhalten bleiben. Somit bleiben beispielsweise parallele Linien weiterhin parallel.
 
@@ -76,6 +82,7 @@ Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der A
 ### Preprocessing
 
 ### CNN Modell
+
 Der Code in `classification_HW.py` implementiert ein Convolutional Neural Network (CNN) zur Klassifikation von Gesichtsaufnahmen. Die Hauptkomponenten und Funktionen umfassen:
 
 - `CNNClassification`: Eine Klasse, die das CNN-Modell definiert. Das Netzwerk besteht aus mehreren Convolutional Layers, ReLU-Aktivierungen und MaxPooling Layers, gefolgt von Fully Connected Layers.
@@ -95,9 +102,55 @@ Der Code in `classification_HW.py` implementiert ein Convolutional Neural Networ
 
 Diese Funktionen und Klassen ermöglichen das Training, die Validierung und die Inferenz eines CNN-Modells zur Geschlechtsklassifikation von Gesichtsaufnahmen.
 
-
 ## Lösungsansätze im Vergleich
+
 ### Training und Evaluation
 
-
 ## Fazit
+
+
+
+
+Entnommener Text: 
+
+
+
+\section{Stand der Technik}
+
+In diesem Kapitel werden Techniken und Methoden vorgestellt, die für die Verarbeitung von Bildern und die Klassifikation von Gesichtern relevant sind. Dazu gehören Bildsegmentierung, neuronale Netze und Deep Learning-Frameworks, sowie deren Anwendung in der Bildanalyse.
+
+\subsection{Bildsegmentierung}
+
+Die Bildsegmentierung ist eine Technik der Computer Vision, die ein digitales Bild in einzelne Pixelgruppen unterteilt, um die Objekterkennung und verwandte Aufgaben zu unterstützen.
+
+Traditionelle Methoden analysieren visuelle Merkmale wie Farbe oder Helligkeit, während moderne Ansätze auf Deep Learning basieren und komplexe neuronale Netze für anspruchsvolle Mustererkennung einsetzen.
+
+Klassische Verfahren umfassen Schwellenwertmethoden (z. B. Otsu), Kantenerkennung und Clustering-Algorithmen (z. B. K-Means).
+
+State-of-the-Art-Modelle wie U-Net oder Mask R-\ac{cnn} ermöglichen eine pixelgenaue Segmentierung mit hoher Präzision.
+
+\subsection{Neuronale Netze und Deep Learning-Frameworks}
+
+\acp{cnn} spielen eine zentrale Rolle in der modernen Bildverarbeitung.
+
+Sie extrahieren Merkmale durch Faltungsoperationen und ermöglichen effektive Objekterkennung sowie Klassifikation.
+
+Deep Learning-Frameworks wie PyTorch bieten GPU-Unterstützung für beschleunigte Berechnungen, automatische Differenzierung für effizientes Training und flexible Programmierschnittstellen.
+
+Diese Werkzeuge erleichtern die Implementierung komplexer neuronaler Netzarchitekturen für verschiedene Bildverarbeitungsaufgaben.
+
+OpenCV ergänzt diese Fähigkeiten durch effiziente Algorithmen für Filterung, Merkmalsextraktion und Transformationen.
+
+\subsection{Deep Learning in der Bildanalyse}  % Das hier ist irgendwie trash
+
+Deep Learning-Methoden, insbesondere \ac{cnn}, haben die Bildanalyse signifikant verbessert.
+
+\ac{cnn} extrahieren hierarchische Merkmale durch Faltungsoperationen und ermöglichen effiziente Objekterkennung sowie Klassifikation.
+
+Aktuelle Anwendungen umfassen Bildklassifizierung, Objektdetektion und semantische Segmentierung.
+
+Transfer Learning reduziert den Trainingsaufwand durch Nutzung vortrainierter Modelle.
+
+In der industriellen Bildverarbeitung finden Deep Learning-Techniken zunehmend Anwendung, etwa in der automatisierten Qualitätskontrolle und Werkstoffprüfung.
+
+Die kontinuierliche Weiterentwicklung dieser Techniken verspricht weitere Fortschritte, insbesondere in der medizinischen Bildanalyse und industriellen Anwendungen.
