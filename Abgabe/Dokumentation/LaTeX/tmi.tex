@@ -49,6 +49,7 @@ Für die Implementierung wurde die Programmiersprache Python verwendet, unterst�
 
 \section{Stand der Technik}
 \label{sec:state_of_the_art}
+Um eine einführung in die Thematik zu geben und auch aktuelle Entwicklungen zu berücksichtigen, wird in diesem Kapitel der Stand der Technik in der Bildverarbeitung und Computer Vision beschrieben. Es wird nicht auf Einzelheiten eingegangen, sondern ein Überblick über die wichtigsten Technologien mit Python3 und dessen Methoden gegeben.
 
 \subsection{Entwicklungswerkzeuge}
 \label{sec:tools}
@@ -56,9 +57,22 @@ Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich se
 
 \subsection{Bildverarbeitung}
 \label{sec:image_processing}
+Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. 
 
-\section{Computer Vision}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
+    \caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes}
+    \label{fig:bin_class}
+\end{figure}
+
+\subsection{Computer Vision}
 \label{sec:computer_vision} 
+Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird. Neuronale Netze bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch spezielle Faltungsebenen extrahieren.
+
+Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Klassifikation teilt Daten in Gruppen ein, während Regression Zusammenhänge beschreibt. Die binäre Klassifikation unterscheidet zwei Klassen, dargestellt in Abbildung \ref{fig:bin_class}. Eine Entscheidungsgrenze trennt beide Klassen. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
+
+Neben dem Training eigener Modelle können auch vortrainierte Modelle von Plattformen wie TensorFlow oder PyTorch geladen und feinabgestimmt werden.
+
 
 \section{Datensatz} 
 \label{sec:dataset}
@@ -85,24 +99,34 @@ Die in Abbildung \ref{fig:architecture} dargetsellte Workflow beschreibt anschau
 Im Folgenden wird eine genauere Beschreibung des Lösungsvorgangs gegeben.
 
 \subsection{Generierung der Daten}
-In der Datei \texttt{data\_generation.py} wird der in Kapitel \ref{sec:dataset_description} beschriebene Datensatz eingelesen und die Bilder mittels der Segmentierungsmasken verarbeitet. Hierbei geschieht die Verarbeitung wie Folgt. Den Bildern wird eine zusätzliche Farbebene (Alpha-Kanal) beigefügt, sowie die abgebildeten Personen freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training des Modells zu verwenden.
-
-wird mittels der Segmentierungsmaske und einer Konturanalyse der Hintergrund entfernt und ein zusätzlicher. Diese Positionen werden genutzt, um die Transformationsmatrix für die affine Transformation zu berechnen. Anschließend werden die Bilder anhand dieser Matrix transformiert, um die Gesichter einheitlich zu positionieren. Zudem erfolgt im gleichen Zuge der Transformation eine Skalierung der Bilder auf eine einheitliche Größe. Die transformierten Bilder werden in einem neuen Verzeichnis gespeichert, um sie für das Training des Modells zu verwenden.
+In der Datei \texttt{data\_generation.py} wird der in Kapitel \ref{sec:dataset_description} beschriebene Datensatz eingelesen und die Bilder mittels der Segmentierungsmasken verarbeitet. Hierbei geschieht die Verarbeitung wie Folgt. Den Bildern wird eine zusätzliche Farbebene (Alpha-Kanal) beigefügt, sowie die abgebildeten Personen freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Hierzu werden die Schwerpunkte der Konturen von Augen und Mund extrahiert und für die Berechnung der Transformationsmatrix bereitgestellt. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training und die Validierung des Modells zu verwenden.
 
 
 \subsection{Training des Modells}
+\label{sec:training}
+Das Trainieren des Neuronalen Netzwerks geschieht in der Datei \texttt{classification.py}. Hierbei wird das Modell mit dem generierten Datensatz in mehreren Epochen trainiert. Die Trainingsdaten werden in Batches geladen und dem Modell übergeben. Nach jeder Epoche wird das Modell anhand eines Validierungsdatensatzes evaluiert, um die Genauigkeit der Klassifikation zu überprüfen. Das Training erfolgt iterativ, wobei die Gewichte des Modells angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Nach Abschluss des Trainings wird das Modell gespeichert und für die spätere Verwendung bereitgestellt. Die Während des Trainierens angewendeten Konzepte Data Augmentation und Early Stopping vermindern das Risiko von Overfitting und verbessern die Generalisierbarkeit des Modells.
 
-Die Datei \texttt{preprocess.py} dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in die gewünschte Position und Ausrichtung zu transformieren. 
+Overfitting beschreibt die Situation, dass das Modell sich an nicht wesentliche Merkmale der Eingangsdaten anpasst. Vereinfacht erklärt: es lernt die Testdaten auswendig und kann dann nicht mehr auf wesentliche Merkmale Klassifizieren.
 
-Die Transformation erfolgt über die so genannte affine Transformation. Diese bewirkt, dass geometrische Merkmale nach der Transformation weiterhin erhalten bleiben. Somit bleiben beispielsweise parallele Linien weiterhin parallel.
+Data Augmentation beschreibt die Veränderung des Datensatzes, sodass der Datensatz größer wirk als er ist. 
+Early Stopping beschreibt das Abbrechen des Trainings, wenn die Genauigkeit des Modells auf den Validierungsdaten nicht mehr steigt.
 
-Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Mundes benötigt. Diese dienen dem neuronalen Netzwerk als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der Zielform auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
 
 \subsection{Test des Modells}
 Das Herzstück der Implementierung ist die Klassifikation der Gesichter anhand des Geschlechts. Hierfür wird ein Convolutional Neural Network (CNN) verwendet, das auf dem PyTorch-Framework basiert. Das CNN besteht aus mehreren Convolutional Layers und Pooling Layers, die dazu dienen, tiefere Merkmale aus den Eingabebildern zu extrahieren. Die Ausgabe des CNN wird durch eine Fully Connected Layer und eine ReLU-Aktivierungsfunktion in eine Wahrscheinlichkeit für die Klassifikation als männlich oder weiblich umgewandelt. Das Training des CNN erfolgt über mehrere Epochen, wobei die Gewichte des Netzwerks iterativ angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Die Evaluierung des trainierten Modells erfolgt anhand eines separaten Testdatensatzes, um die Generalisierbarkeit und Leistungsfähigkeit des Modells zu überprüfen.
 
-% Da eine Anforderung an die Aufgabe darin besteht, die Bilder mit allen vier Kanälen zu verarbeiten muss die Standardfunktion, welche das Bild an das Netz übergibt ersetzt werden.
-% Die Standardfunktion konvertiert jedes RGBA Bild in ein Bild ohne Alphakanal, indem dieser abgeschnitten wird. (Schöner Absatz aber hatte unten nix zu suchen.)
+\subsection{Ausführung des Python Codes}
+
+In diesem Kapitel wird beschrieben, wie der mit diesem Paper abgegebene Python Code ausgeführt werden kann.
+Um die pipline der Datenverarbeitung mit Training der Daten und anschließendem Test des Modells durchzuführen, muss die Datei \texttt{classification.py} ausgeführt werden. Alle drei Dateien müssen im selben Verzeichnis liegen.
+
+Hierfür muss sich ebenfalls im selben Verzeichnis wie die Datei \texttt{classification.py} ein Verzeichnis \texttt{Images} befinden, welches die Bilder und Masken enthält. Innerhalb dieses Verzeichnisses wird ebenfalls eine Datei \texttt{tags.json} benötigt, welche die Labels der Bilder enthält.
+
+Der Ordner \texttt{Datensatz}, welcher später die Sortierten Bilder enthält, wird automatisch erstellt und in zwei Unterordner \texttt{Train} und \texttt{Test} unterteilt.
+
+Falls es beim Ausführen des Codes zu Problemen kommt, kann es sein, dass die benötigten Bibliotheken nicht installiert sind. Diese können mit dem Befehl \texttt{pip install -r requirements.txt} installiert werden.
+
+Damit nur ein Test des Modells durchgeführt wird können die Funktion \texttt{train\_model()} und \texttt{dg.preprocess()} in der Datei \texttt{classification.py} auskommentiert werden.
 
 
 \section{Lösungsansätze im Vergleich}
@@ -137,10 +161,7 @@ Der Augenabstand ist die maßgebliche Größe, um die Segmentierung und Transfor
 Diese Erhöhung sorgt für eine Steigerung der Modellkomplexität, da die zuvor verwendeten 256*26*35 Datenpunkte nun auf 256*37*50 erhöht wurden. 
 Durch die zusätzlichen Informationen ist eine Stegerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (Siehe Abbildung: \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
 
-Overfittinng beschreibt die Situation, dass das Modell sich an nicht wesentliche Merkmale der Eingangsdaten anpasst. Vereinfacht erklärt: es lernt die Testdaten auswendig und kann dann nicht mehr auf wesentliche Merkmale Klassifizieren.
-
-Um dieser Problematik entgegen zu wirken wurde Data Augmentation in den Programmcode implementiert. 
-Diese neue \texttt{apply\_augmenatation} Funktion alterniert die Eingangsbilder der Testdaten in jedem Stapel minimal in Färbung, Helligkeit und Kontrast, um eine Zufallskomponente zu Erzeugen, die das Modell nicht auswendig lernen kann. 
+Um dieser Problematik entgegen zu wirken wurden die im Kapitel \ref{sec:training} erklärten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
 
 Das Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Traingserfolges, sondern verschlechtert diesen mit $91,22\%$. 
 Ohne den Augmentation Ansatz zu verwerfen ist die nächste Optimierung die Ergänzung einer weiteren Faltungsebene. 
@@ -155,18 +176,6 @@ Unter Berücksichtigung der zeitlichen Komponente des Optimierungsfortschrittes 
 
 Die dazwischen getesteten Modelle stellen verschiedene Optimierungsversuche dar, die im Laufe der Entwicklung durchgeführt wurden. Die Beschreibung dieser Optimierungen und deren Auswirkungen auf die Modellleistung sind im letzten Kapitel (Kapitel: \ref{sec:optimization}) dokumentiert.
 
-\subsection{Ausführung des Python Codes}
-
-In diesem Kapitel wird beschrieben, wie der mit diesem Paper abgegebene Python Code ausgeführt werden kann.
-Um die pipline der Datenverarbeitung mit Training der Daten und anschließendem Test des Modells durchzuführen, muss die Datei \texttt{classification.py} ausgeführt werden. Alle drei Dateien müssen im selben Verzeichnis liegen.
-
-Hierfür muss sich ebenfalls im selben Verzeichnis wie die Datei \texttt{classification.py} ein Verzeichnis \texttt{Images} befinden, welches die Bilder und Masken enthält. Innerhalb dieses Verzeichnisses wird ebenfalls eine Datei \texttt{tags.json} benötigt, welche die Labels der Bilder enthält.
-
-Der Ordner \texttt{Datensatz}, welcher später die Sortierten Bilder enthält, wird automatisch erstellt und in zwei Unterordner \texttt{Train} und \texttt{Test} unterteilt.
-
-Falls es beim Ausführen des Codes zu Problemen kommt, kann es sein, dass die benötigten Bibliotheken nicht installiert sind. Diese können mit dem Befehl \texttt{pip install -r requirements.txt} installiert werden.
-
-Damit nur ein Test des Modells durchgeführt wird können die Funktion \texttt{train\_model()} und \texttt{dg.preprocess()} in der Datei \texttt{classification.py} auskommentiert werden.
 
 
 \section{Fazit}
