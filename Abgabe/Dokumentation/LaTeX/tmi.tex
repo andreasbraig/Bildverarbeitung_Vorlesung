@@ -59,7 +59,9 @@ Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich se
 \label{sec:image_processing}
 Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. 
 
-Eine weit verbreitete Bibliothek für die Bildverarbeitung ist OpenCV, die zahlreiche Funktionen zur Bildanalyse, Filterung und Merkmalsextraktion bietet. OpenCV unterstützt auch fortgeschrittene Techniken wie die Gesichtserkennung und -verfolgung, Objekterkennung und Bewegungsanalyse. 
+\subsection{Computer Vision}
+\label{sec:computer_vision} 
+Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde ausschließlich überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um Vorhersagen zu treffen. Neuronale Netze, inspiriert von biologischen Neuronen, bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch Faltungsebenen extrahieren und dann damit klassifizieren.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
@@ -105,13 +107,17 @@ In der Datei \texttt{data\_generation.py} wird der in Kapitel \ref{sec:dataset_d
 
 
 \subsection{Training des Modells}
-Das Trainieren des Neuronalen Netzwerks geschieht in der Datei \texttt{classification.py}. Hierbei wird das Modell mit den generierten Daten trainiert und die Genauigkeit des Modells anhand eines Testdatensatzes evaluiert. Das Modell wird iterativ über mehrere Epochen trainiert, wobei die Gewichte des Netzwerks angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Die Evaluierung des trainierten Modells erfolgt anhand eines separaten Testdatensatzes, um die Generalisierbarkeit und Leistungsfähigkeit des Modells zu überprüfen.
+\label{sec:training}
+Das Trainieren des Neuronalen Netzwerks geschieht in der Datei \texttt{classification.py}. Hierbei wird das Modell mit dem generierten Datensatz in mehreren Epochen trainiert. Die Trainingsdaten werden in Batches geladen und dem Modell übergeben. Nach jeder Epoche wird das Modell anhand eines Validierungsdatensatzes evaluiert, um die Genauigkeit der Klassifikation zu überprüfen. Das Training erfolgt iterativ, wobei die Gewichte des Modells angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Nach Abschluss des Trainings wird das Modell gespeichert und für die spätere Verwendung bereitgestellt. Die Während des Trainierens angewendeten Konzepte Data Augmentation und Early Stopping vermindern das Risiko von Overfitting und verbessern die Generalisierbarkeit des Modells.
+
+Overfitting beschreibt die Situation, dass das Modell sich an nicht wesentliche Merkmale der Eingangsdaten anpasst. Vereinfacht erklärt: es lernt die Testdaten auswendig und kann dann nicht mehr auf wesentliche Merkmale Klassifizieren.
+
+Data Augmentation beschreibt die Veränderung des Datensatzes, sodass der Datensatz größer wirk als er ist. 
+Early Stopping beschreibt das Abbrechen des Trainings, wenn die Genauigkeit des Modells auf den Validierungsdaten nicht mehr steigt.
+
 
 \subsection{Test des Modells}
 Das Herzstück der Implementierung ist die Klassifikation der Gesichter anhand des Geschlechts. Hierfür wird ein Convolutional Neural Network (CNN) verwendet, das auf dem PyTorch-Framework basiert. Das CNN besteht aus mehreren Convolutional Layers und Pooling Layers, die dazu dienen, tiefere Merkmale aus den Eingabebildern zu extrahieren. Die Ausgabe des CNN wird durch eine Fully Connected Layer und eine ReLU-Aktivierungsfunktion in eine Wahrscheinlichkeit für die Klassifikation als männlich oder weiblich umgewandelt. Das Training des CNN erfolgt über mehrere Epochen, wobei die Gewichte des Netzwerks iterativ angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Die Evaluierung des trainierten Modells erfolgt anhand eines separaten Testdatensatzes, um die Generalisierbarkeit und Leistungsfähigkeit des Modells zu überprüfen.
-
-% Da eine Anforderung an die Aufgabe darin besteht, die Bilder mit allen vier Kanälen zu verarbeiten muss die Standardfunktion, welche das Bild an das Netz übergibt ersetzt werden.
-% Die Standardfunktion konvertiert jedes RGBA Bild in ein Bild ohne Alphakanal, indem dieser abgeschnitten wird. (Schöner Absatz aber hatte unten nix zu suchen.)
 
 
 \section{Lösungsansätze im Vergleich}
@@ -146,10 +152,7 @@ Der Augenabstand ist die maßgebliche Größe, um die Segmentierung und Transfor
 Diese Erhöhung sorgt für eine Steigerung der Modellkomplexität, da die zuvor verwendeten 256*26*35 Datenpunkte nun auf 256*37*50 erhöht wurden. 
 Durch die zusätzlichen Informationen ist eine Stegerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (Siehe Abbildung: \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
 
-Overfittinng beschreibt die Situation, dass das Modell sich an nicht wesentliche Merkmale der Eingangsdaten anpasst. Vereinfacht erklärt: es lernt die Testdaten auswendig und kann dann nicht mehr auf wesentliche Merkmale Klassifizieren.
-
-Um dieser Problematik entgegen zu wirken wurde Data Augmentation in den Programmcode implementiert. 
-Diese neue \texttt{apply\_augmenatation} Funktion alterniert die Eingangsbilder der Testdaten in jedem Stapel minimal in Färbung, Helligkeit und Kontrast, um eine Zufallskomponente zu Erzeugen, die das Modell nicht auswendig lernen kann. 
+Um dieser Problematik entgegen zu wirken wurden die im Kapitel \ref{sec:training} erklärten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
 
 Das Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Traingserfolges, sondern verschlechtert diesen mit $91,22\%$. 
 Ohne den Augmentation Ansatz zu verwerfen ist die nächste Optimierung die Ergänzung einer weiteren Faltungsebene. 
