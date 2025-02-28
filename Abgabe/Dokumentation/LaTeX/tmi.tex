@@ -41,7 +41,7 @@
 \label{sec:introduction}
 \IEEEPARstart{D}{iese} Arbeit befasst sich mit der Verarbeitung und Klassifikation von Gesichtsaufnahmen. Die verwendeten Daten bestehen aus Gesichtsaufnahmen von Personen unterschiedlichen Alters und Geschlechts. 
 
-Die erste Teilaufgabe der Arbeit besteht in der Segmentierung und Verarbeitung des Datensatzes, um die Gesichtselemente (insbesondere Augen und Mund) in den Bildern einheitlich zu positionieren. Dies wird erreicht, indem ein gleichschenkliges Dreieck mit festen Positionen für die Augen und den Mund im Bild definiert wird. 
+Die erste Teilaufgabe der Arbeit besteht in der Segmentierung und Verarbeitung des Datensatzes, um die Gesichtselemente (insbesondere Augen und Mund) in den Bildern einheitlich zu positionieren. Dies wird erreicht, indem ein gleichschenkliges Dreieck mit festen Positionen für Augen und Mund im Bild definiert wird. 
 
 Die zweite Teilaufgabe konzentriert sich auf die Klassifikation des Geschlechts der abgebildeten Person. Ein Convolutional Neural Network wird trainiert, um eine binäre Klassifikation zwischen Männlich (0) und Weiblich (1) durchzuführen.
 
@@ -63,17 +63,17 @@ Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse un
 \label{sec:computer_vision}
 Maschinelles Lernen ermöglicht es Algorithmen, Muster in Daten zu erkennen und auf dieser Grundlage Vorhersagen zu treffen. Ein Teilbereich dieses Fachgebiets ist \textit{Computer Vision}, das sich mit der Analyse und Interpretation von visuellen Informationen aus Bildern und Videos beschäftigt.
 
-Neuronale Netze, die aus Eingabe-, versteckten und Ausgabeschichten bestehen, spielen eine zentrale Rolle im Bereich des maschinellen Lernens. Insbesondere \acp{cnn} haben sich als äußerst effektiv in der Bildverarbeitung erwiesen. Diese Netzwerke extrahieren Bildmerkmale mithilfe spezieller Faltungsebenen, was sie besonders für Klassifikationsaufgaben in der Bildanalyse geeignet macht.
+Neuronale Netze, spielen eine zentrale Rolle im Bereich des maschinellen Lernens. Insbesondere \acp{cnn} haben sich als äußerst effektiv in der Bildverarbeitung erwiesen. Diese Netzwerke extrahieren Bildmerkmale mithilfe spezieller Faltungsebenen, was sie besonders für Klassifikationsaufgaben in der Bildanalyse geeignet macht.
 
 Die wichtigsten Lernansätze im maschinellen Lernen sind überwachtes, unüberwachtes und verstärkendes Lernen. In dieser Arbeit wird überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um aus diesen Beispielen zu lernen und Vorhersagen zu treffen.
+
+Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Während die Klassifikation Daten in diskrete Gruppen einteilt, beschreibt Regression kontinuierliche Zusammenhänge. Die binäre Klassifikation, wie in Abbildung \ref{fig:bin_class} dargestellt, teilt Daten in zwei Klassen und trennt diese mithilfe einer Entscheidungsgrenze. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
     \caption{Schematische Darstellung der binären Klassifikation hier in form von Kreisen und Quadraten.}
     \label{fig:bin_class}
 \end{figure}
-
-Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Während die Klassifikation Daten in diskrete Gruppen einteilt, beschreibt Regression kontinuierliche Zusammenhänge. Die binäre Klassifikation, wie in Abbildung \ref{fig:bin_class} dargestellt, teilt Daten in zwei Klassen und trennt diese mithilfe einer Entscheidungsgrenze. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
 
 Neben dem Training eigener Modelle können auch vortrainierte Modelle von Plattformen wie TensorFlow oder PyTorch geladen und fein abgestimmt werden.
 
@@ -156,7 +156,11 @@ Falls ausschließlich das trainierte Modell getestet werden soll, können die Fu
 \section{Lösungsansätze im Vergleich}
 In diesem Kapitel werden fünf Ansätze zur Implementierung des \ac{cnn} vorgestellt. Insgesamt umfasst die Versuchsreihe 23 trainierte neuronale Netze unterschiedlicher Einstellungen und Dimensionen.
 
-Um die zentralen Erkenntnisse und den Fortschritt über die Trainingsphasen hinweg darzustellen, wurden fünf repräsentative Modelle ausgewählt. Diese Modelle verdeutlichen sowohl die Entwicklung der Klassifikationsgenauigkeit als auch den Einfluss der gewählten Architektur auf die Trainingsdauer und die Generalisierungsfähigkeit des Netzwerks.
+% Um die zentralen Erkenntnisse und den Fortschritt über die Trainingsphasen hinweg darzustellen, wurden fünf repräsentative Modelle ausgewählt. Diese Modelle verdeutlichen sowohl die Entwicklung der Klassifikationsgenauigkeit als auch den Einfluss der gewählten Architektur auf die Trainingsdauer und die Generalisierungsfähigkeit des Netzwerks.
+
+\subsection{Ablauf der Optimierung}
+\label{sec:optimization}
+Die Grundlage für das Design des neuronalen Netzes bildet ein im Labor verwendeter PyTorch-Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Erfolg_Dauer.png}}
@@ -164,12 +168,9 @@ Um die zentralen Erkenntnisse und den Fortschritt über die Trainingsphasen hinw
     \label{fig:compareGraph}
 \end{figure}
 
-\subsection{Ablauf der Optimierung}
-\label{sec:optimization}
-Die Grundlage für das Design des neuronalen Netzes bildet ein im Labor verwendeter PyTorch-Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
-
 Mit dem ersten Programmentwurf entsteht das Netz "Model35", welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 256*26*35 linearen Datenpunkten ausgestattet.
 Es wurde für den Test in 35 Epochen trainiert und liefert $92,7\%$ Genauigkeit im Test (siehe Abbildung \ref{fig:compareGraph}).
+
 
 Der erste Optimierungsansatz besteht in der Erhöhung der Trainingsepochen. Bei gleichbleibenden Modellparametern wird das Netz mit 90 statt 35 Epochen trainiert. Dies hat maßgeblichen Einfluss auf die Gesamtdauer, die mit 386 Minuten deutlich über den 129 Minuten des Vorgängers liegt (siehe Abbildung \ref{fig:compareGraph}), ohne dabei eine Verbesserung der Testgenauigkeit zu bewirken.
 
