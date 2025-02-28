@@ -159,7 +159,7 @@ Der nächste Optimierungsansatz besteht in der erhöhung der Bildauflösung. Die
 Der Augenabstand ist die maßgebliche Größe, um die Segmentierung und Transformation des Bildes durchzuführen.
 
 Diese Erhöhung sorgt für eine Steigerung der Modellkomplexität, da die zuvor verwendeten 256*26*35 Datenpunkte nun auf 256*37*50 erhöht wurden. 
-Durch die zusätzlichen Informationen ist eine Stegerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (Siehe Abbildung: \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
+Durch die zusätzlichen Informationen ist eine Stegerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (Siehe Abbildung \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
 
 Um dieser Problematik entgegen zu wirken wurden die im Kapitel \ref{sec:training} erklärten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
 
@@ -176,12 +176,15 @@ Unter Berücksichtigung der zeitlichen Komponente des Optimierungsfortschrittes 
 
 Die dazwischen getesteten Modelle stellen verschiedene Optimierungsversuche dar, die im Laufe der Entwicklung durchgeführt wurden. Die Beschreibung dieser Optimierungen und deren Auswirkungen auf die Modellleistung sind im letzten Kapitel (Kapitel: \ref{sec:optimization}) dokumentiert.
 
-
-
 \section{Fazit}
-Im Fazit werden die Ergebnisse der Arbeit zusammengefasst und diskutiert. Es wird reflektiert, inwiefern die gesetzten Ziele erreicht wurden und welche Verbesserungspotenziale noch bestehen.
+\label{sec:conclusion}
+In dieser Arbeit wurde die Verarbeitung und Klassifikation von Gesichtsaufnahmen zur Geschlechterklassifikation mittels neuronaler Netze untersucht. Der Wissensgewinn über die Zeit war erheblich, da verschiedene Modelle und Optimierungsansätze getestet und evaluiert wurden. Beginnend mit einem einfachen Modell, das bereits eine solide Genauigkeit erzielte, wurden durch schrittweise Optimierungen wie die Erhöhung der Bildauflösung, die Implementierung von Data Augmentation und Early Stopping sowie die Anpassung der Netzwerkarchitektur signifikante Verbesserungen erreicht.
 
+Die besten Ergebnisse wurden mit einem Modell erzielt, das Data Augmentation und eine zusätzliche Faltungsebene nutzte, was die Genauigkeit auf bis zu $99\%$ steigerte. Dies zeigt, dass durch gezielte Optimierungen und Anpassungen erhebliche Leistungssteigerungen möglich sind.
 
+Als Ausblick soll nicht unerwähnt bleiben, dass weitere Verbesserungen durch den Einsatz fortschrittlicherer Aktivierungsfunktionen wie Sigmoid möglich gewesen wären. Diese könnten die Klassifikationsgenauigkeit weiter erhöhen, indem sie nichtlineare Beziehungen in den Daten besser modellieren. Zukünftige Arbeiten könnten sich darauf konzentrieren, diese und andere fortschrittliche Techniken zu integrieren, um die Modellleistung weiter zu optimieren.
+
+Insgesamt zeigt diese Arbeit, dass durch iterative Optimierung und den Einsatz moderner Techniken in der Bildverarbeitung und im maschinellen Lernen robuste und leistungsfähige Modelle zur Geschlechterklassifikation entwickelt werden können.
 
 
 
