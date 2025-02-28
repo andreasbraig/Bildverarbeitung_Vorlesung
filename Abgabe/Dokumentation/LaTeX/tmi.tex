@@ -95,7 +95,7 @@ Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etw
 Die in Abbildung \ref{fig:architecture} dargetsellte Workflow beschreibt anschaulich die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz.
 Im Folgenden wird eine genauere Beschreibung des Lösungsvorgansg gegeben.
 
-\subsection{Get Dataset}
+\subsection{Data Generation}
 Das Preprocessing übernimmt die zentrale Aufgabe der Vorverarbeitung der Rohdaten für das Training des neuronalen Netzwerks.
 Durch die Funktion \texttt{cleanup} wird zunächst sichergestellt, dass sämtliche Datensätze in den Zielordnern gelöscht werden, um eine Vermischung mit einem veralteten Datensatz zu verhindern.
 Anschließend werden die Metadaten, einschließlich der Dateinamen und der Geschlechter, aus der \texttt{tag.json} extrahiert und in einem strukturierten 2D-Array gespeichert, sodass die Weiterverarbeitung der Daten erleichtert wird.
@@ -114,8 +114,8 @@ Die Transformation erfolgt über die so genannte affine Transformation. Diese be
 
 Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Musndes benötigt. Diese dienen dem neuronalen Netzwerk später als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der "Shape" auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
 
-\subsection{CNN Modell}
-Das \ac{cnn} wird verwendet, um das Geschlecht der abgebildeten Person zu klassifizieren. Hierbei kommen mehrere Convolutional Layers und Pooling Layers zum Einsatz, um aus den Eingabebildern tiefere Merkmale zu extrahieren.
+\subsection{Klassifikation}
+Das Herzstück der Implementierung ist die Klassifikation der Gesichter anhand des Geschlechts. Hierfür wird ein Convolutional Neural Network (CNN) verwendet, das auf dem PyTorch-Framework basiert. Das CNN besteht aus mehreren Convolutional Layers und Pooling Layers, die dazu dienen, tiefere Merkmale aus den Eingabebildern zu extrahieren. Die Ausgabe des CNN wird durch eine Fully Connected Layer und eine Sigmoid-Aktivierungsfunktion in eine Wahrscheinlichkeit für die Klassifikation als männlich oder weiblich umgewandelt. Das Training des CNN erfolgt über mehrere Epochen, wobei die Gewichte des Netzwerks iterativ angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Die Evaluierung des trainierten Modells erfolgt anhand eines separaten Testdatensatzes, um die Generalisierbarkeit und Leistungsfähigkeit des Modells zu überprüfen.
 
 % Da eine Anforderung an die Aufgabe darin besteht, die Bilder mit allen vier Kanälen zu verarbeiten muss die Standardfunktion, welche das Bild an das Netz übergibt ersetzt werden.
 % Die Standardfunktion konvertiert jedes RGBA Bild in ein Bild ohne Alphakanal, indem dieser abgeschnitten wird. (Schöner Absatz aber hatte unten nix zu suchen.)
