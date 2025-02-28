@@ -125,6 +125,7 @@ Um der Anforderung an diese Dokumentation gerecht zu werden fällt die Wahl auf 
 \end{figure}
 
 \subsection{Ablauf der Optimierung}
+\label{sec:optimization}
 Als Grundlage für das Design des neuralen Netz dient ein im Labor verwendeter Python-Pytorch Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
 
 Mit dem ersten Prorgammentwurf entsteht das netz "Model35", welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 256*26*35 linearen Datenpunkten ausgestattet.
@@ -156,9 +157,12 @@ Dies Reduziert die Linearen Parameter und damit auch die Komplexität des Modell
 In einem ersten Test konnte dieses Letzte Modell (model40\_AUG\_3Layer\_100px\_ES) zunächst $94\%$ und in einem zweiten Test $99\%$ erzielen.
 
 \subsection{Diskussion der Lösungsansätze}
-Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $80\%$ Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit einer moderaten Trainingsdauer und Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht.
-Dieses Modell geht in beiden Grafiken (Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}) eindeutig als Bestes Modell hervor, da es mit geringerer Komplexität und kürzester Trainingsdauer die besten Ergebnisse liefert.
+Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $80\%$ Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit einer moderaten Trainingsdauer und Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht (Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}).
 
+Die anderen Modelle liefern hinsichtlich des Erfolges ebenfalls solide Resultate. 
+Unter Berücksichtigung der zeitlichen Komponente des Optimierungsfortschrittes hinsichtlich des Codeaufbaus der fünf Modelle sind die anfangs erreichten $92,75\%$ ebenfalls nicht zu vernachlässigen. Hier wurden $7\%$ weniger erzielt als beim besten Modell, allerdings mit fünf Tagen weniger Arbeitsaufwand für die Codeoptimierung. 
+
+Die dazwischen getesteten Modelle stellen verschiedene Optimierungsversuche dar, die im Laufe der Entwicklung durchgeführt wurden. Die Beschreibung dieser Optimierungen und deren Auswirkungen auf die Modellleistung sind im letzten Kapitel (Kapitel: \ref{sec:optimization}) dokumentiert.
 
 \subsection{Ausführung des Python Codes}
 
