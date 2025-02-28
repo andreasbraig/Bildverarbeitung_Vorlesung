@@ -57,7 +57,9 @@ Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich se
 
 \subsection{Bildverarbeitung}
 \label{sec:image_processing}
-Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. 
+Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten.
+
+% hier noch verbessern
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
@@ -111,9 +113,19 @@ Overfitting beschreibt die Situation, dass das Modell sich an nicht wesentliche 
 Data Augmentation beschreibt die Veränderung des Datensatzes, sodass der Datensatz größer wirk als er ist. 
 Early Stopping beschreibt das Abbrechen des Trainings, wenn die Genauigkeit des Modells auf den Validierungsdaten nicht mehr steigt.
 
+\begin{figure}[H]
+    \centerline{\includegraphics[width=\columnwidth]{Trainingslog.png}}
+    \caption{Trainingsergebnis pro Epoche des letzten Modells.}
+    \label{fig:trainlog}
+\end{figure}
+
+Die Abbildung \ref{fig:trainlog} zeigt das Trainingsergebnis des letzten Modells. Die Genauigkeit des Modells steigt mit jeder Epoche und nähert sich den $100\%$ asymptotisch an. Zudem sinken die Verluste, bis diese nahezu $0\%$ sind. Dies zeigt, dass das Modell gut trainiert ist und eine hohe Genauigkeit bei der Geschlechterklassifikation erreicht.
+Außerdem ist in der Grafik zu sehen, bei welcher Epoche die Data Augmentation angewand wird. Denn hier sind kurzzeitige Verschlechterungen von Genauigkeit und Verlust zu erkennen, die durch die Veränderung des Datensatzes entstehen.
 
 \subsection{Test des Modells}
-Das Trainierte Modell wird in der \texttt{classification.py}-Datei getestet. Hierbei wird dem Modell batchweise der Testdatensatz übermittelt, welcher sich von dem Traingsdatensatz unterscheidet, übermittelt Die Klassifikationsergebnisse werden mit den tatsächlichen Labels verglichen, um die Genauigkeit des Modells zu bestimmen. Das Ergebnis wird in Form einer Erfolgsquote ausgegeben, die die Genauigkeit des Modells bei der Geschlechterklassifikation angibt. Zudem werden die falsch Klassifizierten Bilder in ein separates Verzeichnis gespeichert, um die Fehleranalyse zu erleichtern.
+Das zuvor in Kapitel \ref{sec:training} trainiert und gespeicherte Modell wird neu geladen und für das Testen verwendet. Durch ein erneutes Laden des Modells wird sichergestellt, dass das Modell unabhängig von dem Trainingsprozess getestet werden kann.
+Hierbei wird dem Modell batchweise der Testdatensatz übermittelt, welcher sich von dem Traingsdatensatz unterscheidet, übermittelt Die Klassifikationsergebnisse werden mit den tatsächlichen Labels verglichen, um die Genauigkeit des Modells zu bestimmen. Das Ergebnis wird in Form einer Erfolgsquote ausgegeben, die die Genauigkeit des Modells bei der Geschlechterklassifikation angibt. Zudem werden die falsch Klassifizierten Bilder in ein separates Verzeichnis gespeichert, um die Fehleranalyse zu erleichtern.
+
 
 \subsection{Ausführung des Python Codes}
 
@@ -188,11 +200,5 @@ Insgesamt zeigt diese Arbeit, dass durch iterative Optimierung und den Einsatz m
 
 
 
-
-\appendices
-
-% \section*{Appendix und die Nutzung von ergänzenden Dateien}
-
-\section*{Danksagung}
 
 \end{document}
