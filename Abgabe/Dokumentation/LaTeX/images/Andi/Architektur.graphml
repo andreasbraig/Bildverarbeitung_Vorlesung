@@ -253,7 +253,7 @@ Klassifizierten Bildern<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:
     <edge id="e7" source="n4" target="n14">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="0.0" sy="0.0" tx="-161.20333047818394" ty="-81.00935605916698"/>
           <y:LineStyle color="#000000" type="line" width="6.0"/>
           <y:Arrows source="none" target="delta"/>
           <y:BendStyle smoothed="false"/>
