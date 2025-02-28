@@ -78,6 +78,7 @@ Die kontinuierliche Weiterentwicklung dieser Techniken verspricht weitere Fortsc
 In diesem Kapitel wird der verwendete Datensatz sowie die damit einhergehenden Herausforderungen beschrieben.
 
 \subsection{Allgemeine Beschreibung des Datensatzes}
+\label{sec:dataset_description}
 Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche Segmentierung beinhaltet. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die für jedes Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen.
 
 \subsection{Herausforderungen bei der Datenverarbeitung}  
@@ -97,7 +98,10 @@ Die in Abbildung \ref{fig:architecture} dargetsellte Workflow beschreibt anschau
 Im Folgenden wird eine genauere Beschreibung des Lösungsvorgangs gegeben.
 
 \subsection{Generierung der Daten}
-In der Datei \texttt{data\_generation.py} wird der Datensatz eingelesen und die Bilder sowie die Segmentierungsmasken verarbeitet. Hierbei wird die Segmentierungsmaske genutzt, um die Positionen der Augen und des Mundes zu bestimmen. Anschließend werden die Bilder anhand dieser Positionen transformiert, um die Gesichter einheitlich zu positionieren. Die transformierten Bilder werden in einem neuen Verzeichnis gespeichert, um sie für das Training des Modells zu verwenden.
+In der Datei \texttt{data\_generation.py} wird der in Kapitel \ref{sec:dataset_description} beschriebene Datensatz eingelesen und die Bilder mittels der Segmentierungsmasken verarbeitet. Hierbei geschieht die Verarbeitung wie Folgt. Den Bildern wird eine zusätzliche Farbebene (Alpha-Kanal) beigefügt, sowie die abgebildeten Personen freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training des Modells zu verwenden.
+
+wird mittels der Segmentierungsmaske und einer Konturanalyse der Hintergrund entfernt und ein zusätzlicher. Diese Positionen werden genutzt, um die Transformationsmatrix für die affine Transformation zu berechnen. Anschließend werden die Bilder anhand dieser Matrix transformiert, um die Gesichter einheitlich zu positionieren. Zudem erfolgt im gleichen Zuge der Transformation eine Skalierung der Bilder auf eine einheitliche Größe. Die transformierten Bilder werden in einem neuen Verzeichnis gespeichert, um sie für das Training des Modells zu verwenden.
+
 
 \subsection{Training des Modells}
 

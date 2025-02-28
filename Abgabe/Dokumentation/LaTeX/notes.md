@@ -33,14 +33,14 @@ Für die Lösung dieser Aufgabe wurde die Programmiersprache Python mit den wese
 
 
 ## Stand der Technik
-### Python: 
+### Entwicklungswerkzeuge: 
 Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich sehr gut für die Bildverarbeitung eignet. Die Bibliothek OpenCV bietet hier umfangreiche Unterstützung für Bildanalyse, Filterung, Merkmalsextraktion und Segmentierung. Die Kombination mit Deep-Learning-Frameworks wie z.B. PyTorch ermöglicht die Entwicklung fortschrittlicher Bildverarbeitungsalgorithmen, darunter Objekterkennung, Segmentierung und Bildklassifikation. Aufgrund seiner einfachen Syntax, plattformübergreifenden Kompatibilität und starken Community ist Python eine bevorzugte Wahl für Forschung und industrielle Anwendungen im Bereich der computergestützten Bildverarbeitung.
 
-### OpenCV:
-OpenCV (Open Source Computer Vision Library) ist eine leistungsstarke, quelloffene Bibliothek für die Bild- und Videoverarbeitung. Sie bietet eine breite Palette an Algorithmen für Aufgaben wie Bildfilterung, Merkmalsextraktion, Objekterkennung, Bewegungsverfolgung und Deep-Learning-gestützte Bildanalyse. OpenCV unterstützt mehrere Programmiersprachen, darunter Python, C++ und Java, und ist für verschiedene Plattformen verfügbar. Durch ihre hohe Effizienz und Kompatibilität mit Bibliotheken wie NumPy und PyTorch wird OpenCV sowohl in der Forschung als auch in industriellen Anwendungen, etwa in der Robotik, Medizintechnik und autonomen Systemen, eingesetzt.
+### Bildverarbeitung:
 
-### PyTorch: 
-PyTorch ist ein leistungsstarkes, quelloffenes Deep-Learning-Framework, das von Meta AI entwickelt wurde. Es bietet eine dynamische Berechnungsgrafik, die eine flexible Modellentwicklung ermöglicht. PyTorch wird besonders in der Forschung und Entwicklung von neuronalen Netzen eingesetzt, insbesondere für Computer Vision und Natural Language Processing. Dank seiner tiefen Integration mit Python sowie Unterstützung für GPU-Beschleunigung bietet es eine hohe Performance und Skalierbarkeit. Mit Bibliotheken wie TorchVision und TorchAudio erweitert PyTorch seine Funktionalität für spezifische Anwendungen in Bild- und Sprachverarbeitung.
+### Klassifikation:
+
+
 
 ### Möglichkeiten:
 
