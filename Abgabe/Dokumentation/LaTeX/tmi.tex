@@ -39,7 +39,7 @@
 
 \section{Einleitung}
 \label{sec:introduction}
-\IEEEPARstart{D}{iese} Arbeit befasst sich mit der Verarbeitung und Klassifikation von Gesichtsaufnahmen. Die verwendeten Daten bestehen aus Gesichtsaufnahmen von Personen unterschiedlichen Alters. 
+\IEEEPARstart{D}{iese} Arbeit befasst sich mit der Verarbeitung und Klassifikation von Gesichtsaufnahmen. Die verwendeten Daten bestehen aus Gesichtsaufnahmen von Personen unterschiedlichen Alters und Geschlechts. 
 
 Die erste Teilaufgabe der Arbeit besteht in der Segmentierung und Verarbeitung des Datensatzes, um die Gesichtselemente (insbesondere Augen und Mund) in den Bildern einheitlich zu positionieren. Dies wird erreicht, indem ein gleichschenkliges Dreieck mit festen Positionen für die Augen und den Mund im Bild definiert wird. 
 
@@ -49,20 +49,23 @@ Für die Implementierung wurde die Programmiersprache Python verwendet, unterst�
 
 \section{Stand der Technik}
 \label{sec:state_of_the_art}
-Um eine einführung in die Thematik zu geben und auch aktuelle Entwicklungen zu berücksichtigen, wird in diesem Kapitel der Stand der Technik in der Bildverarbeitung und Computer Vision beschrieben. Es wird nicht auf Einzelheiten eingegangen, sondern ein Überblick über die wichtigsten Technologien mit Python3 und dessen Methoden gegeben.
+Um eine Einführung in die Thematik zu geben und auch aktuelle Entwicklungen zu berücksichtigen, wird in diesem Kapitel der Stand der Technik in der Bildverarbeitung und Computer Vision beschrieben. Es wird nicht auf Einzelheiten eingegangen, sondern ein Überblick über die wichtigsten Technologien und Methoden in Bezug auf Python gegeben.
 
 \subsection{Entwicklungswerkzeuge}
 \label{sec:tools}
-Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich sehr gut für die Bildverarbeitung eignet. Die Bibliothek OpenCV bietet hier umfangreiche Unterstützung für Bildanalyse, Filterung, Merkmalsextraktion und Segmentierung. Die Kombination mit Deep-Learning-Frameworks wie z.B. PyTorch ermöglicht die Entwicklung fortschrittlicher Bildverarbeitungsalgorithmen, darunter Objekterkennung, Segmentierung und Bildklassifikation. Aufgrund seiner einfachen Syntax, plattformübergreifenden Kompatibilität und starken Community ist Python eine bevorzugte Wahl für Forschung und industrielle Anwendungen im Bereich der computergestützten Bildverarbeitung.
+Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich sehr gut für die Bildverarbeitung eignet. Die Bibliothek OpenCV bietet umfangreiche Unterstützung für Bildanalyse, Filterung, Merkmalsextraktion und Segmentierung. In Kombination mit Deep-Learning-Frameworks wie PyTorch ermöglicht sie die Entwicklung fortschrittlicher Bildverarbeitungsalgorithmen, darunter Objekterkennung, Segmentierung und Bildklassifikation. Aufgrund ihrer einfachen Syntax, plattformübergreifenden Kompatibilität und starken Community ist Python eine bevorzugte Wahl für Forschung und industrielle Anwendungen im Bereich der computergestützten Bildverarbeitung.
 
 \subsection{Bildverarbeitung}
 \label{sec:image_processing}
-Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. Hierzu könne die in Kapitel \ref{sec:tools} beschriebenen Bibliotheken OpenCV verwendet werden. Zuzüglich der Python-Bibliothek numpy bietet dies eine leistungsstarke Grundlage für die digitale Bildverarbeitung.
-
+Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. Hierzu kann die in Kapitel \ref{sec:tools} beschriebene Bibliothek OpenCV verwendet werden. Ergänzt durch die Python-Bibliothek numpy bietet dies eine leistungsstarke Grundlage für die digitale Bildverarbeitung.
 
 \subsection{Computer Vision}
-\label{sec:computer_vision} 
-Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird. Neuronale Netze bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch spezielle Faltungsebenen extrahieren.
+\label{sec:computer_vision}
+Maschinelles Lernen ermöglicht es Algorithmen, Muster in Daten zu erkennen und auf dieser Grundlage Vorhersagen zu treffen. Ein Teilbereich dieses Fachgebiets ist \textit{Computer Vision}, das sich mit der Analyse und Interpretation von visuellen Informationen aus Bildern und Videos beschäftigt.
+
+Neuronale Netze, die aus Eingabe-, versteckten und Ausgabeschichten bestehen, spielen eine zentrale Rolle im Bereich des maschinellen Lernens. Insbesondere \acp{cnn} haben sich als äußerst effektiv in der Bildverarbeitung erwiesen. Diese Netzwerke extrahieren Bildmerkmale mithilfe spezieller Faltungsebenen, was sie besonders für Klassifikationsaufgaben in der Bildanalyse geeignet macht.
+
+Die wichtigsten Lernansätze im maschinellen Lernen sind überwachtes, unüberwachtes und verstärkendes Lernen. In dieser Arbeit wird überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um aus diesen Beispielen zu lernen und Vorhersagen zu treffen.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
@@ -70,9 +73,9 @@ Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten 
     \label{fig:bin_class}
 \end{figure}
 
-Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Klassifikation teilt Daten in Gruppen ein, während Regression Zusammenhänge beschreibt. Die binäre Klassifikation unterscheidet zwei Klassen, dargestellt in Abbildung \ref{fig:bin_class}. Eine Entscheidungsgrenze trennt beide Klassen. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
+Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Während die Klassifikation Daten in diskrete Gruppen einteilt, beschreibt Regression kontinuierliche Zusammenhänge. Die binäre Klassifikation, wie in Abbildung \ref{fig:bin_class} dargestellt, teilt Daten in zwei Klassen und trennt diese mithilfe einer Entscheidungsgrenze. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
 
-Neben dem Training eigener Modelle können auch vortrainierte Modelle von Plattformen wie TensorFlow oder PyTorch geladen und feinabgestimmt werden.
+Neben dem Training eigener Modelle können auch vortrainierte Modelle von Plattformen wie TensorFlow oder PyTorch geladen und fein abgestimmt werden.
 
 
 \section{Datensatz} 
@@ -81,49 +84,57 @@ In diesem Kapitel wird der verwendete Datensatz sowie die damit einhergehenden H
 
 \subsection{Allgemeine Beschreibung des Datensatzes}
 \label{sec:dataset_description}
-Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche Segmentierung beinhaltet. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die für jedes Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen.
+Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, die die Segmentierungsinformationen enthält. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die jedem Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung im Datensatz beträgt etwa 1200 Bilder von Männern und 800 Bilder von Frauen.
 
+% Masken und Münder?
 \subsection{Herausforderungen bei der Datenverarbeitung}  
-Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken ungewollte Fehler bei der Vorverarbeitung hervorrufen können. Auch die Labels in der \texttt{tags.json}-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz. 
+Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven können die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem liegt eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen vor, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. 
 
-Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etwa wenn die Segmentierungsqualität oder Perspektivenvielfalt die Leistung eines Erkennungsmodells beeinträchtigt.
+Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken ungewollte Fehler bei der Vorverarbeitung hervorrufen können. Auch die Labels in der \texttt{tags.json}-Datei können Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz. 
+
+Je nach Anwendung könnten weitere Herausforderungen auftreten, etwa wenn die Qualität der Segmentierung oder die Vielfalt der Perspektiven die Leistung eines Erkennungsmodells beeinträchtigt.
 
 \section{Implementierte Lösung}
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Architektur.png}}
-    \caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes}
+    \caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes.}
     \label{fig:architecture}
 \end{figure}
 
-Die in Abbildung \ref{fig:architecture} dargetsellte Workflow beschreibt anschaulich die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz.
-Im Folgenden wird eine genauere Beschreibung des Lösungsvorgangs gegeben.
+Der in Abbildung \ref{fig:architecture} dargestellte Workflow veranschaulicht die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz. Im Folgenden wird der Lösungsvorgang detailliert beschrieben.
 
 \subsection{Generierung der Daten}
-In der Datei \texttt{data\_generation.py} wird der in Kapitel \ref{sec:dataset_description} beschriebene Datensatz eingelesen und die Bilder mittels der Segmentierungsmasken verarbeitet. Hierbei geschieht die Verarbeitung wie Folgt. Den Bildern wird eine zusätzliche Farbebene (Alpha-Kanal) beigefügt, sowie die abgebildeten Personen freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Hierzu werden die Schwerpunkte der Konturen von Augen und Mund extrahiert und für die Berechnung der Transformationsmatrix bereitgestellt. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training und die Validierung des Modells zu verwenden.
+Die in der Datei \texttt{data\_generation.py} implementierten Funktionen lesen den in Kapitel \ref{sec:dataset_description} beschriebenen Datensatz ein und verarbeiten die Bilder mittels der Segmentierungsmasken. Dabei wird den Bildern eine zusätzliche Farbebene (Alpha-Kanal) hinzugefügt und die abgebildete Person freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Hierzu werden die Schwerpunkte der Konturen von Augen und Mund extrahiert und für die Berechnung der Transformationsmatrix bereitgestellt. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training und die Validierung des Modells zu verwenden.
 
 
 \subsection{Training des Modells}
 \label{sec:training}
-Das Trainieren des Neuronalen Netzwerks geschieht in der Datei \texttt{classification.py}. Hierbei wird das Modell mit dem generierten Datensatz in mehreren Epochen trainiert. Die Trainingsdaten werden in Batches geladen und dem Modell übergeben. Nach jeder Epoche wird das Modell anhand eines Validierungsdatensatzes evaluiert, um die Genauigkeit der Klassifikation zu überprüfen. Das Training erfolgt iterativ, wobei die Gewichte des Modells angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Nach Abschluss des Trainings wird das Modell gespeichert und für die spätere Verwendung bereitgestellt. Die Während des Trainierens angewendeten Konzepte Data Augmentation und Early Stopping vermindern das Risiko von Overfitting und verbessern die Generalisierbarkeit des Modells.
+Das Training des neuronalen Netzwerks erfolgt mit den in der Datei \texttt{classification.py} implementierten Funktionen und Methoden. Dabei wird das Modell über mehrere Epochen hinweg mit dem generierten Datensatz trainiert. Die Trainingsdaten werden in Batches geladen und dem Modell übergeben. Nach jeder Epoche wird das Modell anhand eines Validierungsdatensatzes evaluiert, um die Genauigkeit der Klassifikation zu überprüfen. Während des iterativen Trainingsprozesses werden die Modellgewichte durch die Optimierungsfunktionen kontinuierlich angepasst, um die Klassifikationsgenauigkeit zu maximieren. Nach Abschluss des Trainings wird das trainierte Modell gespeichert und für die spätere Verwendung bereitgestellt. 
 
-Overfitting beschreibt die Situation, dass das Modell sich an nicht wesentliche Merkmale der Eingangsdaten anpasst. Vereinfacht erklärt: es lernt die Testdaten auswendig und kann dann nicht mehr auf wesentliche Merkmale Klassifizieren.
+Zur Vermeidung von Overfitting - also der Überanpassung des Modells an irrelevante Merkmale der Trainingsdaten - werden die Methoden der Data Augmentation und des Early Stopping eingesetzt. Overfitting führt dazu, dass das Modell spezifische Eigenschaften der Trainingsdaten memoriert, anstatt generalisierbare Muster zu erkennen, wodurch seine Leistungsfähigkeit auf unbekannten Daten und damit seine Generalisierbarkeit eingeschränkt wird.
 
-Data Augmentation beschreibt die Veränderung des Datensatzes, sodass der Datensatz größer wirk als er ist. 
-Early Stopping beschreibt das Abbrechen des Trainings, wenn die Genauigkeit des Modells auf den Validierungsdaten nicht mehr steigt.
+Data Augmentation beschreibt die gezielte Veränderung der Trainingsdaten, um deren Vielfalt zu erhöhen. Dadurch wirkt der Datensatz größer, als er tatsächlich ist. 
+
+Early Stopping beschreibt das automatische Abbrechen des Trainings, wenn sich die Genauigkeit des Modells auf den Validierungsdaten nicht weiter verbessert.
+
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Trainingslog.png}}
-    \caption{Trainingsergebnis pro Epoche des letzten Modells.}
+    \caption{Trainingsergebnis pro Epoche des finalen Modells.}
     \label{fig:trainlog}
 \end{figure}
 
-Die Abbildung \ref{fig:trainlog} zeigt das Trainingsergebnis des letzten Modells. Die Genauigkeit des Modells steigt mit jeder Epoche und nähert sich den $100\%$ asymptotisch an. Zudem sinken die Verluste, bis diese nahezu $0\%$ sind. Dies zeigt, dass das Modell gut trainiert ist und eine hohe Genauigkeit bei der Geschlechterklassifikation erreicht.
-Außerdem ist in der Grafik zu sehen, bei welcher Epoche die Data Augmentation angewand wird. Denn hier sind kurzzeitige Verschlechterungen von Genauigkeit und Verlust zu erkennen, die durch die Veränderung des Datensatzes entstehen.
+Die Abbildung \ref{fig:trainlog} zeigt das Trainingsergebnis des finalen Modells. Die Klassifikationsgenauigkeit des Modells steigt mit jeder Epoche und nähert sich einem Wert von $100 \%$ asymptotisch an. Zudem verringert sich der Verlust, bis dieser nahezu $0 \%$ erreicht. Dies zeigt, dass das Modell gut trainiert ist und eine hohe Genauigkeit in der Geschlechterklassifikation erzielt.
+
+Zudem lässt sich in der Grafik erkennen, zu welchen Zeitpunkten die Data Augmentation angewendet wird. In diesen Phasen treten kurzzeitige Verschlechterungen der Genauigkeit und ein Anstieg des Verlusts auf, was auf die gezielte Modifikation des Datensatzes zurückzuführen ist.
 
 \subsection{Test des Modells}
-Das zuvor in Kapitel \ref{sec:training} trainiert und gespeicherte Modell wird neu geladen und für das Testen verwendet. Durch ein erneutes Laden des Modells wird sichergestellt, dass das Modell unabhängig von dem Trainingsprozess getestet werden kann.
-Hierbei wird dem Modell batchweise der Testdatensatz übermittelt, welcher sich von dem Traingsdatensatz unterscheidet, übermittelt Die Klassifikationsergebnisse werden mit den tatsächlichen Labels verglichen, um die Genauigkeit des Modells zu bestimmen. Das Ergebnis wird in Form einer Erfolgsquote ausgegeben, die die Genauigkeit des Modells bei der Geschlechterklassifikation angibt. Zudem werden die falsch Klassifizierten Bilder in ein separates Verzeichnis gespeichert, um die Fehleranalyse zu erleichtern.
+Das in Kapitel \ref{sec:training} trainierte und gespeicherte Modell wird für die Testphase neu geladen. Durch dieses erneute Laden des Modells wird sichergestellt, dass das Modell unabhängig von dem Trainingsprozess evaluiert wird.
+
+Hierbei wird dem Modell der Testdatensatz batchweise übergeben. Dieser unterscheidet sich von dem Traingsdatensatz und ermöglicht somit eine objektive Bewertung der Modellleistung. Die Klassifikationsergebnisse werden mit den tatsächlichen Labels verglichen, um die Genauigkeit des Modells zu bestimmen. Das Ergebnis wird in Form einer Erfolgsquote ausgegeben, die die Klassifikationsgenauigkeit bei der Geschlechtererkennung angibt.
+
+Zudem werden die falsch Klassifizierten Bilder in ein separates Verzeichnis gespeichert, um eine gezielte Fehleranalyse zu ermöglichen.
 
 
 \subsection{Ausführung des Python Codes}
