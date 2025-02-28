@@ -94,20 +94,12 @@ Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etw
 \end{figure}
 
 Die in Abbildung \ref{fig:architecture} dargetsellte Workflow beschreibt anschaulich die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz.
-Im Folgenden wird eine genauere Beschreibung des Lösungsvorgansg gegeben.
+Im Folgenden wird eine genauere Beschreibung des Lösungsvorgangs gegeben.
 
-\subsection{Data Generation}
-Das Preprocessing übernimmt die zentrale Aufgabe der Vorverarbeitung der Rohdaten für das Training des neuronalen Netzwerks.
-Durch die Funktion \texttt{cleanup} wird zunächst sichergestellt, dass sämtliche Datensätze in den Zielordnern gelöscht werden, um eine Vermischung mit einem veralteten Datensatz zu verhindern.
-Anschließend werden die Metadaten, einschließlich der Dateinamen und der Geschlechter, aus der \texttt{tag.json} extrahiert und in einem strukturierten 2D-Array gespeichert, sodass die Weiterverarbeitung der Daten erleichtert wird.
-Auf Grundlage der so gewonnenen Zuordnungen zwischen Bilddateien und Geschlecht erfolgt die Trennung der Bilddaten in zwei separate Ordner - einen für männliche und einen für weibliche Gesichter.
-Im nächsten Schritt wird die Funktion \texttt{freistellen} eingesetzt, um die Gesichter in den Bildern zu extrahieren.
-Nach dieser Extraktion erfolgt eine Transformation, die die Gesichter auf eine standardisierte Positionierung von Augen und Mund ausrichtet, um eine konsistente Eingabe für das Modell zu gewährleisten.
-Anschließend erfolgt mithilfe der Funktion \texttt{train\_test\_split} die Aufteilung der vorverarbeiteten Bilddaten in Trainings- und Testdatensätze.
-Hierbei wird ein zufällig ausgewählter Prozentsatz der Bilder in den Testdatensatz überführt.
-Dieser Schritt ist entscheidend, um eine objektive Evaluierung des Modells zu ermöglichen und Überanpassung (Overfitting) zu vermeiden, wie in Abschnitt \ref{sec:overfitting} beschrieben.
+\subsection{Generierung der Daten}
+In der Datei \texttt{data\_generation.py} wird der Datensatz eingelesen und die Bilder sowie die Segmentierungsmasken verarbeitet. Hierbei wird die Segmentierungsmaske genutzt, um die Positionen der Augen und des Mundes zu bestimmen. Anschließend werden die Bilder anhand dieser Positionen transformiert, um die Gesichter einheitlich zu positionieren. Die transformierten Bilder werden in einem neuen Verzeichnis gespeichert, um sie für das Training des Modells zu verwenden.
 
-\subsection{Preprocessing}
+\subsection{Training des Modells}
 
 Die Datei \texttt{preprocess.py} dient der Verarbeitung des Datensatzes. Hier werden gezielt Funktionen implementiert, um die gegebenen Ressourcen (Segmentierungsmaske) zu nutzen und die Personen auf den Bildern aufgrund dessen Freizustellen und in die gewünschte Position und Ausrichtung zu transformieren. 
 
@@ -115,7 +107,7 @@ Die Transformation erfolgt über die so genannte affine Transformation. Diese be
 
 Zur Berechnung der Transforamtionsmatrix werden die einzelnen Schwerpunkte der Augen und des Mundes benötigt. Diese dienen dem neuronalen Netzwerk als Ankerpunkte, um für jedes Gesicht immer möglichst die gleiche Ausgangslage zu haben. Zudem wird mit angabe der Zielform auch die Skalierung der Bilder auf eine einheitliche Größe gebracht.
 
-\subsection{Classifikation}
+\subsection{Test des Modells}
 Das Herzstück der Implementierung ist die Klassifikation der Gesichter anhand des Geschlechts. Hierfür wird ein Convolutional Neural Network (CNN) verwendet, das auf dem PyTorch-Framework basiert. Das CNN besteht aus mehreren Convolutional Layers und Pooling Layers, die dazu dienen, tiefere Merkmale aus den Eingabebildern zu extrahieren. Die Ausgabe des CNN wird durch eine Fully Connected Layer und eine ReLU-Aktivierungsfunktion in eine Wahrscheinlichkeit für die Klassifikation als männlich oder weiblich umgewandelt. Das Training des CNN erfolgt über mehrere Epochen, wobei die Gewichte des Netzwerks iterativ angepasst werden, um die Klassifikationsgenauigkeit zu maximieren. Die Evaluierung des trainierten Modells erfolgt anhand eines separaten Testdatensatzes, um die Generalisierbarkeit und Leistungsfähigkeit des Modells zu überprüfen.
 
 % Da eine Anforderung an die Aufgabe darin besteht, die Bilder mit allen vier Kanälen zu verarbeiten muss die Standardfunktion, welche das Bild an das Netz übergibt ersetzt werden.
