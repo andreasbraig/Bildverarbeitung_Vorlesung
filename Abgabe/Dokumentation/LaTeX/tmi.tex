@@ -57,10 +57,20 @@ Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich se
 
 \subsection{Bildverarbeitung}
 \label{sec:image_processing}
+Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. 
 
-\section{Computer Vision}
+\subsection{Computer Vision}
 \label{sec:computer_vision} 
+Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde ausschließlich überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um Vorhersagen zu treffen. Neuronale Netze, inspiriert von biologischen Neuronen, bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch Faltungsebenen extrahieren und dann damit klassifizieren.
 
+\begin{figure}[H]
+    \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
+    \caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes}
+    \label{fig:bin_class}
+\end{figure}
+
+Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Während Klassifikation Daten in Gruppen einteilt, beschreibt Regression Zusammenhänge anhand mathematischer Funktionen. Die binäre Klassifikation unterscheidet zwei Klassen, dargestellt in Abbildung : \ref{fig:bin_class} Kreise (Klasse 0) und Quadrate (Klasse 1). Eine Entscheidungsgrenze trennt beide Klassen, wobei einige Datenpunkte nahe der Grenze liegen. Durch Training optimiert sich das Modell, um neue Objekte korrekt einer Klasse zuzuordnen. In dieser Arbeit wird binäre Klassifikation verwendet, um zu erkennen, welches Geschlecht auf einem Bild abgebildet ist.
+\subsubsection{Vortrainierte Modelle}
 
 
 \section{Datensatz} 
