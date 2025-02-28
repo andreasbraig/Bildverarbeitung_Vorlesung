@@ -57,19 +57,18 @@ Python ist eine leistungsfähige, interpretierte Programmiersprache, die sich se
 
 \subsection{Bildverarbeitung}
 \label{sec:image_processing}
-Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten.
+Bildverarbeitung umfasst eine Vielzahl von Techniken und Methoden zur Analyse und Manipulation von Bildern. Zu den grundlegenden Methoden gehören die Kantendetektion, Bildsegmentierung und Merkmalsdetektion. Diese Techniken ermöglichen es, relevante Informationen aus Bildern zu extrahieren und weiterzuverarbeiten. Hierzu könne die in Kapitel \ref{sec:tools} beschriebenen Bibliotheken OpenCV verwendet werden. Zuzüglich der Python-Bibliothek numpy bietet dies eine leistungsstarke Grundlage für die digitale Bildverarbeitung.
 
-% hier noch verbessern
+
+\subsection{Computer Vision}
+\label{sec:computer_vision} 
+Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird. Neuronale Netze bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch spezielle Faltungsebenen extrahieren.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
     \caption{Schematische Darstellung der binären Klassifikation hier in form von Kreisen und Quadraten.}
     \label{fig:bin_class}
 \end{figure}
-
-\subsection{Computer Vision}
-\label{sec:computer_vision} 
-Maschinelles Lernen stellt den Zusammenhang zwischen Eingangs- und Ausgabedaten her. Die wichtigsten Methoden sind überwachtes, unüberwachtes und Verstärkungslernen. In dieser Arbeit wurde überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird. Neuronale Netze bestehen aus Eingabe-, versteckten und Ausgabeschichten. Convolutional Neural Networks (CNNs) sind besonders für Bildverarbeitung geeignet, da sie Bildmerkmale durch spezielle Faltungsebenen extrahieren.
 
 Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Klassifikation teilt Daten in Gruppen ein, während Regression Zusammenhänge beschreibt. Die binäre Klassifikation unterscheidet zwei Klassen, dargestellt in Abbildung \ref{fig:bin_class}. Eine Entscheidungsgrenze trennt beide Klassen. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
 
@@ -85,9 +84,9 @@ In diesem Kapitel wird der verwendete Datensatz sowie die damit einhergehenden H
 Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, welche Segmentierung beinhaltet. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die für jedes Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung innerhalb des Datensatzes umfasst ca. 1200 Bilder von Männern und 800 Bilder von Frauen.
 
 \subsection{Herausforderungen bei der Datenverarbeitung}  
-Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken die Modellleistung negativ beeinflussen könnten. Auch die Labels in der tags.json-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz. 
+Die Nutzung dieses Datensatzes bringt mehrere Herausforderungen mit sich. Die variierende Bildqualität und unterschiedlichen Perspektiven könnten die Konsistenz der Segmentierung beeinträchtigen und die Generalisierbarkeit von Modellen erschweren. Zudem besteht eine Ungleichverteilung der Geschlechter mit 1200 Bildern von Männern und 800 von Frauen, was zu Verzerrungen in geschlechtsspezifischen Analysen führen kann. Die Qualität und Konsistenz der Segmentierungsmasken ist ein weiterer kritischer Faktor, da ungenaue oder fehlerhafte Masken ungewollte Fehler bei der Vorverarbeitung hervorrufen können. Auch die Labels in der \texttt{tags.json}-Datei könnten Ungenauigkeiten enthalten oder nicht-binäre Identitäten ausschließen, was die Anwendbarkeit in diversen Szenarien einschränkt. Darüber hinaus erfordert die Verarbeitung von 2000 Bildern und Masken erhebliche Rechenleistung und Speicherplatz. 
 
-Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etwa wenn die Segmentierungsqualität oder Perspektivenvielfalt die Leistung eines Erkennungsmodells beeinträchtigt. Diese Aspekte sollten bei der Vorverarbeitung und Modellentwicklung sorgfältig berücksichtigt werden, um Verzerrungen zu minimieren und robuste Ergebnisse zu erzielen.
+Schließlich könnten je nach Anwendung weitere Herausforderungen auftreten, etwa wenn die Segmentierungsqualität oder Perspektivenvielfalt die Leistung eines Erkennungsmodells beeinträchtigt.
 
 \section{Implementierte Lösung}
 
@@ -153,35 +152,35 @@ Um der Anforderung an diese Dokumentation gerecht zu werden fällt die Wahl auf 
 
 \subsection{Ablauf der Optimierung}
 \label{sec:optimization}
-Als Grundlage für das Design des neuralen Netz dient ein im Labor verwendeter Python-Pytorch Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
+Als Grundlage für das Design des neuronalen Netzes dient ein im Labor verwendeter Python-PyTorch Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
 
-Mit dem ersten Prorgammentwurf entsteht das netz "Model35", welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 256*26*35 linearen Datenpunkten ausgestattet.
-Es wurde für den Test in 35 Epochen trainiert und liefert $92,7\%$ Genauigkeit im Test (Siehe Abbildung: \ref{fig:compareGraph})
+Mit dem ersten Programmentwurf entsteht das Netz "Model35", welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 256*26*35 linearen Datenpunkten ausgestattet.
+Es wurde für den Test in 35 Epochen trainiert und liefert $92,7\%$ Genauigkeit im Test (siehe Abbildung: \ref{fig:compareGraph}).
 
-Der erste Ansatz der Optimierung ist die erhöhung der Trainingsepochen. Bei gleichbleibenden Modellparametern wird mit 90 Statt 35 Epochen Trainiert.
-Dies hat maßgeblichen Einfluss auf die gesamtdauer, die mit 386min deutlich über den 129min des Vorängers liegt (Siehe Abbildung: \ref{fig:compareGraph}). Dies hat keinen positiven Effekt auf den Erfolg des Tests.
+Der erste Ansatz der Optimierung ist die Erhöhung der Trainingsepochen. Bei gleichbleibenden Modellparametern wird mit 90 statt 35 Epochen trainiert.
+Dies hat maßgeblichen Einfluss auf die Gesamtdauer, die mit 386 Minuten deutlich über den 129 Minuten des Vorgängers liegt (siehe Abbildung: \ref{fig:compareGraph}). Dies hat keinen positiven Effekt auf den Erfolg des Tests.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=\columnwidth]{Erfolg_Groesse.png}}
-    \caption{Vergleichsdiagramm zwischen Erfolgsquote des jeweiligen Modells im Test gegenüber dem Verbrauchten Speicherplatz.}
+    \caption{Vergleichsdiagramm zwischen Erfolgsquote des jeweiligen Modells im Test gegenüber dem verbrauchten Speicherplatz.}
     \label{fig:compareSize}
 \end{figure}
 
-Der nächste Optimierungsansatz besteht in der erhöhung der Bildauflösung. Die zuvor festgelegten 70px für den Augenabstand werden auf 100px erhöht, was eine Auflösungserhöhung von 210x280 auf 300x400 bedeutet.
+Der nächste Optimierungsansatz besteht in der Erhöhung der Bildauflösung. Die zuvor festgelegten 70px für den Augenabstand werden auf 100px erhöht, was eine Auflösungserhöhung von 210x280 auf 300x400 bedeutet.
 Der Augenabstand ist die maßgebliche Größe, um die Segmentierung und Transformation des Bildes durchzuführen.
 
 Diese Erhöhung sorgt für eine Steigerung der Modellkomplexität, da die zuvor verwendeten 256*26*35 Datenpunkte nun auf 256*37*50 erhöht wurden. 
-Durch die zusätzlichen Informationen ist eine Stegerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (Siehe Abbildung \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
+Durch die zusätzlichen Informationen ist eine Steigerung des Erfolges um $0,2\%$ möglich. Durch die Erhöhung der Komplexität und damit auch der Kapazität des Modells auf fast das Doppelte (siehe Abbildung \ref{fig:compareSize}), ist eine Betrachtung der Overfitting-Problematik unabdingbar.
 
-Um dieser Problematik entgegen zu wirken wurden die im Kapitel \ref{sec:training} erklärten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
+Um dieser Problematik entgegenzuwirken, wurden die im Kapitel \ref{sec:training} erklärten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
 
-Das Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Traingserfolges, sondern verschlechtert diesen mit $91,22\%$. 
-Ohne den Augmentation Ansatz zu verwerfen ist die nächste Optimierung die Ergänzung einer weiteren Faltungsebene. 
-Dies Reduziert die Linearen Parameter und damit auch die Komplexität des Modells, was sich postiv auf die Traningsdauer auswirkt. 
-In einem ersten Test konnte dieses Letzte Modell (model40\_AUG\_3Layer\_100px\_ES) zunächst $94\%$ und in einem zweiten Test $99\%$ erzielen.
+Das Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Trainingserfolges, sondern verschlechtert diesen mit $91,22\%$. 
+Ohne den Augmentation-Ansatz zu verwerfen, ist die nächste Optimierung die Ergänzung einer weiteren Faltungsebene. 
+Dies reduziert die linearen Parameter und damit auch die Komplexität des Modells, was sich positiv auf die Trainingsdauer auswirkt. 
+In einem ersten Test konnte dieses letzte Modell (model40\_AUG\_3Layer\_100px\_ES) zunächst $94\%$ und in einem zweiten Test $99\%$ erzielen.
 
 \subsection{Diskussion der Lösungsansätze}
-Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $80\%$ Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit einer moderaten Trainingsdauer und Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht (Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}).
+Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $80\%$. Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit einer moderaten Trainingsdauer und Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht (Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}).
 
 Die anderen Modelle liefern hinsichtlich des Erfolges ebenfalls solide Resultate. 
 Unter Berücksichtigung der zeitlichen Komponente des Optimierungsfortschrittes hinsichtlich des Codeaufbaus der fünf Modelle sind die anfangs erreichten $92,75\%$ ebenfalls nicht zu vernachlässigen. Hier wurden $7\%$ weniger erzielt als beim besten Modell, allerdings mit fünf Tagen weniger Arbeitsaufwand für die Codeoptimierung. 
