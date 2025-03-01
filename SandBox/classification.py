@@ -252,29 +252,24 @@ def cleanup(path):
 
 if __name__ == '__main__':
 
-    #dg.preprocess(eye_dist=100)
+    dg.preprocess(eye_dist=100)
 
     data_dir = "Datensatz/Learn"
     test_data_dir = "Datensatz/Test"
-
     model = "model40_aug_4Layer_100px_ES.state"
-
     logfile = model[:-6]+"_testlog.csv"
-
     fehl_data_dir = "Datensatz/"+model[:-6]+"fehl"
-
     preferred_device = "cpu"
+
+
     device = get_device(preferred_device)
     if not os.path.exists(data_dir):
         print(f"Error: Directory {data_dir} doesn't exist!")
+        
 
     print(f"Using device: {device}")
-
-    #train_model(data_dir, device, epochs=40,modelname=model)
-
+    train_model(data_dir, device, epochs=40,modelname=model)
     test_model(test_data_dir, device,model,logfile)
-
     cleanup(fehl_data_dir)
-
     copy_misclassified_images(logfile,test_data_dir+"/maennlich",fehl_data_dir)
     copy_misclassified_images(logfile,test_data_dir+"/weiblich",fehl_data_dir)

@@ -9,8 +9,10 @@ Labor/Model_Archiv
 **/*.state
 
 .venv
+testvenv
 
 Abgabe/Images
+SandBox/Images
 
 Abgabe/Datensatz
 
