@@ -9,8 +9,10 @@ Labor/Model_Archiv
 **/*.state
 
 .venv
+testvenv
 
 Abgabe/Images
+SandBox/Images
 
 Abgabe/Datensatz
 
@@ -19,3 +21,8 @@ Bilder
 **/*.png
 
 !Abgabe/Dokumentation/**/*.png
+
+Abgabe/Dokumentation/Latex/tmi.*
+
+!Abgabe/Dokumentation/Latex/tmi.tex
+!Abgabe/Dokumentation/Latex/tmi.sty

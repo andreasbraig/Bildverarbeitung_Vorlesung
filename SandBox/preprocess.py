@@ -1,5 +1,5 @@
-import cv2 #Importieren OpenCV
-import numpy as np #Importieren Numpy
+import cv2
+import numpy as np
 
 def freistellen(image, segm):
 
@@ -28,14 +28,14 @@ def transformation(image, segm,eye_dist=70):
         [eye_dist*2, eye_dist*2], 
         [eye_dist, eye_dist*2]
     ])
+
     src_pts = np.float32([centr[2], centr[1], centr[0]])
     
-    # Transformation berechnen
     matrix = cv2.getAffineTransform(src_pts, target_pts)
     warped = cv2.warpAffine(image, matrix, (eye_dist*3, eye_dist*4))
-    
-    # Bild speichern
+
     return warped
+
 
 def get_lastpoint(centr):
 
@@ -44,7 +44,9 @@ def get_lastpoint(centr):
 
     last = np.add(centr[0], vec//2)
     last = np.add(last, vec2)
+
     return last
+
 
 def get_single_center(segm,value):
 
@@ -71,6 +73,7 @@ def get_single_center(segm,value):
 
         return [cx,cy]
 
+
 def get_corners(segm):
     result=[]
     contours = [5,6,7]
@@ -85,5 +88,6 @@ def get_corners(segm):
 
     return result
 
-if __name__ == '__main__': #Wird das Skript mit python Basis.py aufgerufen, ist diese Bedingung erfüllt
+
+if __name__ == '__main__':
     pass
