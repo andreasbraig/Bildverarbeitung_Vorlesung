@@ -11,7 +11,7 @@
 
 
 \markboth{\journalname, VOL. 01, NO. 01, MARCH 2020}
-{TEL22AT1 \MakeLowercase{\textit{et al.}}: Verarbeitung von Gesichtsaufnahmen zur Geschlechterklassifikation als Anwendung neuronaler Netze}
+{TEL22AT1 \MakeLowercase{\textit{et al.}}: Geschlechtsbezogene Bildanalyse mittels neuronaler Netze}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
     \acro{cnn}[CNN]{Convolutional Neural Network} 
 \end{acronym}
 
-\title{Verarbeitung von Gesichtsaufnahmen zur Geschlechterklassifikation als Anwendung neuronaler Netze}
+\title{Geschlechtsbezogene Bildverarbeitung und -Analyse mittels neuronaler Netze} %Verarbeitung von Gesichtsaufnahmen zur Geschlechterklassifikation als Anwendung neuronaler Netze
 \author{Niklas Herhoffer, Celine Schneider, Andreas Braig
 \thanks{Diese Arbeit wurde im Rahmen des Kurses Digitale Bildverarbeitung erstellt. Die Einreichung erfolgte am 02.03.2025. Die Autoren sind Studierende an der Dualen Hochschule Baden-Württemberg Mannheim.}
 }
@@ -65,17 +65,27 @@ Maschinelles Lernen ermöglicht es Algorithmen, Muster in Daten zu erkennen und 
 
 Neuronale Netze, spielen eine zentrale Rolle im Bereich des maschinellen Lernens. Insbesondere \acp{cnn} haben sich als äußerst effektiv in der Bildverarbeitung erwiesen. Diese Netzwerke extrahieren Bildmerkmale mithilfe spezieller Faltungsebenen, was sie besonders für Klassifikationsaufgaben in der Bildanalyse geeignet macht.
 
-Die wichtigsten Lernansätze im maschinellen Lernen sind überwachtes, unüberwachtes und verstärkendes Lernen. In dieser Arbeit wird überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um aus diesen Beispielen zu lernen und Vorhersagen zu treffen.
+Die wichtigsten Lernansätze im maschinellen Lernen sind überwachtes, unüberwachtes und verstärkendes Lernen. In dieser Arbeit wird überwachtes Lernen genutzt, bei dem ein Algorithmus mit gelabelten Daten trainiert wird, um aus diesen Beispielen zu lernen und Vorhersagen  für unbekannte Daten zu treffen.
 
-Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Klassifikation teilt Daten in diskrete Gruppen ein, Regression beschreibt kontinuierliche Zusammenhänge. Die binäre Klassifikation, wie in Abbildung \ref{fig:bin_class} dargestellt, teilt Daten in zwei Klassen und trennt diese mithilfe einer Entscheidungsgrenze. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht auf einem Bild zu erkennen.
-
-\begin{figure}[H]
-    \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
-    \caption{Schematische Darstellung der binären Klassifikation hier in form von Kreisen und Quadraten.}
-    \label{fig:bin_class}
-\end{figure}
+Beim überwachten Lernen gibt es zwei Hauptmodelle: Klassifikation und Regression. Klassifikation teilt Daten in diskrete Gruppen ein, Regression beschreibt kontinuierliche Zusammenhänge. Die binäre Klassifikation, teilt Daten in zwei diskrete Klassen und trennt diese mithilfe einer Entscheidungsgrenze. In dieser Arbeit wird binäre Klassifikation verwendet, um das Geschlecht der Person auf einem Bild zu erkennen.
 
 Neben dem Training eigener Modelle können auch vortrainierte Modelle von Plattformen wie TensorFlow oder PyTorch geladen und fein abgestimmt werden.
+
+Als Evaluationswerkzeug kommt in dieser Arbeit die Accuracy zum Einsatz. Diese gibt den Anteil der korrekt klassifizierten Daten an der Gesamtanzahl der Daten an. 
+
+\begin{equation}
+    \text{Accuracy} = \frac{n_{\text{richtig klassifiziert}}}{n_{\text{gesamt}}}
+\end{equation}
+
+Neben der Accuracy gibt es weitere Metriken wie Precision, Recall und F1-Score, die spezifischere Informationen über die Leistung eines Modells liefern. Sie werden im Rahmen dieser Arbeit nicht implementiert.
+
+% \begin{figure}[H]
+%     \centerline{\includegraphics[width=\columnwidth]{binaere_klassifikation.png}}
+%     \caption{Schematische Darstellung der binären Klassifikation hier in form von Kreisen und Quadraten.}
+%     \label{fig:bin_class}
+% \end{figure}
+
+
 
 
 \section{Datensatz} 
@@ -84,7 +94,7 @@ In diesem Kapitel wird der verwendete Datensatz sowie die damit einhergehenden H
 
 \subsection{Allgemeine Beschreibung des Datensatzes}
 \label{sec:dataset_description}
-Der Datensatz besteht aus ca. 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, die die Segmentierungsinformationen enthält. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die jedem Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung im Datensatz beträgt etwa 1200 Bilder von Männern und 800 Bilder von Frauen.
+Der Datensatz besteht aus 2000 Bildern unterschiedlicher Qualität und Perspektive, die als JPEG-Dateien vorliegen. Zu jedem Bild existiert eine zugehörige Segmentierungsmaske im PNG-Format, die die Segmentierungsinformationen enthält. Zusätzlich enthält der Datensatz eine \texttt{tags.json}-Datei, die jedem Bild das Geschlecht der abgebildeten Person zuordnet. Die Geschlechterverteilung im Datensatz beträgt etwa 1200 Bilder von Männern und 800 Bilder von Frauen.
 
 % Masken und Münder?
 \subsection{Herausforderungen bei der Datenverarbeitung}  
@@ -97,16 +107,16 @@ Je nach Anwendung könnten weitere Herausforderungen auftreten, etwa wenn die Qu
 
 \section{Implementierte Lösung}
 
+Der in Abbildung \ref{fig:architecture} vereinfacht dargestellte Workflow veranschaulicht die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz. Im Folgenden wird der Lösungsvorgang detailliert beschrieben.
+
 \begin{figure}[H]
-    \centerline{\includegraphics[width=\columnwidth]{Architektur.png}}
+    \centerline{\includegraphics[width=\columnwidth]{Architekturv2.png}}
     \caption{Darstellung der Programmarchitektur in Form eines Blockschaltbildes.}
     \label{fig:architecture}
 \end{figure}
 
-Der in Abbildung \ref{fig:architecture} vereinfacht dargestellte Workflow veranschaulicht die Implementierung des Lösungsvorschlags zu der Aufgabe Geschlechterklassifikation mit dem in Kapitel \ref{sec:dataset} beschriebenen Datensatz. Im Folgenden wird der Lösungsvorgang detailliert beschrieben.
-
 \subsection{Generierung der Daten}
-Die in der Datei \texttt{data\_generation.py} implementierten Funktionen lesen den in Kapitel \ref{sec:dataset_description} beschriebenen Datensatz ein und verarbeiten die Bilder mittels der Segmentierungsmasken. Dabei wird den Bildern eine zusätzliche Farbebene (Alpha-Kanal) hinzugefügt und die abgebildete Person freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Hierzu werden die Schwerpunkte der Konturen von Augen und Mund extrahiert und für die Berechnung der Transformationsmatrix bereitgestellt. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training und Test des Modells zu verwenden.
+Die in der Datei \texttt{data\_generation.py} implementierten Funktionen lesen den in Kapitel \ref{sec:dataset_description} beschriebenen Datensatz ein und verarbeiten die Bilder mittels der Segmentierungsmasken. Dabei wird den Bildern eine zusätzliche Farbebene (Alpha-Kanal) hinzugefügt und die abgebildete Person freigestellt. Das resultierende Bild wird mittels einer affinen Transformation in eine einheitliche Position und Ausrichtung gebracht. Hierzu werden die Schwerpunkte der Konturen von Augen und Mund extrahiert und für die Berechnung der Transformationsmatrix bereitgestellt. Anschließend werden die Bilder in einem neuen Verzeichnis gespeichert, um sie für das Training und Test des Modells zu verwenden. %Thema Aufteilung und Random Split
 
 \subsection{Training des Modells}
 \label{sec:training}
@@ -114,7 +124,7 @@ Das Training des neuronalen Netzwerks erfolgt mit den in der Datei \texttt{class
 
 Zur Vermeidung von Overfitting - also der Überanpassung des Modells an irrelevante Merkmale der Trainingsdaten - werden die Methoden der Data Augmentation und des Early Stopping eingesetzt. Overfitting führt dazu, dass das Modell spezifische Eigenschaften der Trainingsdaten memoriert, anstatt generalisierbare Muster zu erkennen, wodurch seine Leistungsfähigkeit auf unbekannten Daten und damit seine Generalisierbarkeit eingeschränkt wird.
 
-Data Augmentation beschreibt die gezielte Veränderung der Trainingsdaten, um deren Vielfalt zu erhöhen. Dadurch wirkt der Datensatz größer, als er tatsächlich ist. 
+Data Augmentation beschreibt die gezielte Veränderung der Trainingsdaten, um deren Vielfalt zu erhöhen. Dadurch wirkt der Datensatz größer, als er tatsächlich ist. In dieser Arbeit wird Data Augmentation verwendet um zufällige Färbung oder Kontrastveränderung der Bilder bewirken.
 
 Early Stopping beschreibt das automatische Abbrechen des Trainings, wenn sich die Genauigkeit des Modells auf den Validierungsdaten nicht weiter verbessert.
 
@@ -136,7 +146,7 @@ Das in Kapitel \ref{sec:training} trainierte und gespeicherte Modell wird für d
 
 Hierbei wird dem Modell der Testdatensatz übergeben. Dieser enthält für das Modell unbekannte Daten und ermöglicht somit eine objektive Bewertung der Modellleistung. Die Klassifikationsergebnisse werden mit den tatsächlichen Labels verglichen, um die Genauigkeit des Modells zu bestimmen. Das Ergebnis wird in Form einer Erfolgsquote ausgegeben, die in Prozent die Anzahl der korrekt klassifizierten Bilder im Verhältnis zur Gesamtanzahl der Testbilder angibt.
 
-Zudem werden die falsch klassifizierten Bilder in ein separates Verzeichnis gespeichert, um eine gezielte Fehleranalyse zu ermöglichen. %Brauchen wir den Absatz?
+Zudem werden die falsch klassifizierten Bilder in ein separates Verzeichnis gespeichert, um eine gezielte Fehleranalyse zu ermöglichen. %Brauchen wir den Absatz? Formel? 
 
 
 \subsection{Ausführung des Python Codes}
@@ -164,18 +174,18 @@ In diesem Kapitel werden fünf Ansätze zur Implementierung des \ac{cnn} vorgest
 Die Grundlage für das Design des neuronalen Netzes bildet ein im Labor verwendeter PyTorch-Code. Dieser Code ist in seinen Parametern ergänzt, um den verwendeten Bildgrößen und Bildkanälen gerecht zu werden. 
 
 \begin{figure}[H]
-    \centerline{\includegraphics[width=\columnwidth]{Erfolg_Dauer.png}}
+    \centerline{\includegraphics[width=\columnwidth]{Erfolg_Dauerv2.png}}
     \caption{Vergleich der Testgenauigkeit der jeweiligen Modelle in Abhängigkeit von der Dauer einer Trainingsepoche.}
     \label{fig:compareGraph}
 \end{figure}
 
-Mit diesem ersten Programmentwurf entsteht unter anderem das Netz (Model35\_3Layer\_70px), welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 232960 linearen Datenpunkten ausgestattet.
+Mit diesem ersten Programmentwurf entsteht unter anderem das Netz (1, Abbildung \ref{fig:compareGraph}), welches zunächst den besten Wert im Test liefert. Dieses Modell ist mit drei Faltungsebenen und einer Reduktion auf 232960 linearen Datenpunkten ausgestattet.
 Es wurde für den Test in 35 Epochen trainiert und liefert $92,7\%$ Genauigkeit im Test (siehe Abbildung \ref{fig:compareGraph}).
 
 Der erste Optimierungsansatz besteht in der Erhöhung der Trainingsepochen. Bei gleichbleibenden Modellparametern wird das Netz mit 90 statt 35 Epochen trainiert. Dies hat maßgeblichen Einfluss auf die Gesamtdauer, die mit 386 Minuten deutlich über den 129 Minuten des Vorgängers liegt (siehe Abbildung \ref{fig:compareGraph}), ohne dabei eine Verbesserung der Testgenauigkeit zu bewirken.
 
 \begin{figure}[H]
-    \centerline{\includegraphics[width=\columnwidth]{Erfolg_Groesse.png}}
+    \centerline{\includegraphics[width=\columnwidth]{Erfolg_Groessev2.png}}
     \caption{Vergleich der Testgenauigkeit verschiedener Modelle in Abhängigkeit vom benötigten Speicherplatz.}
     \label{fig:compareSize}
 \end{figure}
@@ -187,9 +197,9 @@ Durch die zusätzlichen Informationen ist eine Steigerung des Erfolges um $0,2\%
 
 Um dieser Problematik entgegenzuwirken, wurden die im Kapitel \ref{sec:training} vorgestellten Konzepte Data Augmentation und Early Stopping in den Programmcode implementiert.
 
-Das daraus resultierende Modell (model30\_AUG\_3Layer\_100px) erzielt trotz Augmentation keine Verbesserung des Trainingserfolges, sondern verschlechtert diesen mit $91,22 \%$. 
+Das daraus resultierende Modell (4,Abbildung \ref{fig:compareSize}) erzielt trotz Augmentation keine Verbesserung des Trainingserfolges, sondern verschlechtert diesen mit $91,22 \%$. 
 
-Ohne den Augmentation-Ansatz zu verwerfen, besteht die nächste Optimierung in der Ergänzung einer weiteren Faltungsebene. Dies reduziert die linearen Parameter und damit auch die Komplexität des Modells, was sich positiv auf die Trainingsdauer auswirkt. In einem ersten Test erziehlt dieses letzte Modell (model40\_AUG\_3Layer\_100px\_ES) zunächst $94 \%$ und in einem zweiten Test $99 \%$.
+Ohne den Augmentation-Ansatz zu verwerfen, besteht die nächste Optimierung in der Ergänzung einer weiteren Faltungsebene. Dies reduziert die linearen Parameter und damit auch die Komplexität des Modells, was sich positiv auf die Trainingsdauer auswirkt. In einem ersten Test erziehlt dieses letzte Modell (5 ,Abbildung \ref{fig:compareSize}) zunächst $94 \%$ und in einem zweiten Test $99 \%$.
 
 \subsection{Diskussion der Lösungsansätze}
 Alle drei Lösungsansätze bieten solide Ergebnisse für das Klassifikationsproblem. Keines der vorgestellten Modelle liefert Ergebnisse schlechter als $90\%$. Hinsichtlich der Komplexität und der benötigten Rechenressourcen zeigt sich jedoch, dass das Modell mit Data Augmentation und einer zusätzlichen Faltungsebene (model40\_AUG\_3Layer\_100px\_ES) die besten Resultate erzielt. Es kombiniert eine hohe Genauigkeit mit der kürzesten Trainingsdauer und kleinsten Speicherplatzanforderung, was es zu einer effizienten und effektiven Lösung für die Geschlechterklassifikation macht (siehe Abbildung \ref{fig:compareGraph} und Abbildung \ref{fig:compareSize}).
