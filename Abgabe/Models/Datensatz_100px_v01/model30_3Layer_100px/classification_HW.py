@@ -28,15 +28,10 @@ class CNNClassification(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
 
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(2, 2),  # Reduziert die Höhe und Breite um die Hälfte
 
-            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),
 
@@ -47,7 +42,7 @@ class CNNClassification(nn.Module):
             nn.MaxPool2d(2,2),
             
             nn.Flatten(),
-            nn.Linear(256*18*25, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
+            nn.Linear(256*37*50, 2048),  # Angepasste Dimension basierend auf Eingangsdaten
             nn.ReLU(),
             nn.Linear(2048, 128),
             nn.ReLU(),
@@ -264,7 +259,7 @@ if __name__ == '__main__':
     test_data_dir = "Datensatz/Test"
      
 
-    model = "model40_aug_4Layer_100px_ES.state"
+    model = "model30_3Layer_100px.state"
 
     logfile = model[:-6]+"_testlog.csv"
 
@@ -285,8 +280,8 @@ if __name__ == '__main__':
 
     #Sorge dafür, dass alle Bilder, bei denen es nicht geklappt hat, wegsortiert werden. 
 
-    cleanup(fehl_data_dir)
+    #cleanup(fehl_data_dir)
 
-    copy_misclassified_images(logfile,test_data_dir+"/maennlich",fehl_data_dir)
-    copy_misclassified_images(logfile,test_data_dir+"/weiblich",fehl_data_dir)
+    #copy_misclassified_images(logfile,test_data_dir+"/maennlich",fehl_data_dir)
+    #copy_misclassified_images(logfile,test_data_dir+"/weiblich",fehl_data_dir)
 
